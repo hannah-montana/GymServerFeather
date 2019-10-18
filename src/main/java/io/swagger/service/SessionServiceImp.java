@@ -23,21 +23,27 @@ public class SessionServiceImp implements SessionService{
     @Override
     public List<Session> getAll() {
         List<Session> lst= new ArrayList<>();
+
         lst = sessionRepository.findAll();
+
         return lst;
     }
 
     @Override
     public Session getSessionByName(String name) {
         Session sess = new Session();
+
         sess = sessionRepository.findByName(name);
+
         return sess;
     }
 
     @Override
     public Session getSessionById(String id) {
         Session sess = new Session();
-        sess = sessionRepository.findByName(id);
+
+        sess = sessionRepository.findById(id);
+
         return sess;
     }
 
@@ -74,7 +80,7 @@ public class SessionServiceImp implements SessionService{
     public Integer deleteSession(String id) {
         int result = 0;
 
-        if(sessionRepository.findByName(id) != null){
+        if(sessionRepository.findById(id) != null){
             sessionRepository.delete(id);
             result = 1;
         }

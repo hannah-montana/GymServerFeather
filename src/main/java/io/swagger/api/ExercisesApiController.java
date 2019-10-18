@@ -78,6 +78,7 @@ public class ExercisesApiController implements ExercisesApi {
         return new ResponseEntity<Integer>(result,HttpStatus.OK);
     }
 
+
     public ResponseEntity<Exercise> getExerciseById(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("exId") String exId) {
 
         Exercise exercise = new Exercise();
@@ -91,11 +92,10 @@ public class ExercisesApiController implements ExercisesApi {
 
     public ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("exercise") Exercise ex) {
         Exercise exercise = new Exercise();
+        //String name = ex.getName();
 
-        try{
+        if(ex.getName()!=null) {
             exercise = exerciseService.updateExercise(ex);
-        } catch(Exception e){
-            exercise = new Exercise();
         }
 
         return new ResponseEntity<Exercise>(exercise,HttpStatus.OK);

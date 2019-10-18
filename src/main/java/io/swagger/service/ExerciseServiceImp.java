@@ -41,9 +41,9 @@ public class ExerciseServiceImp implements ExerciseService {
     public Exercise getExerciseById(String id) {
 
         Exercise exercise = new Exercise();
-        //exercise = exerciseRepo.findById(id);
+        exercise = exerciseRepo.findById(id);
 
-        exercise = exerciseRepo.findOne(id);
+        //exercise = exerciseRepo.findOne(id);
         //Query query = new Query(Criteria.where("id").is(id));
         //exercise = mongoTemplate.find(query,Exercise.class);
 
@@ -63,21 +63,15 @@ public class ExerciseServiceImp implements ExerciseService {
 
     @Override
     public Exercise updateExercise(Exercise ex) {
+        // Need update
+        Exercise exercise = new Exercise();
 
-        /*Need to modify*/
-        Exercise updateEx= exerciseRepo.findByName(ex.getName().toString());
-        List<Exercise> lst = exerciseRepo.findAll();
-
-        if(exerciseRepo.findByName(ex.getName().toString()) != null) {
-            for(Exercise exercise:lst){
-                if (updateEx.getName().equals(exercise.getName())) {
-                    updateEx = exerciseRepo.save(ex);
-                    return updateEx;
-                }
-            }
+        if(exerciseRepo.exists(ex.getName().toString())){
+            exerciseRepo.save(ex);
+            exercise = ex;
         }
 
-        return updateEx;
+        return exercise;
     }
 
     @Override
@@ -90,6 +84,7 @@ public class ExerciseServiceImp implements ExerciseService {
         }
         return  result;
     }
+
 
 
 

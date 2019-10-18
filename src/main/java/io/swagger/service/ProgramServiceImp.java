@@ -25,7 +25,7 @@ public class ProgramServiceImp implements  ProgramService {
     @Override
     public Program getProgramById(String id) {
         Program prog = new Program();
-        prog = programRepository.findByName(id);
+        prog = programRepository.findById(id);
         return prog;
     }
 
@@ -68,12 +68,12 @@ public class ProgramServiceImp implements  ProgramService {
     @Override
     public Integer deleteProgramById(String id) {
         int result = 0;
-        String name= programRepository.findByName(id).getName();
 
-        if(name!= null && !name.isEmpty()){
+        if(programRepository.findById(id) != null){
             programRepository.delete(id);
             result = 1;
         }
+
         return  result;
     }
 }

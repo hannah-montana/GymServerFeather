@@ -80,6 +80,7 @@ public interface ExercisesApi {
         @ApiResponse(code = 404, message = "Exercise not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
     @RequestMapping(value = "/exercises/{exId}",
+    //@RequestMapping(value = "/exercises/",
         consumes = { "application/json" },
         method = RequestMethod.PUT)
     ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("exercise") Exercise ex);
