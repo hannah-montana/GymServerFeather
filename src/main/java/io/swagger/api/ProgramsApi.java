@@ -82,6 +82,6 @@ public interface ProgramsApi {
     @RequestMapping(value = "/programs/{proId}",
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Program> updateProgram(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("program") Program prog);
+    ResponseEntity<Program> updateProgram(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Program prog);
 
 }

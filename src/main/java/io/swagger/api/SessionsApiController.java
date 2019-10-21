@@ -91,7 +91,7 @@ public class SessionsApiController implements SessionsApi {
         }
     }
 
-    public ResponseEntity<Session> updateSession(@ApiParam(value = "Session that need to be updated",required=true) @PathVariable("session") Session sess) {
+    public ResponseEntity<Session> updateSession(@ApiParam(value = "Session that need to be updated",required=true) @Valid @RequestBody Session sess) {
         Session session = new Session();
 
         try{

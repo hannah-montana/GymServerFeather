@@ -91,16 +91,17 @@ public class ProgramsApiController implements ProgramsApi {
     }
 
 
-    public ResponseEntity<Program> updateProgram(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("program") Program prog){
-            Program program = new Program();
+    public ResponseEntity<Program> updateProgram(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Program prog){
+        Program program = new Program();
 
-            try{
-                program = programService.updateProgram(prog);
-            } catch(Exception e){
-                program = new Program();
-            }
+        try{
+            program = programService.createProgram(prog);
+        } catch(Exception e){
+            program = new Program();
+        }
 
-            return new ResponseEntity<Program>(program,HttpStatus.OK);
+        return new ResponseEntity<Program>(program,HttpStatus.OK);
+
     }
 
 }

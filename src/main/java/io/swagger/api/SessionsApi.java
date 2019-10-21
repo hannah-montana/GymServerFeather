@@ -81,6 +81,6 @@ public interface SessionsApi {
     @RequestMapping(value = "/sessions/{sesId}",
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Session> updateSession(@ApiParam(value = "Session that need to be updated",required=true) @PathVariable("session") Session sess);
+    ResponseEntity<Session> updateSession(@ApiParam(value = "Session that need to be updated",required=true) @Valid @RequestBody Session sess);
 
 }

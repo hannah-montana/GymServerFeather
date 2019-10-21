@@ -83,6 +83,6 @@ public interface ExercisesApi {
     //@RequestMapping(value = "/exercises/",
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("exercise") Exercise ex);
+    ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Exercise ex);
 
 }

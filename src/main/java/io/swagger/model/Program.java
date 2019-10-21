@@ -19,6 +19,9 @@ import javax.validation.constraints.*;
 @Document(collection = "Program")
 public class Program   {
   @Id
+  @JsonProperty("_id")
+  private String _id = null;
+
   @JsonProperty("id")
   private String id = null;
 
@@ -66,10 +69,18 @@ public class Program   {
     return this;
   }
 
+  public String get_id() {
+    return _id;
+  }
+
+  public void set_id(String _id) {
+    this._id = _id;
+  }
+
   /**
    * Get id
    * @return id
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
 

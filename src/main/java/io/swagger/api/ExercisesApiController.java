@@ -90,11 +90,11 @@ public class ExercisesApiController implements ExercisesApi {
         return new ResponseEntity<Exercise>(exercise,HttpStatus.OK);
     }
 
-    public ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("exercise") Exercise ex) {
+    public ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Exercise ex) {
         Exercise exercise = new Exercise();
         //String name = ex.getName();
 
-        if(ex.getName()!=null) {
+        if(ex!=null) {
             exercise = exerciseService.updateExercise(ex);
         }
 

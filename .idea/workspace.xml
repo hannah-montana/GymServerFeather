@@ -5,15 +5,22 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesApi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/ProgramsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/ProgramsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/ProgramsApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/ProgramsApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/SessionsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/SessionsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/SessionsApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/SessionsApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/model/Program.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/model/Program.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/model/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/model/Session.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/ExerciseServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/ExerciseServiceImp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/ProgramServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/ProgramServiceImp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/SessionServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/SessionServiceImp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/swagger-spring.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/ExercisesApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/ExercisesApi.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/ExercisesApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/ExercisesApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/ProgramsApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/ProgramsApi.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/ProgramsApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/ProgramsApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/model/Program.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/model/Program.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/ExerciseServiceImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/ExerciseServiceImp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/ProgramServiceImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/ProgramServiceImp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/SessionServiceImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/SessionServiceImp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/META-INF/swagger-spring.kotlin_module" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

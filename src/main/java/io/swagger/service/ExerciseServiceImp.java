@@ -63,15 +63,13 @@ public class ExerciseServiceImp implements ExerciseService {
 
     @Override
     public Exercise updateExercise(Exercise ex) {
-        // Need update
-        Exercise exercise = new Exercise();
+        Exercise newEx = new Exercise();
 
-        if(exerciseRepo.exists(ex.getName().toString())){
-            exerciseRepo.save(ex);
-            exercise = ex;
+        if(exerciseRepo.findByName(ex.getName().toString()) == null){
+            newEx = exerciseRepo.save(ex);
         }
 
-        return exercise;
+        return newEx;
     }
 
     @Override

@@ -49,20 +49,13 @@ public class ProgramServiceImp implements  ProgramService {
 
     @Override
     public Program updateProgram(Program prog) {
-        /*Need to modify*/
-        Program updateProg= programRepository.findByName(prog.getName().toString());
-        List<Program> lst = programRepository.findAll();
+        Program newProg = new Program();
 
-        if(programRepository.findByName(prog.getName().toString()) != null) {
-            for(Program exercise:lst){
-                if (updateProg.getName().equals(exercise.getName())) {
-                    updateProg = programRepository.save(prog);
-                    return updateProg;
-                }
-            }
+        if(programRepository.findByName(prog.getName().toString()) == null){
+            newProg = programRepository.save(prog);
         }
 
-        return updateProg;
+        return newProg;
     }
 
     @Override

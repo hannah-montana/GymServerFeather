@@ -60,20 +60,13 @@ public class SessionServiceImp implements SessionService{
 
     @Override
     public Session updateSession(Session ses) {
-        /*Need to modify*/
-        Session updateSes= sessionRepository.findByName(ses.getName().toString());
-        List<Session> lst = sessionRepository.findAll();
+        Session newSes = new Session();
 
-        if(sessionRepository.findByName(ses.getName().toString()) != null) {
-            for(Session exercise:lst){
-                if (updateSes.getName().equals(exercise.getName())) {
-                    updateSes = sessionRepository.save(ses);
-                    return updateSes;
-                }
-            }
+        if(sessionRepository.findByName(ses.getName().toString()) == null){
+            newSes = sessionRepository.save(ses);
         }
 
-        return updateSes;
+        return newSes;
     }
 
     @Override
