@@ -79,7 +79,11 @@ public interface ExercisesApi {
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Exercise not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
+<<<<<<< HEAD
     @RequestMapping(value = "/exercises",
+=======
+    @RequestMapping(value = "/exercises/{exId}",
+>>>>>>> 1bf1e6bc61d8e084ba50a4333ca00a75fb7fe0fd
     //@RequestMapping(value = "/exercises/",
         consumes = { "application/json" },
         method = RequestMethod.PUT)

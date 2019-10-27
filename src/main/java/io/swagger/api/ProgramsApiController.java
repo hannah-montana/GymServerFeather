@@ -107,6 +107,7 @@ public class ProgramsApiController implements ProgramsApi {
 
     public ResponseEntity<Program> updateProgram(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Program prog){
         Program program = new Program();
+<<<<<<< HEAD
 
         try{
             program = programService.updateProgram(prog);
@@ -133,6 +134,17 @@ public class ProgramsApiController implements ProgramsApi {
         }
 
         return new ResponseEntity<Integer>(0, HttpStatus.OK);
+=======
+
+        try{
+            program = programService.createProgram(prog);
+        } catch(Exception e){
+            program = new Program();
+        }
+
+        return new ResponseEntity<Program>(program,HttpStatus.OK);
+
+>>>>>>> 1bf1e6bc61d8e084ba50a4333ca00a75fb7fe0fd
     }
 
 }

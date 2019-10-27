@@ -43,8 +43,12 @@ public class ExerciseServiceImp implements ExerciseService {
     public Exercise getExerciseById(String id) {
 
         Exercise exercise = new Exercise();
-        List<Exercise> lt = exerciseRepo.findAll();
+
         exercise = exerciseRepo.findById(id);
+
+        //exercise = exerciseRepo.findOne(id);
+        //Query query = new Query(Criteria.where("id").is(id));
+        //exercise = mongoTemplate.find(query,Exercise.class);
 
         return exercise;
     }
