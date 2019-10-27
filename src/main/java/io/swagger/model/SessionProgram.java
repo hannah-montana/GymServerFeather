@@ -19,20 +19,28 @@ import javax.validation.constraints.*;
 @Document(collection = "SessionProgram")
 public class SessionProgram   {
   @Id
+  @JsonProperty("_id")
+  private String _id = null;
+
   @JsonProperty("id")
   private String id = null;
 
-  @JsonProperty("proId")
-  private Integer proId = null;
+  @JsonProperty("progId")
+  private String progId = null;
 
-  @JsonProperty("sesId")
-  private Integer sesId = null;
+  @JsonProperty("sessId")
+  private String sessId = null;
 
-  @JsonProperty("point")
-  private Integer point = null;
+  @JsonProperty("coachId")
+  private String coachId = null;
 
-  @JsonProperty("note")
-  private String note = null;
+  public String get_id() {
+    return _id;
+  }
+
+  public void set_id(String _id) {
+    this._id = _id;
+  }
 
   public SessionProgram id(String id) {
     this.id = id;
@@ -42,8 +50,9 @@ public class SessionProgram   {
   /**
    * Get id
    * @return id
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
   public String getId() {
     return id;
@@ -53,82 +62,56 @@ public class SessionProgram   {
     this.id =_id;
   }
 
-  public SessionProgram proId(Integer proId) {
-    this.proId = proId;
+  public SessionProgram progId(String progId) {
+    this.progId = progId;
     return this;
   }
 
   /**
-   * Get proId
-   * @return proId
-  **/
+   * Get progId
+   * @return progId
+   **/
   @ApiModelProperty(value = "")
 
-  public Integer getProId() {
-    return proId;
+  public String getProgId() {
+    return progId;
   }
 
-  public void setProId(Integer proId) {
-    this.proId = proId;
+  public void setProgId(String progId) {
+    this.progId = progId;
   }
 
-  public SessionProgram sesId(Integer sesId) {
-    this.sesId = sesId;
+  public SessionProgram sessId(String sessId) {
+    this.sessId = sessId;
     return this;
   }
 
   /**
-   * Get sesId
-   * @return sesId
-  **/
+   * Get sessId
+   * @return sessId
+   **/
   @ApiModelProperty(value = "")
 
-  public Integer getSesId() {
-    return sesId;
+  public String getSessId() {
+    return sessId;
   }
 
-  public void setSesId(Integer sesId) {
-    this.sesId = sesId;
+  public void setSessId(String sessId) {
+    this.sessId = sessId;
   }
 
-  public SessionProgram point(Integer point) {
-    this.point = point;
+  public SessionProgram coachId(String coachId) {
+    this.coachId = coachId;
     return this;
   }
 
-  /**
-   * Get point
-   * @return point
-  **/
-  @ApiModelProperty(value = "")
-
-  public Integer getPoint() {
-    return point;
+  public String getCoachId() {
+    return coachId;
   }
 
-  public void setPoint(Integer point) {
-    this.point = point;
+  public void setCoachId(String coachId) {
+    this.coachId = coachId;
   }
-
-  public SessionProgram note(String note) {
-    this.note = note;
-    return this;
-  }
-
-  /**
-   * Get note
-   * @return note
-  **/
-  @ApiModelProperty(value = "")
-
-  public String getNote() {
-    return note;
-  }
-
-  public void setNote(String note) {
-    this.note = note;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -140,27 +123,23 @@ public class SessionProgram   {
     }
     SessionProgram sessionProgram = (SessionProgram) o;
     return Objects.equals(this.id, sessionProgram.id) &&
-        Objects.equals(this.proId, sessionProgram.proId) &&
-        Objects.equals(this.sesId, sessionProgram.sesId) &&
-        Objects.equals(this.point, sessionProgram.point) &&
-        Objects.equals(this.note, sessionProgram.note);
+            Objects.equals(this.progId, sessionProgram.progId) &&
+            Objects.equals(this.sessId, sessionProgram.sessId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, proId, sesId, point, note);
+    return Objects.hash(id, progId, sessId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class SessionProgram {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    proId: ").append(toIndentedString(proId)).append("\n");
-    sb.append("    sesId: ").append(toIndentedString(sesId)).append("\n");
-    sb.append("    point: ").append(toIndentedString(point)).append("\n");
-    sb.append("    note: ").append(toIndentedString(note)).append("\n");
+    sb.append("    progId: ").append(toIndentedString(progId)).append("\n");
+    sb.append("    sessId: ").append(toIndentedString(sessId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

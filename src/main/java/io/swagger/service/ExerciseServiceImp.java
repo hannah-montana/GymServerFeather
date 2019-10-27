@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service("exerciseService")
@@ -41,11 +43,8 @@ public class ExerciseServiceImp implements ExerciseService {
     public Exercise getExerciseById(String id) {
 
         Exercise exercise = new Exercise();
-        //exercise = exerciseRepo.findById(id);
-
-        exercise = exerciseRepo.findOne(id);
-        //Query query = new Query(Criteria.where("id").is(id));
-        //exercise = mongoTemplate.find(query,Exercise.class);
+        List<Exercise> lt = exerciseRepo.findAll();
+        exercise = exerciseRepo.findById(id);
 
         return exercise;
     }
@@ -54,30 +53,46 @@ public class ExerciseServiceImp implements ExerciseService {
     public Exercise createExercise(Exercise ex) {
         Exercise newEx = new Exercise();
 
-        if(exerciseRepo.findByName(ex.getName().toString()) == null){
-            newEx = exerciseRepo.save(ex);
+        //get maxId
+        List<Integer> lstId = new ArrayList<>();
+        List<Exercise> lst = exerciseRepo.findAll();
+        for (Exercise item: lst)
+        {
+            lstId.add(Integer.parseInt(item.getId()));
         }
+        int maxId = Collections.max(lstId) + 1;
 
+        if(exerciseRepo.findByName(ex.getName().toString()) == null){
+            ex.setId(String.valueOf(maxId));
+            newEx = exerciseRepo.save(ex);
+            return newEx;
+        }
         return newEx;
     }
 
     @Override
     public Exercise updateExercise(Exercise ex) {
+        Exercise newEx = new Exercise();
 
-        /*Need to modify*/
-        Exercise updateEx= exerciseRepo.findByName(ex.getName().toString());
-        List<Exercise> lst = exerciseRepo.findAll();
-
-        if(exerciseRepo.findByName(ex.getName().toString()) != null) {
-            for(Exercise exercise:lst){
-                if (updateEx.getName().equals(exercise.getName())) {
-                    updateEx = exerciseRepo.save(ex);
-                    return updateEx;
-                }
-            }
+        newEx = mongoTemplate.findOne(
+                Query.query(Criteria.where("id").is(ex.getId())), Exercise.class);
+        if(newEx != null) {
+            newEx.setName(ex.getName());
+            newEx.setDescription(ex.getDescription());
+            newEx.setInstruction(ex.getInstruction());
+            newEx.setDuration(ex.getDuration());
+            newEx.setLevel(ex.getLevel());
+            newEx.setType(ex.getType());
+            newEx.setTarget(ex.getTarget());
+            newEx.setCalorie(ex.getCalorie());
+            newEx.setPhoto(ex.getPhoto());
+            newEx.setBenefit(ex.getBenefit());
+            newEx.setFrequency(ex.getFrequency());
+            newEx.setPoint(ex.getPoint());
+            //haven't check duplicate name
+            exerciseRepo.save(newEx);
         }
-
-        return updateEx;
+        return newEx;
     }
 
     @Override
@@ -85,12 +100,10 @@ public class ExerciseServiceImp implements ExerciseService {
         int result = 0;
 
         if(exerciseRepo.findById(id) != null){
-            exerciseRepo.delete(id);
+            exerciseRepo.delete(exerciseRepo.findById(id));
             result = 1;
         }
         return  result;
     }
-
-
 
 }

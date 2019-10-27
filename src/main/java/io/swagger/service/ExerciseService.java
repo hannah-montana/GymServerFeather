@@ -13,6 +13,4 @@ public interface ExerciseService {
     Exercise updateExercise(Exercise ex);
 
     Integer deleteExerciseById(String id);
-
-
 }

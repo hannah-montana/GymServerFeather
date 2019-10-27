@@ -35,7 +35,11 @@ public interface SessionsApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Session> createNewSession(@ApiParam(value = "Session object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Session sess);
+    ResponseEntity<Integer> createNewSession(@ApiParam(value = "Session object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Session sess,
+                                             @NotNull @ApiParam(value = "", required = false)
+                                             @Valid @RequestParam(value = "listEx", required = false) String listEx,
+                                             @NotNull @ApiParam(value = "", required = false)
+                                             @Valid @RequestParam(value = "coachId", required = false) String coachId);
 
 
     @ApiOperation(value = "Delete session", nickname = "deleteSessionById", notes = "Delete an session.", tags={ "Session", })
@@ -69,18 +73,36 @@ public interface SessionsApi {
     @RequestMapping(value = "/sessions",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<List<Session>> getSessionsByName(@NotNull @ApiParam(value = "", required = false) @Valid @RequestParam(value = "sesName", required = false) String sesName,@NotNull @ApiParam(value = "", required = false) @Valid @RequestParam(value = "keyWords", required = false) String keyWords);
+    ResponseEntity<List<Session>> getSessionsByName(
+            @NotNull @ApiParam(value = "", required = false)
+            @Valid @RequestParam(value = "sesName", required = false) String sesName,
+            @NotNull @ApiParam(value = "", required = false)
+            @Valid @RequestParam(value = "keyWords", required = false) String keyWords);
 
+    @ApiOperation(value = "Update an existing session", nickname = "updateSession", notes = "", tags={ "Session", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Invalid ID supplied"),
+            @ApiResponse(code = 404, message = "Session not found"),
+            @ApiResponse(code = 405, message = "Validation exception") })
+    @RequestMapping(value = "/sessions",
+            consumes = { "application/json" },
+            method = RequestMethod.PUT)
+    ResponseEntity<Session> updateSession(@ApiParam(value = "Session that need to be updated",required=true) @Valid @RequestBody Session sess);
 
-    @ApiOperation(value = "Update an existing session", nickname = "updateSessionById", notes = "", tags={ "Session", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK"),
-        @ApiResponse(code = 400, message = "Invalid ID supplied"),
-        @ApiResponse(code = 404, message = "Session not found"),
-        @ApiResponse(code = 405, message = "Validation exception") })
-    @RequestMapping(value = "/sessions/{sesId}",
-        consumes = { "application/json" },
-        method = RequestMethod.PUT)
-    ResponseEntity<Session> updateSession(@ApiParam(value = "Session that need to be updated",required=true) @PathVariable("session") Session sess);
+    @ApiOperation(value = "Update an existing session", nickname = "updateSessionExercises", notes = "", tags={ "Session", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Invalid ID supplied"),
+            @ApiResponse(code = 404, message = "Session not found"),
+            @ApiResponse(code = 405, message = "Validation exception") })
+    @RequestMapping(value = "/sessions/exercises",
+            consumes = { "application/json" },
+            method = RequestMethod.PUT)
+    ResponseEntity<Integer> updateSessionExercises(@ApiParam(value = "",required=true) @Valid @RequestBody Session sess,
+                                                   @NotNull @ApiParam(value = "", required = false)
+                                                   @Valid @RequestParam(value = "listEx", required = false) String listEx,
+                                                   @NotNull @ApiParam(value = "", required = false)
+                                                   @Valid @RequestParam(value = "coachId", required = false) String coachId);
 
 }

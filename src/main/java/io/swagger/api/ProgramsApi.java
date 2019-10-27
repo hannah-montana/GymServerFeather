@@ -36,7 +36,11 @@ public interface ProgramsApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Program> createNewProgram(@ApiParam(value = "Program object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Program prog);
+    ResponseEntity<Integer> createNewProgram(@ApiParam(value = "Program object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Program prog,
+                                             @NotNull @ApiParam(value = "", required = false)
+                                             @Valid @RequestParam(value = "listSes", required = false) String listSes,
+                                             @NotNull @ApiParam(value = "", required = false)
+                                             @Valid @RequestParam(value = "coachId", required = false) String coachId);
 
 
     @ApiOperation(value = "Delete program", nickname = "deleteProgramById", notes = "Delete an program.", tags={ "Program", })
@@ -73,15 +77,30 @@ public interface ProgramsApi {
     ResponseEntity<List<Program>> getProgramsByName(@NotNull @ApiParam(value = "", required = false) @Valid @RequestParam(value = "proName", required = false) String proName, @NotNull @ApiParam(value = "", required = false) @Valid @RequestParam(value = "keyWords", required = false) String keyWords);
 
 
-    @ApiOperation(value = "Update an existing program", nickname = "updateProgramById", notes = "", tags={ "Program", })
+    @ApiOperation(value = "Update an existing program", nickname = "updateProgram", notes = "", tags={ "Program", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK"),
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Program not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
-    @RequestMapping(value = "/programs/{proId}",
+    @RequestMapping(value = "/programs",
         consumes = { "application/json" },
         method = RequestMethod.PUT)
     ResponseEntity<Program> updateProgram(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("program") Program prog);
+
+    @ApiOperation(value = "Update an existing program", nickname = "updateProgramSessions", notes = "", tags={ "Program", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Invalid ID supplied"),
+            @ApiResponse(code = 404, message = "Session not found"),
+            @ApiResponse(code = 405, message = "Validation exception") })
+    @RequestMapping(value = "/programs/sessions",
+            consumes = { "application/json" },
+            method = RequestMethod.PUT)
+    ResponseEntity<Integer> updateProgramSessions(@ApiParam(value = "",required=true) @Valid @RequestBody Program prog,
+                                                   @NotNull @ApiParam(value = "", required = false)
+                                                   @Valid @RequestParam(value = "listSes", required = false) String listSes,
+                                                   @NotNull @ApiParam(value = "", required = false)
+                                                   @Valid @RequestParam(value = "coachId", required = false) String coachId);
 
 }

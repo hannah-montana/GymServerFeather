@@ -9,8 +9,10 @@ public interface SessionService {
     Session getSessionByName(String name);
     Session getSessionById(String id);
 
-    Session createSession(Session ses);
+    Integer createSession(Session ses);
     Session updateSession(Session ses);
 
     Integer deleteSession(String id);
+
+    List<Session> searchSessionByKeyword(String keyword);
 }

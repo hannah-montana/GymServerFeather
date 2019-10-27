@@ -1,8 +1,10 @@
 package io.swagger.api;
 
+import io.swagger.model.ExerciseSession;
 import io.swagger.model.Session;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.service.ExerciseSessionService;
 import io.swagger.service.SessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,24 +39,31 @@ public class SessionsApiController implements SessionsApi {
     @Autowired
     SessionService sessionService;
 
+    @Autowired
+    ExerciseSessionService exerciseSessionService;
+
     @org.springframework.beans.factory.annotation.Autowired
     public SessionsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
         this.request = request;
     }
 
-
-
-    public ResponseEntity<Session> createNewSession(@ApiParam(value = "Session object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Session sess) {
-        Session session = new Session();
-
+    public ResponseEntity<Integer> createNewSession(@ApiParam(value = "Session object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Session sess,
+                                                    @NotNull @ApiParam(value = "", required = false)
+                                                    @Valid @RequestParam(value = "listEx", required = false) String listEx,
+                                                    @NotNull @ApiParam(value = "", required = false)
+                                                    @Valid @RequestParam(value = "coachId", required = false) String coachId) {
         try{
-            session = sessionService.createSession(sess);
+            int sessId = sessionService.createSession(sess);
+            //sess.setId(String.valueOf(sessId));
+            if(sessId > 0 && listEx != null) {
+                //update list exercises to session
+                exerciseSessionService.saveListExercisesBySessionId(String.valueOf(sessId), listEx, coachId);
+            }
+            return new ResponseEntity<Integer>(1, HttpStatus.OK);
         } catch(Exception e){
-            session = new Session();
+            return new ResponseEntity<Integer>(0, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return new ResponseEntity<Session>(session,HttpStatus.OK);
     }
 
     public ResponseEntity<Integer> deleteSessionById(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("sesId") String sesId) {
@@ -83,15 +92,22 @@ public class SessionsApiController implements SessionsApi {
 
         if(sesName == null){
             lst = sessionService.getAll();
-            return new ResponseEntity<List<Session>>(lst,HttpStatus.OK);
-        } else {
+            //return new ResponseEntity<List<Session>>(lst,HttpStatus.OK);
+        } else if (sesName != null){
             session = sessionService.getSessionByName(sesName);
             lst.add(session);
-            return new ResponseEntity<List<Session>>(lst,HttpStatus.OK);
+            //return new ResponseEntity<List<Session>>(lst,HttpStatus.OK);
         }
+        else {
+            if(keyWords != null){
+                lst = sessionService.searchSessionByKeyword(keyWords);
+                //return new ResponseEntity<List<Session>>(lst,HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<List<Session>>(lst,HttpStatus.OK);
     }
 
-    public ResponseEntity<Session> updateSession(@ApiParam(value = "Session that need to be updated",required=true) @PathVariable("session") Session sess) {
+    public ResponseEntity<Session> updateSession(@ApiParam(value = "Session that need to be updated",required=true) @Valid @RequestBody Session sess) {
         Session session = new Session();
 
         try{
@@ -103,4 +119,19 @@ public class SessionsApiController implements SessionsApi {
         return new ResponseEntity<Session>(session,HttpStatus.OK);
     }
 
+    public ResponseEntity<Integer> updateSessionExercises(@ApiParam(value = "",required=true) @Valid @RequestBody Session sess,
+                                                          @NotNull @ApiParam(value = "", required = false)
+                                                          @Valid @RequestParam(value = "listEx", required = false) String listEx,
+                                                          @NotNull @ApiParam(value = "", required = false)
+                                                          @Valid @RequestParam(value = "coachId", required = false) String coachId){
+        if(listEx != null){
+            //update session
+            Session session = new Session();
+            session = sessionService.updateSession(sess);
+            //update list exercises to session
+            exerciseSessionService.saveListExercisesBySessionId(sess.getId(), listEx, coachId);
+            return new ResponseEntity<Integer>(1, HttpStatus.OK);
+        }
+        return new ResponseEntity<Integer>(0, HttpStatus.OK);
+    }
 }

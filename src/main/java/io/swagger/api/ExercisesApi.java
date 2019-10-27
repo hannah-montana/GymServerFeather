@@ -73,15 +73,27 @@ public interface ExercisesApi {
     ResponseEntity<Exercise> getExerciseById(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("exId") String exId);
 
 
-    @ApiOperation(value = "Update an existing exercise", nickname = "updateExerciseById", notes = "", tags={ "Exercise", })
+    @ApiOperation(value = "Update an existing exercise", nickname = "updateExercise", notes = "", tags={ "Exercise", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK"),
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Exercise not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
-    @RequestMapping(value = "/exercises/{exId}",
+    @RequestMapping(value = "/exercises",
+    //@RequestMapping(value = "/exercises/",
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("exercise") Exercise ex);
+    ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Exercise ex);
 
+   /* @ApiOperation(value = "get exercises in a session", nickname = "getExercisesOfSession", notes = "", response = Exercise.class, tags={ "ExercisesSessions", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Exercise.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Session was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/exercises/Sessions",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<Exercise> getExercisesOfSession(@ApiParam(value = "Parameter description in CommonMark or HTML.", required = true) @PathVariable("sesId") String sesId);
+*/
 }

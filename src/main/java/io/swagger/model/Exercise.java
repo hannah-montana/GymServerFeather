@@ -18,7 +18,7 @@ import javax.validation.constraints.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-08T12:40:40.535Z[GMT]")
 @Document(collection = "Exercise")
 public class Exercise   {
-  
+
   @Id
   @JsonProperty("_id")
   private String _id = null;
@@ -50,9 +50,6 @@ public class Exercise   {
   @JsonProperty("calorie")
   private Integer calorie = null;
 
-  @JsonProperty("video")
-  private String video = null;
-
   @JsonProperty("photo")
   private String photo = null;
 
@@ -81,7 +78,7 @@ public class Exercise   {
   /**
    * Get id
    * @return id
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
@@ -101,7 +98,7 @@ public class Exercise   {
   /**
    * Get name
    * @return name
-  **/
+   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
 
@@ -121,7 +118,7 @@ public class Exercise   {
   /**
    * Get description
    * @return description
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getDescription() {
@@ -140,7 +137,7 @@ public class Exercise   {
   /**
    * Get instruction
    * @return instruction
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getInstruction() {
@@ -159,7 +156,7 @@ public class Exercise   {
   /**
    * Get duration
    * @return duration
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getDuration() {
@@ -178,7 +175,7 @@ public class Exercise   {
   /**
    * Get level
    * @return level
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getLevel() {
@@ -197,7 +194,7 @@ public class Exercise   {
   /**
    * Get type
    * @return type
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getType() {
@@ -216,7 +213,7 @@ public class Exercise   {
   /**
    * Get target
    * @return target
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getTarget() {
@@ -235,7 +232,7 @@ public class Exercise   {
   /**
    * Get calorie
    * @return calorie
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public Integer getCalorie() {
@@ -246,25 +243,6 @@ public class Exercise   {
     this.calorie = calorie;
   }
 
-  public Exercise video(String video) {
-    this.video = video;
-    return this;
-  }
-
-  /**
-   * Get video
-   * @return video
-  **/
-  @ApiModelProperty(value = "")
-
-  public String getVideo() {
-    return video;
-  }
-
-  public void setVideo(String video) {
-    this.video = video;
-  }
-
   public Exercise photo(String photo) {
     this.photo = photo;
     return this;
@@ -273,7 +251,7 @@ public class Exercise   {
   /**
    * Get photo
    * @return photo
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getPhoto() {
@@ -292,7 +270,7 @@ public class Exercise   {
   /**
    * Get benefit
    * @return benefit
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getBenefit() {
@@ -311,7 +289,7 @@ public class Exercise   {
   /**
    * Get frequency
    * @return frequency
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getFrequency() {
@@ -330,7 +308,7 @@ public class Exercise   {
   /**
    * Get point
    * @return point
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public Integer getPoint() {
@@ -352,31 +330,30 @@ public class Exercise   {
     }
     Exercise exercise = (Exercise) o;
     return Objects.equals(this.id, exercise.id) &&
-        Objects.equals(this.name, exercise.name) &&
-        Objects.equals(this.description, exercise.description) &&
-        Objects.equals(this.instruction, exercise.instruction) &&
-        Objects.equals(this.duration, exercise.duration) &&
-        Objects.equals(this.level, exercise.level) &&
-        Objects.equals(this.type, exercise.type) &&
-        Objects.equals(this.target, exercise.target) &&
-        Objects.equals(this.calorie, exercise.calorie) &&
-        Objects.equals(this.video, exercise.video) &&
-        Objects.equals(this.photo, exercise.photo) &&
-        Objects.equals(this.benefit, exercise.benefit) &&
-        Objects.equals(this.frequency, exercise.frequency) &&
-        Objects.equals(this.point, exercise.point);
+            Objects.equals(this.name, exercise.name) &&
+            Objects.equals(this.description, exercise.description) &&
+            Objects.equals(this.instruction, exercise.instruction) &&
+            Objects.equals(this.duration, exercise.duration) &&
+            Objects.equals(this.level, exercise.level) &&
+            Objects.equals(this.type, exercise.type) &&
+            Objects.equals(this.target, exercise.target) &&
+            Objects.equals(this.calorie, exercise.calorie) &&
+            Objects.equals(this.photo, exercise.photo) &&
+            Objects.equals(this.benefit, exercise.benefit) &&
+            Objects.equals(this.frequency, exercise.frequency) &&
+            Objects.equals(this.point, exercise.point);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, description, instruction, duration, level, type, target, calorie, video, photo, benefit, frequency, point);
+    return Objects.hash(id, name, description, instruction, duration, level, type, target, calorie, photo, benefit, frequency, point);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Exercise {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
@@ -386,7 +363,6 @@ public class Exercise   {
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    target: ").append(toIndentedString(target)).append("\n");
     sb.append("    calorie: ").append(toIndentedString(calorie)).append("\n");
-    sb.append("    video: ").append(toIndentedString(video)).append("\n");
     sb.append("    photo: ").append(toIndentedString(photo)).append("\n");
     sb.append("    benefit: ").append(toIndentedString(benefit)).append("\n");
     sb.append("    frequency: ").append(toIndentedString(frequency)).append("\n");

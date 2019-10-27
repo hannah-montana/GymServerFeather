@@ -3,7 +3,9 @@ package io.swagger.api;
 import io.swagger.model.Program;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.models.auth.In;
 import io.swagger.service.ProgramService;
+import io.swagger.service.SessionProgramService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class ProgramsApiController implements ProgramsApi {
     @Autowired
     ProgramService programService;
 
+    @Autowired
+    SessionProgramService sessionProgramService;
+
     @org.springframework.beans.factory.annotation.Autowired
     public ProgramsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
@@ -44,16 +49,25 @@ public class ProgramsApiController implements ProgramsApi {
     }
 
 
-    public ResponseEntity<Program> createNewProgram(@ApiParam(value = "Program object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Program prog) {
+    public ResponseEntity<Integer> createNewProgram(@ApiParam(value = "Program object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Program prog,
+                                                    @NotNull @ApiParam(value = "", required = false)
+                                                    @Valid @RequestParam(value = "listSes", required = false) String listSes,
+                                                    @NotNull @ApiParam(value = "", required = false)
+                                                    @Valid @RequestParam(value = "coachId", required = false) String coachId) {
         Program program = new Program();
 
         try{
-            program = programService.createProgram(prog);
+            int progId = programService.createProgram(prog);
+            if(progId > 0){
+                if(listSes != null) {
+                    //update list sessions to program
+                    sessionProgramService.saveListSesionsByProgramId(prog.getId(), listSes, coachId);
+                }
+            }
+            return new ResponseEntity<Integer>(1, HttpStatus.OK);
         } catch(Exception e){
-            program = new Program();
+            return new ResponseEntity<Integer>(0, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return new ResponseEntity<Program>(program,HttpStatus.OK);
     }
 
     public ResponseEntity<Integer> deleteProgramById(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("proId") String proId) {
@@ -91,16 +105,34 @@ public class ProgramsApiController implements ProgramsApi {
     }
 
 
-    public ResponseEntity<Program> updateProgram(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("program") Program prog){
+    public ResponseEntity<Program> updateProgram(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Program prog){
+        Program program = new Program();
+
+        try{
+            program = programService.updateProgram(prog);
+        } catch(Exception e){
+            program = new Program();
+        }
+
+        return new ResponseEntity<Program>(program,HttpStatus.OK);
+
+    }
+
+    public ResponseEntity<Integer> updateProgramSessions(@ApiParam(value = "",required=true) @Valid @RequestBody Program prog,
+                                                         @NotNull @ApiParam(value = "", required = false)
+                                                         @Valid @RequestParam(value = "listSes", required = false) String listSes,
+                                                         @NotNull @ApiParam(value = "", required = false)
+                                                         @Valid @RequestParam(value = "coachId", required = false) String coachId){
+        if(listSes != null){
+            //update program
             Program program = new Program();
+            program = programService.updateProgram(prog);
+            //update list sessions to program
+            sessionProgramService.saveListSesionsByProgramId(prog.getId(), listSes, coachId);
+            return new ResponseEntity<Integer>(1, HttpStatus.OK);
+        }
 
-            try{
-                program = programService.updateProgram(prog);
-            } catch(Exception e){
-                program = new Program();
-            }
-
-            return new ResponseEntity<Program>(program,HttpStatus.OK);
+        return new ResponseEntity<Integer>(0, HttpStatus.OK);
     }
 
 }

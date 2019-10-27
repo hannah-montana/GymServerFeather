@@ -15,11 +15,14 @@ import javax.validation.constraints.*;
  * User
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-08T12:40:40.535Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-27T08:20:37.196Z[GMT]")
 @Document(collection = "User")
 public class User   {
 
   @Id
+  @JsonProperty("_id")
+  private String _id = null;
+
   @JsonProperty("id")
   private String id = null;
 
@@ -35,37 +38,53 @@ public class User   {
   @JsonProperty("lastName")
   private String lastName = null;
 
+  @JsonProperty("birthDate")
+  private String birthDate = null;
+
   @JsonProperty("role")
   private Integer role = null;
 
-  @JsonProperty("points")
-  private Integer points = null;
+  @JsonProperty("coin")
+  private Integer coin = null;
+
+  @JsonProperty("photo")
+  private String photo = null;
+
+  @JsonProperty("email")
+  private String email = null;
+
+  @JsonProperty("note")
+  private String note = null;
+
+  @JsonProperty("level")
+  private String level = null;
+
+  public String get_id() {
+    return _id;
+  }
+
+  public void set_id(String _id) {
+    this._id = _id;
+  }
 
   public User id(String id) {
     this.id = id;
     return this;
   }
 
-  public User(String userName, String password, String firstName, String lastName) {
-    this.userName = userName;
-    this.password = password;
-    this.firstName = firstName;
-    this.lastName = lastName;
-  }
-
-  public User(){}
   /**
-   * Get _id
-   * @return _id
-  **/
-  @ApiModelProperty(value = "")
+   * Get id
+   * @return id
+   **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
   public String getId() {
     return id;
   }
 
-  public void setId(String _id) {
-    this.id = _id;
+  public void setId(String id) {
+    this.id = id;
   }
 
   public User userName(String userName) {
@@ -76,10 +95,8 @@ public class User   {
   /**
    * Get userName
    * @return userName
-  **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-
+   **/
+  @ApiModelProperty(value = "")
   public String getUserName() {
     return userName;
   }
@@ -96,7 +113,7 @@ public class User   {
   /**
    * Get password
    * @return password
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getPassword() {
@@ -115,7 +132,7 @@ public class User   {
   /**
    * Get firstName
    * @return firstName
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getFirstName() {
@@ -134,7 +151,7 @@ public class User   {
   /**
    * Get lastName
    * @return lastName
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getLastName() {
@@ -145,6 +162,25 @@ public class User   {
     this.lastName = lastName;
   }
 
+  public User birthDate(String birthDate) {
+    this.birthDate = birthDate;
+    return this;
+  }
+
+  /**
+   * Get birthDate
+   * @return birthDate
+   **/
+  @ApiModelProperty(value = "")
+
+  public String getBirthDate() {
+    return birthDate;
+  }
+
+  public void setBirthDate(String birthDate) {
+    this.birthDate = birthDate;
+  }
+
   public User role(Integer role) {
     this.role = role;
     return this;
@@ -153,7 +189,7 @@ public class User   {
   /**
    * Get role
    * @return role
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public Integer getRole() {
@@ -164,23 +200,99 @@ public class User   {
     this.role = role;
   }
 
-  public User points(Integer points) {
-    this.points = points;
+  public User coin(Integer coin) {
+    this.coin = coin;
     return this;
   }
 
   /**
-   * Get points
-   * @return points
-  **/
+   * Get coin
+   * @return coin
+   **/
   @ApiModelProperty(value = "")
 
-  public Integer getPoints() {
-    return points;
+  public Integer getCoin() {
+    return coin;
   }
 
-  public void setPoints(Integer points) {
-    this.points = points;
+  public void setCoin(Integer coin) {
+    this.coin = coin;
+  }
+
+  public User photo(String photo) {
+    this.photo = photo;
+    return this;
+  }
+
+  /**
+   * Get photo
+   * @return photo
+   **/
+  @ApiModelProperty(value = "")
+
+  public String getPhoto() {
+    return photo;
+  }
+
+  public void setPhoto(String photo) {
+    this.photo = photo;
+  }
+
+  public User email(String email) {
+    this.email = email;
+    return this;
+  }
+
+  /**
+   * Get email
+   * @return email
+   **/
+  @ApiModelProperty(value = "")
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public User note(String note) {
+    this.note = note;
+    return this;
+  }
+
+  /**
+   * Get note
+   * @return note
+   **/
+  @ApiModelProperty(value = "")
+
+  public String getNote() {
+    return note;
+  }
+
+  public void setNote(String note) {
+    this.note = note;
+  }
+
+  public User level(String level) {
+    this.level = level;
+    return this;
+  }
+
+  /**
+   * Get level
+   * @return level
+   **/
+  @ApiModelProperty(value = "")
+
+  public String getLevel() {
+    return level;
+  }
+
+  public void setLevel(String level) {
+    this.level = level;
   }
 
 
@@ -194,31 +306,41 @@ public class User   {
     }
     User user = (User) o;
     return Objects.equals(this.id, user.id) &&
-        Objects.equals(this.userName, user.userName) &&
-        Objects.equals(this.password, user.password) &&
-        Objects.equals(this.firstName, user.firstName) &&
-        Objects.equals(this.lastName, user.lastName) &&
-        Objects.equals(this.role, user.role) &&
-        Objects.equals(this.points, user.points);
+            Objects.equals(this.userName, user.userName) &&
+            Objects.equals(this.password, user.password) &&
+            Objects.equals(this.firstName, user.firstName) &&
+            Objects.equals(this.lastName, user.lastName) &&
+            Objects.equals(this.birthDate, user.birthDate) &&
+            Objects.equals(this.role, user.role) &&
+            Objects.equals(this.coin, user.coin) &&
+            Objects.equals(this.photo, user.photo) &&
+            Objects.equals(this.email, user.email) &&
+            Objects.equals(this.note, user.note) &&
+            Objects.equals(this.level, user.level);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, userName, password, firstName, lastName, role, points);
+    return Objects.hash(id, userName, password, firstName, lastName, birthDate, role, coin, photo, email, note, level);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class User {\n");
-    
-    sb.append("    _id: ").append(toIndentedString(id)).append("\n");
+
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    userName: ").append(toIndentedString(userName)).append("\n");
     sb.append("    password: ").append(toIndentedString(password)).append("\n");
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
+    sb.append("    birthDate: ").append(toIndentedString(birthDate)).append("\n");
     sb.append("    role: ").append(toIndentedString(role)).append("\n");
-    sb.append("    points: ").append(toIndentedString(points)).append("\n");
+    sb.append("    coin: ").append(toIndentedString(coin)).append("\n");
+    sb.append("    photo: ").append(toIndentedString(photo)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
+    sb.append("    note: ").append(toIndentedString(note)).append("\n");
+    sb.append("    level: ").append(toIndentedString(level)).append("\n");
     sb.append("}");
     return sb.toString();
   }

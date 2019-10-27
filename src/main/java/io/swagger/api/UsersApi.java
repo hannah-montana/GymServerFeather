@@ -5,6 +5,7 @@
  */
 package io.swagger.api;
 
+import io.swagger.model.LoginModel;
 import io.swagger.model.User;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.jws.soap.SOAPBinding;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
@@ -47,7 +49,7 @@ public interface UsersApi {
     ResponseEntity<Void> deleteUserByUserName(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("userName") String userName);
 
 
-    @ApiOperation(value = "get a user by userName", nickname = "getUserByUserName", notes = "", response = User.class, tags={ "User", })
+    /*@ApiOperation(value = "get a user by userName", nickname = "getUserByUserName", notes = "", response = User.class, tags={ "User", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = User.class),
         @ApiResponse(code = 400, message = "Bad request"),
@@ -57,7 +59,7 @@ public interface UsersApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<User> getUserByUserName(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("userName") String userName);
-
+*/
 
     @ApiOperation(value = "Find users by lastName or firstName.", nickname = "getUsersByName", notes = "", response = User.class, responseContainer = "List", tags={ "User", })
     @ApiResponses(value = { 
@@ -81,5 +83,44 @@ public interface UsersApi {
         consumes = { "application/json" },
         method = RequestMethod.PUT)
     ResponseEntity<Void> updateUserByUserName(@ApiParam(value = "User object that needs to be update to the gym" ,required=true )  @Valid @RequestBody User body,@ApiParam(value = "name that need to be updated",required=true) @PathVariable("userName") String userName);
+
+    /*
+    * Check login
+    * */
+    @ApiOperation(value = "Check login", nickname = "CheckLogin", notes = "", response = User.class, tags={ "LoginModel", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = LoginModel.class),
+            @ApiResponse(code = 405, message = "Invalid input") })
+    @RequestMapping(value = "/users/checkLogin",
+            produces = { "application/json" },
+            consumes = { "application/json" },
+            method = RequestMethod.POST)
+    ResponseEntity<LoginModel> CheckLogin(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body);
+
+    /*
+    * get User by id
+    * */
+
+    /*@ApiOperation(value = "get a user by id", nickname = "getUserById", notes = "", response = User.class, tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = User.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "A user was not found") })
+    @RequestMapping(value = "/users/{uid}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<User> getUserById(@ApiParam(value = "",required=true) @PathVariable("uid") String uid);
+*/
+
+    @ApiOperation(value = "get a user by id", nickname = "getUserById", notes = "", response = User.class, tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = User.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Exercise was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/users/{uId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<User> getUserById(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("uId") String uId);
 
 }

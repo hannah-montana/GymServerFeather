@@ -9,7 +9,7 @@ public interface ProgramService {
     Program getProgramById(String id);
     Program getProgramByName(String name);
 
-    Program createProgram(Program prog);
+    Integer createProgram(Program prog);
     Program updateProgram(Program prog);
 
 

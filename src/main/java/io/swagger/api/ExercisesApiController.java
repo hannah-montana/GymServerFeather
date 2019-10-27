@@ -78,6 +78,7 @@ public class ExercisesApiController implements ExercisesApi {
         return new ResponseEntity<Integer>(result,HttpStatus.OK);
     }
 
+
     public ResponseEntity<Exercise> getExerciseById(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("exId") String exId) {
 
         Exercise exercise = new Exercise();
@@ -89,16 +90,29 @@ public class ExercisesApiController implements ExercisesApi {
         return new ResponseEntity<Exercise>(exercise,HttpStatus.OK);
     }
 
-    public ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @PathVariable("exercise") Exercise ex) {
+    public ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Exercise ex) {
         Exercise exercise = new Exercise();
+        //String name = ex.getName();
 
-        try{
+        if(ex!=null) {
             exercise = exerciseService.updateExercise(ex);
-        } catch(Exception e){
-            exercise = new Exercise();
         }
 
         return new ResponseEntity<Exercise>(exercise,HttpStatus.OK);
     }
+
+ /*   public ResponseEntity<Exercise> getExercisesOfSession(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("sesId") String sesId) {
+        String accept = request.getHeader("Accept");
+        if (accept != null && accept.contains("application/json")) {
+            try {
+                return new ResponseEntity<Exercise>(objectMapper.readValue("{\n  \"exCalorie\" : 6,\n  \"exVideo\" : \"exVideo\",\n  \"exId\" : 0,\n  \"exTarget\" : \"exTarget\",\n  \"exInstruction\" : \"exInstruction\",\n  \"exFrequency\" : \"exFrequency\",\n  \"exName\" : \"exName\",\n  \"exLevel\" : \"exLevel\",\n  \"exDuration\" : \"exDuration\",\n  \"exPoint\" : 1,\n  \"exPhoto\" : \"exPhoto\",\n  \"exType\" : \"exType\",\n  \"exBenefit\" : \"exBenefit\",\n  \"exDescription\" : \"exDescription\"\n}", Exercise.class), HttpStatus.NOT_IMPLEMENTED);
+            } catch (IOException e) {
+                log.error("Couldn't serialize response for content type application/json", e);
+                return new ResponseEntity<Exercise>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        return new ResponseEntity<Exercise>(HttpStatus.NOT_IMPLEMENTED);
+    }*/
 
 }

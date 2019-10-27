@@ -45,7 +45,7 @@ public class ProgramUser   {
   /**
    * Get id
    * @return id
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getId() {
@@ -64,7 +64,7 @@ public class ProgramUser   {
   /**
    * Get proId
    * @return proId
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public Integer getProId() {
@@ -83,7 +83,7 @@ public class ProgramUser   {
   /**
    * Get userId
    * @return userId
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public Integer getUserId() {
@@ -102,7 +102,7 @@ public class ProgramUser   {
   /**
    * Get coachId
    * @return coachId
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public Integer getCoachId() {
@@ -121,7 +121,7 @@ public class ProgramUser   {
   /**
    * Get point
    * @return point
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public Integer getPoint() {
@@ -140,7 +140,7 @@ public class ProgramUser   {
   /**
    * Get note
    * @return note
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getNote() {
@@ -162,11 +162,11 @@ public class ProgramUser   {
     }
     ProgramUser programUser = (ProgramUser) o;
     return Objects.equals(this.id, programUser.id) &&
-        Objects.equals(this.proId, programUser.proId) &&
-        Objects.equals(this.userId, programUser.userId) &&
-        Objects.equals(this.coachId, programUser.coachId) &&
-        Objects.equals(this.point, programUser.point) &&
-        Objects.equals(this.note, programUser.note);
+            Objects.equals(this.proId, programUser.proId) &&
+            Objects.equals(this.userId, programUser.userId) &&
+            Objects.equals(this.coachId, programUser.coachId) &&
+            Objects.equals(this.point, programUser.point) &&
+            Objects.equals(this.note, programUser.note);
   }
 
   @Override
@@ -178,7 +178,7 @@ public class ProgramUser   {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ProgramUser {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    proId: ").append(toIndentedString(proId)).append("\n");
     sb.append("    userId: ").append(toIndentedString(userId)).append("\n");

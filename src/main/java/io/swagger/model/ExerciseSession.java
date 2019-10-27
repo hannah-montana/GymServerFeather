@@ -19,17 +19,20 @@ import javax.validation.constraints.*;
 @Document(collection = "ExerciseSession")
 public class ExerciseSession   {
   @Id
+  @JsonProperty("_id")
+  private String _id = null;
+
   @JsonProperty("id")
   private String id = null;
 
   @JsonProperty("exId")
-  private Integer exId = null;
+  private String exId = null;
 
-  @JsonProperty("sesId")
-  private Integer sesId = null;
+  @JsonProperty("sessId")
+  private String sessId = null;
 
   @JsonProperty("coachId")
-  private Integer coachId = null;
+  private String coachId = null;
 
   @JsonProperty("point")
   private Integer point = null;
@@ -42,11 +45,20 @@ public class ExerciseSession   {
     return this;
   }
 
+  public String get_id() {
+    return _id;
+  }
+
+  public void set_id(String _id) {
+    this._id = _id;
+  }
+
   /**
    * Get id
    * @return id
-  **/
-  @ApiModelProperty(value = "")
+   **/
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
   public String getId() {
     return id;
@@ -56,7 +68,7 @@ public class ExerciseSession   {
     this.id = _id;
   }
 
-  public ExerciseSession exId(Integer exId) {
+  public ExerciseSession exId(String exId) {
     this.exId = exId;
     return this;
   }
@@ -64,37 +76,37 @@ public class ExerciseSession   {
   /**
    * Get exId
    * @return exId
-  **/
+   **/
   @ApiModelProperty(value = "")
 
-  public Integer getExId() {
+  public String getExId() {
     return exId;
   }
 
-  public void setExId(Integer exId) {
+  public void setExId(String exId) {
     this.exId = exId;
   }
 
-  public ExerciseSession sesId(Integer sesId) {
-    this.sesId = sesId;
+  public ExerciseSession sessId(String sessId) {
+    this.sessId = sessId;
     return this;
   }
 
   /**
-   * Get sesId
-   * @return sesId
-  **/
+   * Get sessId
+   * @return sessId
+   **/
   @ApiModelProperty(value = "")
 
-  public Integer getSesId() {
-    return sesId;
+  public String getSessId() {
+    return sessId;
   }
 
-  public void setSesId(Integer sesId) {
-    this.sesId = sesId;
+  public void setSessId(String sessId) {
+    this.sessId = sessId;
   }
 
-  public ExerciseSession coachId(Integer coachId) {
+  public ExerciseSession coachId(String coachId) {
     this.coachId = coachId;
     return this;
   }
@@ -102,14 +114,14 @@ public class ExerciseSession   {
   /**
    * Get coachId
    * @return coachId
-  **/
+   **/
   @ApiModelProperty(value = "")
 
-  public Integer getCoachId() {
+  public String getCoachId() {
     return coachId;
   }
 
-  public void setCoachId(Integer coachId) {
+  public void setCoachId(String coachId) {
     this.coachId = coachId;
   }
 
@@ -121,7 +133,7 @@ public class ExerciseSession   {
   /**
    * Get point
    * @return point
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public Integer getPoint() {
@@ -140,7 +152,7 @@ public class ExerciseSession   {
   /**
    * Get note
    * @return note
-  **/
+   **/
   @ApiModelProperty(value = "")
 
   public String getNote() {
@@ -162,26 +174,26 @@ public class ExerciseSession   {
     }
     ExerciseSession exerciseSession = (ExerciseSession) o;
     return Objects.equals(this.id, exerciseSession.id) &&
-        Objects.equals(this.exId, exerciseSession.exId) &&
-        Objects.equals(this.sesId, exerciseSession.sesId) &&
-        Objects.equals(this.coachId, exerciseSession.coachId) &&
-        Objects.equals(this.point, exerciseSession.point) &&
-        Objects.equals(this.note, exerciseSession.note);
+            Objects.equals(this.exId, exerciseSession.exId) &&
+            Objects.equals(this.sessId, exerciseSession.sessId) &&
+            Objects.equals(this.coachId, exerciseSession.coachId) &&
+            Objects.equals(this.point, exerciseSession.point) &&
+            Objects.equals(this.note, exerciseSession.note);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, exId, sesId, coachId, point, note);
+    return Objects.hash(id, exId, sessId, coachId, point, note);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ExerciseSession {\n");
-    
+
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    exId: ").append(toIndentedString(exId)).append("\n");
-    sb.append("    sesId: ").append(toIndentedString(sesId)).append("\n");
+    sb.append("    sessId: ").append(toIndentedString(sessId)).append("\n");
     sb.append("    coachId: ").append(toIndentedString(coachId)).append("\n");
     sb.append("    point: ").append(toIndentedString(point)).append("\n");
     sb.append("    note: ").append(toIndentedString(note)).append("\n");
