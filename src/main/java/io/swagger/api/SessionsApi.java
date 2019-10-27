@@ -90,7 +90,6 @@ public interface SessionsApi {
             method = RequestMethod.PUT)
     ResponseEntity<Session> updateSession(@ApiParam(value = "Session that need to be updated",required=true) @Valid @RequestBody Session sess);
 
-<<<<<<< HEAD
     @ApiOperation(value = "Update an existing session", nickname = "updateSessionExercises", notes = "", tags={ "Session", })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
@@ -105,17 +104,5 @@ public interface SessionsApi {
                                                    @Valid @RequestParam(value = "listEx", required = false) String listEx,
                                                    @NotNull @ApiParam(value = "", required = false)
                                                    @Valid @RequestParam(value = "coachId", required = false) String coachId);
-=======
-    @ApiOperation(value = "Update an existing session", nickname = "updateSessionById", notes = "", tags={ "Session", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK"),
-        @ApiResponse(code = 400, message = "Invalid ID supplied"),
-        @ApiResponse(code = 404, message = "Session not found"),
-        @ApiResponse(code = 405, message = "Validation exception") })
-    @RequestMapping(value = "/sessions/{sesId}",
-        consumes = { "application/json" },
-        method = RequestMethod.PUT)
-    ResponseEntity<Session> updateSession(@ApiParam(value = "Session that need to be updated",required=true) @Valid @RequestBody Session sess);
->>>>>>> 1bf1e6bc61d8e084ba50a4333ca00a75fb7fe0fd
 
 }
