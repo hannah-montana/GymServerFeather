@@ -62,9 +62,10 @@ public class ProgramsApiController implements ProgramsApi {
                 if(listSes != null) {
                     //update list sessions to program
                     sessionProgramService.saveListSesionsByProgramId(prog.getId(), listSes, coachId);
+                    return new ResponseEntity<Integer>(1, HttpStatus.OK);
                 }
             }
-            return new ResponseEntity<Integer>(1, HttpStatus.OK);
+            return new ResponseEntity<Integer>(0, HttpStatus.OK);
         } catch(Exception e){
             return new ResponseEntity<Integer>(0, HttpStatus.INTERNAL_SERVER_ERROR);
         }

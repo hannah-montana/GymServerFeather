@@ -79,12 +79,10 @@ public class SessionServiceImp implements SessionService{
             ses.setId(String.valueOf(maxId));
             newSes = sessionRepository.save(ses);
 
-            //add exercises
-
             return maxId;
         }
 
-        return maxId;
+        return 0;
     }
 
     @Override
