@@ -1,7 +1,9 @@
 package io.swagger.service;
 
 import io.swagger.model.Program;
+import io.swagger.model.SessionProgram;
 import io.swagger.repository.ProgramRepository;
+import io.swagger.repository.SessionProgramRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -15,9 +17,12 @@ import java.util.List;
 @Service("programService")
 public class ProgramServiceImp implements  ProgramService {
     private ProgramRepository programRepository;
+    private SessionProgramRepository sessionProgramRepository;
 
-    public ProgramServiceImp(ProgramRepository programRepository) {
+    public ProgramServiceImp(ProgramRepository programRepository,
+                             SessionProgramRepository sessionProgramRepository) {
         this.programRepository = programRepository;
+        this.sessionProgramRepository = sessionProgramRepository;
     }
 
     @Autowired
@@ -86,6 +91,17 @@ public class ProgramServiceImp implements  ProgramService {
     @Override
     public Integer deleteProgramById(String id) {
         int result = 0;
+
+        //delete in SessionProgram
+        Query query = new Query();
+        query.addCriteria(Criteria.where("progId").is(id));
+
+        List<SessionProgram> lstSesProg = mongoTemplate.find(query, SessionProgram.class);
+        if(lstSesProg != null){
+            for(SessionProgram item : lstSesProg){
+                sessionProgramRepository.delete(sessionProgramRepository.findById(item.getId()));
+            }
+        }
 
         if(programRepository.findById(id) != null){
             programRepository.delete(programRepository.findById(id));

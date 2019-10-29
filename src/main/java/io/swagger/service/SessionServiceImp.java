@@ -2,6 +2,7 @@ package io.swagger.service;
 
 import io.swagger.model.ExerciseSession;
 import io.swagger.model.Session;
+import io.swagger.repository.ExerciseSessionRepository;
 import io.swagger.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -16,12 +17,15 @@ import java.util.List;
 @Service("sessionService")
 public class SessionServiceImp implements SessionService{
     private SessionRepository sessionRepository;
+    private ExerciseSessionRepository exerciseSessionRepository;
 
     @Autowired
     MongoTemplate mongoTemplate;
 
-    public SessionServiceImp(SessionRepository sessionRepository) {
+    public SessionServiceImp(SessionRepository sessionRepository,
+                             ExerciseSessionRepository exerciseSessionRepository) {
         this.sessionRepository = sessionRepository;
+        this.exerciseSessionRepository = exerciseSessionRepository;
     }
 
     @Override
@@ -81,7 +85,6 @@ public class SessionServiceImp implements SessionService{
 
             return maxId;
         }
-
         return 0;
     }
 
@@ -106,6 +109,18 @@ public class SessionServiceImp implements SessionService{
     public Integer deleteSession(String id) {
         int result = 0;
 
+        //delete in ExerciseSession
+        Query query = new Query();
+        query.addCriteria(Criteria.where("sessId").is(id));
+
+        List<ExerciseSession> lstExSes = mongoTemplate.find(query, ExerciseSession.class);
+        if(lstExSes != null){
+            for(ExerciseSession item : lstExSes){
+                exerciseSessionRepository.delete(exerciseSessionRepository.findById(item.getId()));
+            }
+        }
+
+        //delete in Session
         if(sessionRepository.findById(id) != null){
             sessionRepository.delete(sessionRepository.findById(id));
             result = 1;
