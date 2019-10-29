@@ -50,7 +50,7 @@ public class SessionsApiController implements SessionsApi {
 
     public ResponseEntity<Integer> createNewSession(@ApiParam(value = "Session object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Session sess,
                                                     @NotNull @ApiParam(value = "", required = false)
-                                                    @Valid @RequestParam(value = "listEx", required = false) String listEx,
+                                                    @Valid @RequestParam(value = "listEx", required = false) String[] listEx,
                                                     @NotNull @ApiParam(value = "", required = false)
                                                     @Valid @RequestParam(value = "coachId", required = false) String coachId) {
         try{
@@ -121,7 +121,7 @@ public class SessionsApiController implements SessionsApi {
 
     public ResponseEntity<Integer> updateSessionExercises(@ApiParam(value = "",required=true) @Valid @RequestBody Session sess,
                                                           @NotNull @ApiParam(value = "", required = false)
-                                                          @Valid @RequestParam(value = "listEx", required = false) String listEx,
+                                                          @Valid @RequestParam(value = "listEx", required = false) String[] listEx,
                                                           @NotNull @ApiParam(value = "", required = false)
                                                           @Valid @RequestParam(value = "coachId", required = false) String coachId){
         if(listEx != null){

@@ -56,7 +56,7 @@ public class SessionProgramServiceImp implements SessionProgramService  {
         return maxId;
     }
 
-    public Integer saveListSesionsByProgramId(String progId, String listSes, String coachId){
+    public Integer saveListSesionsByProgramId(String progId, String[] listSes, String coachId){
         Query query = new Query();
         query.addCriteria(Criteria.where("progId").is(progId));
         List<SessionProgram> lstSessPro = mongoTemplate.find(query, SessionProgram.class);
@@ -69,8 +69,8 @@ public class SessionProgramServiceImp implements SessionProgramService  {
 
             //add again
             int maxid = getMaxId();
-            String[] splitListEx = listSes.split(",");
-            for (String it : splitListEx) {
+            //String[] splitListEx = listSes.split(",");
+            for (String it : listSes) {
                 maxid = maxid + 1;
                 SessionProgram es = new SessionProgram();
                 es.setSessId(progId);

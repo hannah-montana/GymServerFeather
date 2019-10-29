@@ -54,7 +54,7 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
         return maxId;
     }
 
-    public Integer saveListExercisesBySessionId(String sessId, String listEx, String coachId){
+    public Integer saveListExercisesBySessionId(String sessId, String[] listEx, String coachId){
         Query query = new Query();
         query.addCriteria(Criteria.where("sessId").is(sessId));
         List<ExerciseSession> lstExSess = mongoTemplate.find(query, ExerciseSession.class);
@@ -67,8 +67,8 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
 
             //add again
             int maxid = getMaxId();
-            String[] splitListEx = listEx.split(",");
-            for (String it : splitListEx) {
+            //String[] splitListEx = listEx.split(",");
+            for (String it : listEx) {
                 maxid = maxid + 1;
                 ExerciseSession es = new ExerciseSession();
                 es.setSessId(sessId);

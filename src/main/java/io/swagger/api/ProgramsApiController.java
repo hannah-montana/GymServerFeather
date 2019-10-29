@@ -51,7 +51,7 @@ public class ProgramsApiController implements ProgramsApi {
 
     public ResponseEntity<Integer> createNewProgram(@ApiParam(value = "Program object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Program prog,
                                                     @NotNull @ApiParam(value = "", required = false)
-                                                    @Valid @RequestParam(value = "listSes", required = false) String listSes,
+                                                    @Valid @RequestParam(value = "listSes", required = false) String[] listSes,
                                                     @NotNull @ApiParam(value = "", required = false)
                                                     @Valid @RequestParam(value = "coachId", required = false) String coachId) {
         Program program = new Program();
@@ -120,7 +120,7 @@ public class ProgramsApiController implements ProgramsApi {
 
     public ResponseEntity<Integer> updateProgramSessions(@ApiParam(value = "",required=true) @Valid @RequestBody Program prog,
                                                          @NotNull @ApiParam(value = "", required = false)
-                                                         @Valid @RequestParam(value = "listSes", required = false) String listSes,
+                                                         @Valid @RequestParam(value = "listSes", required = false) String[] listSes,
                                                          @NotNull @ApiParam(value = "", required = false)
                                                          @Valid @RequestParam(value = "coachId", required = false) String coachId){
         if(listSes != null){

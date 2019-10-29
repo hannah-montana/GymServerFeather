@@ -94,7 +94,6 @@ public class UsersApiController implements UsersApi {
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-
     /*
     * Check Login
     * */

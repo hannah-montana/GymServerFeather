@@ -7,5 +7,5 @@ import java.util.List;
 public interface SessionProgramService {
     List<Session> getListSessionsByProgramId(String proId);
     int getMaxId();
-    Integer saveListSesionsByProgramId(String sessId, String listEx, String coachId);
+    Integer saveListSesionsByProgramId(String sessId, String[] listEx, String coachId);
 }

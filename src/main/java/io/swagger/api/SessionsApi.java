@@ -37,7 +37,7 @@ public interface SessionsApi {
         method = RequestMethod.POST)
     ResponseEntity<Integer> createNewSession(@ApiParam(value = "Session object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Session sess,
                                              @NotNull @ApiParam(value = "", required = false)
-                                             @Valid @RequestParam(value = "listEx", required = false) String listEx,
+                                             @Valid @RequestParam(value = "listEx", required = false) String[] listEx,
                                              @NotNull @ApiParam(value = "", required = false)
                                              @Valid @RequestParam(value = "coachId", required = false) String coachId);
 
@@ -101,7 +101,7 @@ public interface SessionsApi {
             method = RequestMethod.PUT)
     ResponseEntity<Integer> updateSessionExercises(@ApiParam(value = "",required=true) @Valid @RequestBody Session sess,
                                                    @NotNull @ApiParam(value = "", required = false)
-                                                   @Valid @RequestParam(value = "listEx", required = false) String listEx,
+                                                   @Valid @RequestParam(value = "listEx", required = false) String[] listEx,
                                                    @NotNull @ApiParam(value = "", required = false)
                                                    @Valid @RequestParam(value = "coachId", required = false) String coachId);
 

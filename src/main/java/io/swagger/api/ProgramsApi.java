@@ -38,7 +38,7 @@ public interface ProgramsApi {
         method = RequestMethod.POST)
     ResponseEntity<Integer> createNewProgram(@ApiParam(value = "Program object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Program prog,
                                              @NotNull @ApiParam(value = "", required = false)
-                                             @Valid @RequestParam(value = "listSes", required = false) String listSes,
+                                             @Valid @RequestParam(value = "listSes", required = false) String[] listSes,
                                              @NotNull @ApiParam(value = "", required = false)
                                              @Valid @RequestParam(value = "coachId", required = false) String coachId);
 
@@ -99,7 +99,7 @@ public interface ProgramsApi {
             method = RequestMethod.PUT)
     ResponseEntity<Integer> updateProgramSessions(@ApiParam(value = "",required=true) @Valid @RequestBody Program prog,
                                                    @NotNull @ApiParam(value = "", required = false)
-                                                   @Valid @RequestParam(value = "listSes", required = false) String listSes,
+                                                   @Valid @RequestParam(value = "listSes", required = false) String[] listSes,
                                                    @NotNull @ApiParam(value = "", required = false)
                                                    @Valid @RequestParam(value = "coachId", required = false) String coachId);
 

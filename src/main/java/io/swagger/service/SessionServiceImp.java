@@ -84,7 +84,7 @@ public class SessionServiceImp implements SessionService{
             return maxId;
         }
 
-        return 0;
+        return maxId;
     }
 
     @Override
