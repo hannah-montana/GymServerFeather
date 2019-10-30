@@ -32,7 +32,7 @@ public interface ExercisesApi {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Exercise.class, responseContainer = "List"),
             @ApiResponse(code = 405, message = "Invalid input") })
-    @RequestMapping(value = "/excercises",
+    @RequestMapping(value = "/exercises",
             produces = { "application/json" },
             consumes = { "application/json" },
             method = RequestMethod.POST)
@@ -45,7 +45,7 @@ public interface ExercisesApi {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Not found."),
             @ApiResponse(code = 200, message = "Unexpected error") })
-    @RequestMapping(value = "/excercises/",
+    @RequestMapping(value = "/exercises/",
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<List<Exercise>> getExercisesByName(@NotNull @ApiParam(value = "", required = false) @Valid @RequestParam(value = "exName", required = false) String exName,@NotNull @ApiParam(value = "", required = false) @Valid @RequestParam(value = "keyWords", required = false) String keyWords);
