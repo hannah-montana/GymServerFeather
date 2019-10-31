@@ -72,7 +72,7 @@ public class UsersApiController implements UsersApi {
 
     public ResponseEntity<List<User>> getUsersByName(@ApiParam(value = "") @Valid @RequestParam(value = "lastName", required = false) String lastName,@ApiParam(value = "") @Valid @RequestParam(value = "firstName", required = false) String firstName) {
         //need to rewrite again, it's just an example
-        List<User> lst = new ArrayList<>();
+        List<User> lst = new ArrayList<User>();
         //if (!firstName.isEmpty())
         //{
             //lst = userService.getUserByLastName(lastName);

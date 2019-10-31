@@ -8,7 +8,7 @@ public class LoginModel {
     private String firstName;
     private String lastName;
     private Integer role;
-    private Integer coin;
+    private Integer point;
     private String birthDate;
     private String level;
     private String status;
@@ -55,12 +55,12 @@ public class LoginModel {
         this.role = role;
     }
 
-    public Integer getCoin() {
-        return coin;
+    public Integer getPoint() {
+        return point;
     }
 
-    public void setCoin(Integer coin) {
-        this.coin = coin;
+    public void setPoint(Integer point) {
+        this.point = point;
     }
 
     public String getBirthDate() {

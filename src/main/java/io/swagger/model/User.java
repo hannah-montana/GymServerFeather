@@ -44,8 +44,8 @@ public class User   {
   @JsonProperty("role")
   private Integer role = null;
 
-  @JsonProperty("coin")
-  private Integer coin = null;
+  @JsonProperty("point")
+  private Integer point = null;
 
   @JsonProperty("photo")
   private String photo = null;
@@ -200,23 +200,23 @@ public class User   {
     this.role = role;
   }
 
-  public User coin(Integer coin) {
-    this.coin = coin;
+  public User point(Integer point) {
+    this.point = point;
     return this;
   }
 
   /**
-   * Get coin
-   * @return coin
+   * Get point
+   * @return point
    **/
   @ApiModelProperty(value = "")
 
-  public Integer getCoin() {
-    return coin;
+  public Integer getPoint() {
+    return point;
   }
 
-  public void setCoin(Integer coin) {
-    this.coin = coin;
+  public void setPoint(Integer point) {
+    this.point = point;
   }
 
   public User photo(String photo) {
@@ -312,7 +312,7 @@ public class User   {
             Objects.equals(this.lastName, user.lastName) &&
             Objects.equals(this.birthDate, user.birthDate) &&
             Objects.equals(this.role, user.role) &&
-            Objects.equals(this.coin, user.coin) &&
+            Objects.equals(this.point, user.point) &&
             Objects.equals(this.photo, user.photo) &&
             Objects.equals(this.email, user.email) &&
             Objects.equals(this.note, user.note) &&
@@ -321,7 +321,7 @@ public class User   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, userName, password, firstName, lastName, birthDate, role, coin, photo, email, note, level);
+    return Objects.hash(id, userName, password, firstName, lastName, birthDate, role, point, photo, email, note, level);
   }
 
   @Override
@@ -336,7 +336,7 @@ public class User   {
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
     sb.append("    birthDate: ").append(toIndentedString(birthDate)).append("\n");
     sb.append("    role: ").append(toIndentedString(role)).append("\n");
-    sb.append("    coin: ").append(toIndentedString(coin)).append("\n");
+    sb.append("    point: ").append(toIndentedString(point)).append("\n");
     sb.append("    photo: ").append(toIndentedString(photo)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    note: ").append(toIndentedString(note)).append("\n");

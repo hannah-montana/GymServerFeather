@@ -62,6 +62,9 @@ public class Exercise   {
   @JsonProperty("point")
   private Integer point = null;
 
+  @JsonProperty("isChecked")
+  private String isChecked = null;
+
   public Exercise id(String id) {
     this.id = id;
     return this;
@@ -319,6 +322,13 @@ public class Exercise   {
     this.point = point;
   }
 
+  public String getIsChecked() {
+    return isChecked;
+  }
+
+  public void setIsChecked(String isChecked) {
+    this.isChecked = isChecked;
+  }
 
   @Override
   public boolean equals(java.lang.Object o) {

@@ -45,14 +45,16 @@ public class ExercisesApiController implements ExercisesApi {
     }
 
 
-    public ResponseEntity<Exercise> createNewExercise(@ApiParam(value = "Exercises object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Exercise ex) {
+    public ResponseEntity<Integer> createNewExercise(@ApiParam(value = "Exercises object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Exercise ex) {
         Exercise exercise = new Exercise();
 
         if(ex!= null){
-            exercise = exerciseService.createExercise(ex);
+            int exid = exerciseService.createExercise(ex);
+            if (exid > 0)
+                return new ResponseEntity<Integer>(1, HttpStatus.OK);
         }
 
-        return new ResponseEntity<Exercise>(exercise,HttpStatus.OK);
+        return new ResponseEntity<Integer>(0, HttpStatus.OK);
     }
 
     public ResponseEntity<List<Exercise>> getExercisesByName(@NotNull @ApiParam(value = "", required = false) @Valid @RequestParam(value = "exName", required = false) String exName, @NotNull @ApiParam(value = "", required = false) @Valid @RequestParam(value = "keyWords", required = false) String keyWords) {
@@ -90,15 +92,16 @@ public class ExercisesApiController implements ExercisesApi {
         return new ResponseEntity<Exercise>(exercise,HttpStatus.OK);
     }
 
-    public ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Exercise ex) {
+    public ResponseEntity<Integer> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Exercise ex) {
         Exercise exercise = new Exercise();
         //String name = ex.getName();
 
         if(ex!=null) {
-            exercise = exerciseService.updateExercise(ex);
+            int res = exerciseService.updateExercise(ex);
+            return new ResponseEntity<Integer>(1, HttpStatus.OK);
         }
+        return new ResponseEntity<Integer>(0, HttpStatus.OK);
 
-        return new ResponseEntity<Exercise>(exercise,HttpStatus.OK);
     }
 
  /*   public ResponseEntity<Exercise> getExercisesOfSession(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("sesId") String sesId) {

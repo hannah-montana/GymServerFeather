@@ -9,8 +9,8 @@ public interface ExerciseService {
     Exercise getExerciseByName(String name);
     Exercise getExerciseById(String id);
 
-    Exercise createExercise(Exercise ex);
-    Exercise updateExercise(Exercise ex);
+    Integer createExercise(Exercise ex);
+    Integer updateExercise(Exercise ex);
 
     Integer deleteExerciseById(String id);
 }

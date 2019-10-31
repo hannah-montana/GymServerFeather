@@ -64,7 +64,7 @@ public class UserServiceImp implements UserService {
             res.setFirstName(u.getFirstName());
             res.setLastName(u.getLastName());
             res.setBirthDate(u.getBirthDate());
-            res.setCoin(u.getCoin());
+            res.setPoint(u.getPoint());
             res.setLevel(u.getLevel());
             res.setRole(u.getRole());
             res.setStatus("login");

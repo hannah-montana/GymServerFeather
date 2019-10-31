@@ -50,7 +50,7 @@ public class ExerciseServiceImp implements ExerciseService {
     }
 
     @Override
-    public Exercise createExercise(Exercise ex) {
+    public Integer createExercise(Exercise ex) {
         Exercise newEx = new Exercise();
 
         //get maxId
@@ -65,13 +65,13 @@ public class ExerciseServiceImp implements ExerciseService {
         if(exerciseRepo.findByName(ex.getName().toString()) == null){
             ex.setId(String.valueOf(maxId));
             newEx = exerciseRepo.save(ex);
-            return newEx;
+            return maxId;
         }
-        return newEx;
+        return 0;
     }
 
     @Override
-    public Exercise updateExercise(Exercise ex) {
+    public Integer updateExercise(Exercise ex) {
         Exercise newEx = new Exercise();
 
         newEx = mongoTemplate.findOne(
@@ -91,8 +91,10 @@ public class ExerciseServiceImp implements ExerciseService {
             newEx.setPoint(ex.getPoint());
             //haven't check duplicate name
             exerciseRepo.save(newEx);
+
+            return 1;
         }
-        return newEx;
+        return 0;
     }
 
     @Override

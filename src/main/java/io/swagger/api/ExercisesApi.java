@@ -36,7 +36,7 @@ public interface ExercisesApi {
             produces = { "application/json" },
             consumes = { "application/json" },
             method = RequestMethod.POST)
-    ResponseEntity<Exercise> createNewExercise(@ApiParam(value = "Exercises object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Exercise ex);
+    ResponseEntity<Integer> createNewExercise(@ApiParam(value = "Exercises object that needs to be added to the gym" ,required=true )  @Valid @RequestBody Exercise ex);
 
 
     @ApiOperation(value = "Find exercises by its name and its keywords.", nickname = "getExercisesByName", notes = "", response = Exercise.class, responseContainer = "List", tags={ "Exercise", })
@@ -83,7 +83,7 @@ public interface ExercisesApi {
     //@RequestMapping(value = "/exercises/",
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Exercise> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Exercise ex);
+    ResponseEntity<Integer> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Exercise ex);
 
    /* @ApiOperation(value = "get exercises in a session", nickname = "getExercisesOfSession", notes = "", response = Exercise.class, tags={ "ExercisesSessions", })
     @ApiResponses(value = {

@@ -125,13 +125,18 @@ public class SessionsApiController implements SessionsApi {
                                                           @Valid @RequestParam(value = "listEx", required = false) String[] listEx,
                                                           @NotNull @ApiParam(value = "", required = false)
                                                           @Valid @RequestParam(value = "coachId", required = false) String coachId){
-        if(listEx != null){
-            //update session
-            Session session = new Session();
-            session = sessionService.updateSession(sess);
-            //update list exercises to session
-            exerciseSessionService.saveListExercisesBySessionId(sess.getId(), listEx, coachId);
-            return new ResponseEntity<Integer>(1, HttpStatus.OK);
+        try {
+            if (listEx != null) {
+                //update session
+                Session session = new Session();
+                session = sessionService.updateSession(sess);
+                //update list exercises to session
+                exerciseSessionService.saveListExercisesBySessionId(sess.getId(), listEx, coachId);
+                return new ResponseEntity<Integer>(1, HttpStatus.OK);
+            }
+        }
+        catch (Exception ex){
+            return new ResponseEntity<Integer>(-1, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<Integer>(0, HttpStatus.OK);
     }
