@@ -48,6 +48,14 @@ public interface UsersApi {
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteUserByUserName(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("userName") String userName);
 
+    @ApiOperation(value = "Delete user", nickname = "deleteUserById", notes = "Delete an user.", tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Invalid userId supplied"),
+            @ApiResponse(code = 404, message = "User not found") })
+    @RequestMapping(value = "/users/{userId}",
+            method = RequestMethod.DELETE)
+    ResponseEntity<Integer> deleteUserById(@ApiParam(value = "The id that needs to be deleted",required=true) @PathVariable("userId") String userId);
 
     /*@ApiOperation(value = "get a user by userName", nickname = "getUserByUserName", notes = "", response = User.class, tags={ "User", })
     @ApiResponses(value = { 
@@ -122,5 +130,22 @@ public interface UsersApi {
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<User> getUserById(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("uId") String uId);
+
+
+    @ApiOperation(value = "Assign programs to user", nickname = "assignUserPrograms", notes = "", tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Invalid ID supplied"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 405, message = "Validation exception") })
+    @RequestMapping(value = "/users/programs",
+            consumes = { "application/json" },
+            method = RequestMethod.PUT)
+    ResponseEntity<Integer> assignUserPrograms(@ApiParam(value = "",required=true) @Valid @RequestBody User user,
+                                               @NotNull @ApiParam(value = "", required = false)
+                                               @Valid @RequestParam(value = "listProg", required = false) String[] listProg,
+                                               @NotNull @ApiParam(value = "", required = false)
+                                               @Valid @RequestParam(value = "coachId", required = false) String coachId);
+
 
 }

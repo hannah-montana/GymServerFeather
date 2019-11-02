@@ -41,10 +41,10 @@ public class Session   {
   private Integer focusSession = null;
 
   @JsonProperty("validated")
-  private Integer validated = null;
+  private String validated = null;
 
   @JsonProperty("sendReported")
-  private Integer sendReported = null;
+  private String sendReported = null;
 
   public Session id(String id) {
     this.id = id;
@@ -155,29 +155,29 @@ public class Session   {
     this.focusSession = focusSession;
   }
 
-  public Session validated(Integer validated) {
+  public Session validated(String validated) {
     this.validated = validated;
     return this;
   }
 
-  public Integer getValidated() {
+  public String getValidated() {
     return validated;
   }
 
-  public void setValidated(Integer validated) {
+  public void setValidated(String validated) {
     this.validated = validated;
   }
 
-  public Session sendReported(Integer sendReported) {
+  public Session sendReported(String sendReported) {
     this.sendReported = sendReported;
     return this;
   }
 
-  public Integer getSendReported() {
+  public String getSendReported() {
     return sendReported;
   }
 
-  public void setSendReported(Integer sendReported) {
+  public void setSendReported(String sendReported) {
     this.sendReported = sendReported;
   }
 

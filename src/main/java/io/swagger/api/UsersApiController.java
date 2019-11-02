@@ -1,9 +1,11 @@
 package io.swagger.api;
 
 import io.swagger.model.LoginModel;
+import io.swagger.model.ProgramUser;
 import io.swagger.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.service.ProgramUserService;
 import io.swagger.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +41,9 @@ public class UsersApiController implements UsersApi {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ProgramUserService programUserService;
+
     @org.springframework.beans.factory.annotation.Autowired
     public UsersApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
@@ -62,6 +67,15 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<Void> deleteUserByUserName(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("userName") String userName) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    }
+
+    @Override
+    public ResponseEntity<Integer> deleteUserById(@ApiParam(value = "The id that needs to be deleted",required=true) @PathVariable("userId") String userId) {
+        int result;
+
+        result = userService.deleteUserById(userId);
+
+        return new ResponseEntity<Integer>(result,HttpStatus.OK);
     }
 
     /*public ResponseEntity<User> getUserByUserName(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("userName") String userName) {
@@ -136,6 +150,22 @@ public class UsersApiController implements UsersApi {
         }
 
         return new ResponseEntity<User>(user,HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Integer> assignUserPrograms(@ApiParam(value = "",required=true) @Valid @RequestBody User user,
+                                                      @NotNull @ApiParam(value = "", required = false)
+                                                      @Valid @RequestParam(value = "listProg", required = false) String[] listProg,
+                                                      @NotNull @ApiParam(value = "", required = false)
+                                                      @Valid @RequestParam(value = "coachId", required = false) String coachId) {
+        if(listProg != null){
+
+            //update list sessions to program
+            programUserService.saveListProgramsByUserId(user.getId(), listProg, coachId);
+            return new ResponseEntity<Integer>(1, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Integer>(0, HttpStatus.OK);
     }
 
 }

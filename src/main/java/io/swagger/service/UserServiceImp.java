@@ -1,7 +1,9 @@
 package io.swagger.service;
 
 import io.swagger.model.LoginModel;
+import io.swagger.model.ProgramUser;
 import io.swagger.model.User;
+import io.swagger.repository.ProgramUserRepository;
 import io.swagger.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -20,9 +22,11 @@ public class UserServiceImp implements UserService {
     MongoTemplate mongoTemplate;
 
     private UserRepository userRepo;
+    private ProgramUserRepository programUserRepository;
 
-    public UserServiceImp(UserRepository userRepo) {
+    public UserServiceImp(UserRepository userRepo, ProgramUserRepository programUserRepository) {
         this.userRepo = userRepo;
+        this.programUserRepository = programUserRepository;
     }
 
     public List<User> getAll(){
@@ -77,5 +81,28 @@ public class UserServiceImp implements UserService {
         List<User> lst = userRepo.findAll();
         user = userRepo.findById(id);
         return user;
+    }
+
+    @Override
+    public Integer deleteUserById(String id) {
+        int result = 0;
+
+        //delete in SessionProgram
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(id));
+
+        List<ProgramUser> lstProgUser = mongoTemplate.find(query, ProgramUser.class);
+        if(lstProgUser != null){
+            for(ProgramUser item : lstProgUser){
+                programUserRepository.delete(programUserRepository.findById(item.getId()));
+            }
+        }
+
+        if(programUserRepository.findById(id) != null){
+            programUserRepository.delete(programUserRepository.findById(id));
+            result = 1;
+        }
+
+        return  result;
     }
 }

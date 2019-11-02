@@ -22,14 +22,14 @@ public class ProgramUser   {
   @JsonProperty("id")
   private String id = null;
 
-  @JsonProperty("proId")
-  private Integer proId = null;
+  @JsonProperty("progId")
+  private String progId = null;
 
   @JsonProperty("userId")
-  private Integer userId = null;
+  private String userId = null;
 
   @JsonProperty("coachId")
-  private Integer coachId = null;
+  private String coachId = null;
 
   @JsonProperty("point")
   private Integer point = null;
@@ -56,8 +56,8 @@ public class ProgramUser   {
     this.id = _id;
   }
 
-  public ProgramUser proId(Integer proId) {
-    this.proId = proId;
+  public ProgramUser proId(String proId) {
+    this.progId = proId;
     return this;
   }
 
@@ -67,15 +67,15 @@ public class ProgramUser   {
    **/
   @ApiModelProperty(value = "")
 
-  public Integer getProId() {
-    return proId;
+  public String getProgId() {
+    return progId;
   }
 
-  public void setProId(Integer proId) {
-    this.proId = proId;
+  public void setProgId(String proId) {
+    this.progId = proId;
   }
 
-  public ProgramUser userId(Integer userId) {
+  public ProgramUser userId(String userId) {
     this.userId = userId;
     return this;
   }
@@ -86,15 +86,15 @@ public class ProgramUser   {
    **/
   @ApiModelProperty(value = "")
 
-  public Integer getUserId() {
+  public String getUserId() {
     return userId;
   }
 
-  public void setUserId(Integer userId) {
+  public void setUserId(String userId) {
     this.userId = userId;
   }
 
-  public ProgramUser coachId(Integer coachId) {
+  public ProgramUser coachId(String coachId) {
     this.coachId = coachId;
     return this;
   }
@@ -105,11 +105,11 @@ public class ProgramUser   {
    **/
   @ApiModelProperty(value = "")
 
-  public Integer getCoachId() {
+  public String getCoachId() {
     return coachId;
   }
 
-  public void setCoachId(Integer coachId) {
+  public void setCoachId(String coachId) {
     this.coachId = coachId;
   }
 
@@ -162,7 +162,7 @@ public class ProgramUser   {
     }
     ProgramUser programUser = (ProgramUser) o;
     return Objects.equals(this.id, programUser.id) &&
-            Objects.equals(this.proId, programUser.proId) &&
+            Objects.equals(this.progId, programUser.progId) &&
             Objects.equals(this.userId, programUser.userId) &&
             Objects.equals(this.coachId, programUser.coachId) &&
             Objects.equals(this.point, programUser.point) &&
@@ -171,7 +171,7 @@ public class ProgramUser   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, proId, userId, coachId, point, note);
+    return Objects.hash(id, progId, userId, coachId, point, note);
   }
 
   @Override
@@ -180,7 +180,7 @@ public class ProgramUser   {
     sb.append("class ProgramUser {\n");
 
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    proId: ").append(toIndentedString(proId)).append("\n");
+    sb.append("    proId: ").append(toIndentedString(progId)).append("\n");
     sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
     sb.append("    coachId: ").append(toIndentedString(coachId)).append("\n");
     sb.append("    point: ").append(toIndentedString(point)).append("\n");

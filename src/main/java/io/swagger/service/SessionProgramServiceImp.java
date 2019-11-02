@@ -72,13 +72,13 @@ public class SessionProgramServiceImp implements SessionProgramService  {
             //String[] splitListEx = listSes.split(",");
             for (String it : listSes) {
                 maxid = maxid + 1;
-                SessionProgram es = new SessionProgram();
-                es.setSessId(progId);
-                es.sessId(it);
-                es.setCoachId(coachId);
-                es.setProgId(progId);
-                es.setId(String.valueOf(maxid));
-                sessionProgramRepository.save(es);
+                SessionProgram sessionProgramp = new SessionProgram();
+                sessionProgramp.setSessId(it);
+                //es.sessId(it);
+                sessionProgramp.setCoachId(coachId);
+                sessionProgramp.setProgId(progId);
+                sessionProgramp.setId(String.valueOf(maxid));
+                sessionProgramRepository.save(sessionProgramp);
             }
             return 1;
 

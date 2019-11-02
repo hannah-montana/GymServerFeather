@@ -13,4 +13,6 @@ public interface UserService {
     LoginModel checkUserLogin(User user);
 
     User getUserById(String id);
+
+    Integer deleteUserById(String id);
 }
