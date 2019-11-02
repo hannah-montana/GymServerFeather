@@ -2,8 +2,6 @@ package io.swagger.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -42,7 +40,7 @@ public class User   {
   private String birthDate = null;
 
   @JsonProperty("role")
-  private Integer role = null;
+  private String role = null;
 
   @JsonProperty("point")
   private Integer point = null;
@@ -76,8 +74,19 @@ public class User   {
    * Get id
    * @return id
    **/
+
   @ApiModelProperty(required = true, value = "")
   @NotNull
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+
+  /*
 
   public String getId() {
     return id;
@@ -86,6 +95,8 @@ public class User   {
   public void setId(String id) {
     this.id = id;
   }
+*/
+
 
   public User userName(String userName) {
     this.userName = userName;
@@ -181,7 +192,7 @@ public class User   {
     this.birthDate = birthDate;
   }
 
-  public User role(Integer role) {
+  public User role(String role) {
     this.role = role;
     return this;
   }
@@ -192,11 +203,11 @@ public class User   {
    **/
   @ApiModelProperty(value = "")
 
-  public Integer getRole() {
+  public String getRole() {
     return role;
   }
 
-  public void setRole(Integer role) {
+  public void setRole(String role) {
     this.role = role;
   }
 

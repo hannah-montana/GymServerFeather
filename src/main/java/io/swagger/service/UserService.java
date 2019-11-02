@@ -2,6 +2,7 @@ package io.swagger.service;
 
 import io.swagger.model.LoginModel;
 import io.swagger.model.User;
+import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
@@ -13,4 +14,8 @@ public interface UserService {
     LoginModel checkUserLogin(User user);
 
     User getUserById(String id);
+
+    Integer deleteUserById(String id);
+
+    List<User> getAllCustomer();
 }

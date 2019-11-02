@@ -4,6 +4,7 @@ import io.swagger.model.LoginModel;
 import io.swagger.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.service.ProgramUserService;
 import io.swagger.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.multipart.MultipartFile;
-import sun.rmi.runtime.Log;
 
 import javax.validation.constraints.*;
 import javax.validation.Valid;
@@ -38,6 +35,9 @@ public class UsersApiController implements UsersApi {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ProgramUserService programUserService;
 
     @org.springframework.beans.factory.annotation.Autowired
     public UsersApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -116,16 +116,6 @@ public class UsersApiController implements UsersApi {
     /*
     * Get user by Id
     * */
-    /*public ResponseEntity<User> getUserById(@ApiParam(value = "",required=true) @PathVariable("uid") String uid){
-        try {
-            User user = new User();
-            user = userService.getUserById(uid);
-            return new ResponseEntity<User>(user, HttpStatus.OK);
-        } catch (Exception e){
-            log.error("Couldn't find user by Id");
-            return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
 
     public ResponseEntity<User> getUserById(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("uId") String uId) {
 
@@ -138,4 +128,36 @@ public class UsersApiController implements UsersApi {
         return new ResponseEntity<User>(user,HttpStatus.OK);
     }
 
+    public ResponseEntity<Integer> deleteUserById(@ApiParam(value = "The id that needs to be deleted",required=true) @PathVariable("userId") String userId) {
+        int result;
+
+        result = userService.deleteUserById(userId);
+
+        return new ResponseEntity<Integer>(result,HttpStatus.OK);
+    }
+
+    public ResponseEntity<Integer> assignUserPrograms(@ApiParam(value = "",required=true) @Valid @RequestBody User user,
+                                                      @NotNull @ApiParam(value = "", required = false)
+                                                      @Valid @RequestParam(value = "listProg", required = false) String[] listProg,
+                                                      @NotNull @ApiParam(value = "", required = false)
+                                                      @Valid @RequestParam(value = "coachId", required = false) String coachId) {
+        if(listProg != null){
+
+            //update list sessions to program
+            programUserService.saveListProgramsByUserId(user.getId(), listProg, coachId);
+            return new ResponseEntity<Integer>(1, HttpStatus.OK);
+        }
+
+        return new ResponseEntity<Integer>(0, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<User>> getAllCustomers(){
+        try {
+            List<User> lst = userService.getAllCustomer();
+            return new ResponseEntity<List<User>>(lst, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<List<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

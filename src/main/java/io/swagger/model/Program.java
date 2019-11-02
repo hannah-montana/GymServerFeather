@@ -34,6 +34,8 @@ public class Program   {
   @JsonProperty("numberOfSession")
   private Integer numberOfSession = null;
 
+  private String isFinished = null; //temp field
+
   public Program id(String id) {
     this.id = id;
     return this;
@@ -115,6 +117,13 @@ public class Program   {
     this.numberOfSession = numberOfSession;
   }
 
+  public String getIsFinished() {
+    return isFinished;
+  }
+
+  public void setIsFinished(String isFinished) {
+    this.isFinished = isFinished;
+  }
 
   @Override
   public boolean equals(java.lang.Object o) {

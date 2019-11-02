@@ -7,11 +7,15 @@ public class LoginModel {
     private String id;
     private String firstName;
     private String lastName;
-    private Integer role;
+    private String role;
     private Integer point;
     private String birthDate;
     private String level;
     private String status;
+    private String userName;
+    private String photo;
+    private String email;
+    private String note;
 
     public LoginModel(){}
 
@@ -47,11 +51,11 @@ public class LoginModel {
         this.lastName = lastName;
     }
 
-    public Integer getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Integer role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
@@ -85,5 +89,37 @@ public class LoginModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

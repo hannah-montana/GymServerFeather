@@ -49,18 +49,6 @@ public interface UsersApi {
     ResponseEntity<Void> deleteUserByUserName(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("userName") String userName);
 
 
-    /*@ApiOperation(value = "get a user by userName", nickname = "getUserByUserName", notes = "", response = User.class, tags={ "User", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = User.class),
-        @ApiResponse(code = 400, message = "Bad request"),
-        @ApiResponse(code = 404, message = "A user was not found"),
-        @ApiResponse(code = 200, message = "Unexpected error") })
-    @RequestMapping(value = "/users/{userName}",
-        produces = { "application/json" }, 
-        method = RequestMethod.GET)
-    ResponseEntity<User> getUserByUserName(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("userName") String userName);
-*/
-
     @ApiOperation(value = "Find users by lastName or firstName.", nickname = "getUsersByName", notes = "", response = User.class, responseContainer = "List", tags={ "User", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = User.class, responseContainer = "List"),
@@ -101,17 +89,6 @@ public interface UsersApi {
     * get User by id
     * */
 
-    /*@ApiOperation(value = "get a user by id", nickname = "getUserById", notes = "", response = User.class, tags={ "User", })
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = User.class),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 404, message = "A user was not found") })
-    @RequestMapping(value = "/users/{uid}",
-            produces = { "application/json" },
-            method = RequestMethod.GET)
-    ResponseEntity<User> getUserById(@ApiParam(value = "",required=true) @PathVariable("uid") String uid);
-*/
-
     @ApiOperation(value = "get a user by id", nickname = "getUserById", notes = "", response = User.class, tags={ "User", })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = User.class),
@@ -122,5 +99,41 @@ public interface UsersApi {
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<User> getUserById(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("uId") String uId);
+
+    @ApiOperation(value = "Delete user", nickname = "deleteUserById", notes = "Delete an user.", tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Invalid userId supplied"),
+            @ApiResponse(code = 404, message = "User not found") })
+    @RequestMapping(value = "/users/{userId}",
+            method = RequestMethod.DELETE)
+    ResponseEntity<Integer> deleteUserById(@ApiParam(value = "The id that needs to be deleted",required=true) @PathVariable("userId") String userId);
+
+    @ApiOperation(value = "Assign programs to user", nickname = "assignUserPrograms", notes = "", tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Invalid ID supplied"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 405, message = "Validation exception") })
+    @RequestMapping(value = "/users/programs",
+            consumes = { "application/json" },
+            method = RequestMethod.PUT)
+    ResponseEntity<Integer> assignUserPrograms(@ApiParam(value = "",required=true) @Valid @RequestBody User user,
+                                               @NotNull @ApiParam(value = "", required = false)
+                                               @Valid @RequestParam(value = "listProg", required = false) String[] listProg,
+                                               @NotNull @ApiParam(value = "", required = false)
+                                               @Valid @RequestParam(value = "coachId", required = false) String coachId);
+
+
+    @ApiOperation(value = "get all customers with role=2.", nickname = "getAllCustomers", notes = "", response = User.class, responseContainer = "List", tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = User.class, responseContainer = "List"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Not found."),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/users/getAllCustomers",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<List<User>> getAllCustomers();
 
 }
