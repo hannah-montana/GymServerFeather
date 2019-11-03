@@ -38,4 +38,15 @@ public interface ExercisesSessionsApi {
         method = RequestMethod.GET)
     ResponseEntity<List<Exercise>> getExercisesOfSession(@ApiParam(value = "Parameter description in CommonMark or HTML.", required = true) @PathVariable("sessId") String sessId);
 
+    @ApiOperation(value = "get check list exercise by session", nickname = "getCheckListExercisesOfSession", notes = "", response = Exercise.class, tags={ "ExercisesSessions", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Exercise.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Session was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/checkListExercisesSessions/{sessId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<List<Exercise>> getCheckListExercisesOfSession(@ApiParam(value = "", required = true) @PathVariable("sessId") String sessId);
+
 }

@@ -19,6 +19,9 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
     private ExerciseSessionRepository exerciseSessionRepository;
     private ExerciseRepository exerciseRepository;
 
+    @Autowired
+    private ExerciseService exerciseService;
+
     public ExerciseSessionServiceImp(ExerciseSessionRepository exerciseSessionRepository, ExerciseRepository exerciseRepository) {
         this.exerciseSessionRepository = exerciseSessionRepository;
         this.exerciseRepository = exerciseRepository;
@@ -39,6 +42,21 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
         }
 
         return lstEx;
+    }
+
+    public List<Exercise> getCheckListExercise (String sessId){
+        List<Exercise> lstExBySessId = getListExercisesBySessionId(sessId);
+        List<Exercise> lstAllExs = exerciseService.getAll(); // exerciseRepository.findAll();
+
+        for(Exercise ex: lstAllExs){
+            for(Exercise exCheck: lstExBySessId){
+                if(ex.getId() == exCheck.getId()){
+                    ex.setIsChecked("1");
+                }
+            }
+        }
+
+        return lstAllExs;
     }
 
     public int getMaxId(){

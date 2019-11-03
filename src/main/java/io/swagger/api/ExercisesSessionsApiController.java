@@ -50,4 +50,11 @@ public class ExercisesSessionsApiController implements ExercisesSessionsApi {
         return new ResponseEntity<List<Exercise>>(lstEx, HttpStatus.OK);
     }
 
+    public ResponseEntity<List<Exercise>> getCheckListExercisesOfSession(@ApiParam(value = "", required = true) @PathVariable("sessId") String sessId){
+        List<Exercise> lstEx = new ArrayList<>();
+
+        lstEx = exerciseSessionService.getCheckListExercise(sessId);
+
+        return new ResponseEntity<List<Exercise>>(lstEx, HttpStatus.OK);
+    }
 }

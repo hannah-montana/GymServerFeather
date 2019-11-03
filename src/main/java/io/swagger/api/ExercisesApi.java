@@ -80,20 +80,8 @@ public interface ExercisesApi {
         @ApiResponse(code = 404, message = "Exercise not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
     @RequestMapping(value = "/exercises",
-    //@RequestMapping(value = "/exercises/",
         consumes = { "application/json" },
         method = RequestMethod.PUT)
     ResponseEntity<Integer> updateExercise(@ApiParam(value = "name that need to be updated",required=true) @Valid @RequestBody Exercise ex);
 
-   /* @ApiOperation(value = "get exercises in a session", nickname = "getExercisesOfSession", notes = "", response = Exercise.class, tags={ "ExercisesSessions", })
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "OK", response = Exercise.class),
-            @ApiResponse(code = 400, message = "Bad request"),
-            @ApiResponse(code = 404, message = "Session was not found"),
-            @ApiResponse(code = 200, message = "Unexpected error") })
-    @RequestMapping(value = "/exercises/Sessions",
-            produces = { "application/json" },
-            method = RequestMethod.GET)
-    ResponseEntity<Exercise> getExercisesOfSession(@ApiParam(value = "Parameter description in CommonMark or HTML.", required = true) @PathVariable("sesId") String sesId);
-*/
 }
