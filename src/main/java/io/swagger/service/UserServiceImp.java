@@ -78,8 +78,23 @@ public class UserServiceImp implements UserService {
 
     public User getUserById(String id){
         User user = new User();
-        List<User> lst = userRepo.findAll();
-        user = userRepo.findById(id);
+        Query query = new Query();
+        query.fields().include("id");
+        query.fields().include("firstName");
+        query.fields().include("lastName");
+        query.fields().include("userName");
+        query.fields().include("birthDate");
+        query.fields().include("role");
+        query.fields().include("point");
+        query.fields().include("photo");
+        query.fields().include("email");
+        query.fields().include("note");
+        query.fields().include("level");
+        query.fields().include("coachId");
+
+        query.addCriteria(Criteria.where("id").is(id));
+        user = mongoTemplate.findOne(query, User.class);
+
         return user;
     }
 
@@ -118,11 +133,35 @@ public class UserServiceImp implements UserService {
         query.fields().include("email");
         query.fields().include("note");
         query.fields().include("level");
+        query.fields().include("coachId");
 
         query.addCriteria(Criteria.where("role").is("2"));
 
         List<User> lst = mongoTemplate.find(query, User.class);
 
         return lst;
+    }
+
+    public Integer updateUser(User user){
+        User u = new User();
+
+        u = userRepo.findById(user.getId());
+        if(u != null){
+            u.setEmail(user.getEmail());
+            u.setFirstName(user.getFirstName());
+            u.setLastName(user.getLastName());
+            if(user.getPassword() != "" && user.getPassword() != null)
+                u.setPassword(user.getPassword());
+            u.setNote(user.getNote());
+            u.setBirthDate(user.getBirthDate());
+            if(user.getPhoto() != "" && user.getPhoto() != null)
+                u.setPhoto(user.getPhoto());
+
+            userRepo.save(u);
+
+            return 1;
+        }
+
+        return 0;
     }
 }

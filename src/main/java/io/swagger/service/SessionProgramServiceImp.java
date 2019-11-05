@@ -20,13 +20,16 @@ public class SessionProgramServiceImp implements SessionProgramService  {
     SessionRepository sessionRepository;
     SessionProgramRepository sessionProgramRepository;
 
+    @Autowired
+    MongoTemplate mongoTemplate;
+
+    @Autowired
+    SessionService sessionService;
+
     public SessionProgramServiceImp(SessionRepository sessionRepository, SessionProgramRepository sessionProgramRepository) {
         this.sessionRepository = sessionRepository;
         this.sessionProgramRepository = sessionProgramRepository;
     }
-
-    @Autowired
-    MongoTemplate mongoTemplate;
 
     public List<Session> getListSessionsByProgramId(String progId) {
 
@@ -85,5 +88,21 @@ public class SessionProgramServiceImp implements SessionProgramService  {
         } catch (Exception e){
             return 0;
         }
+    }
+
+    public List<Session> getCheckListSession(String progId) {
+
+        List<Session> lstExBySessId = getListSessionsByProgramId(progId);
+        List<Session> lstAllExs = sessionService.getAll();
+
+        for(Session ex: lstAllExs){
+            for(Session exCheck: lstExBySessId){
+                if(ex.getId() == exCheck.getId()){
+                    ex.setIsChecked("1");
+                }
+            }
+        }
+
+        return lstAllExs;
     }
 }

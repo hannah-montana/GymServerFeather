@@ -26,8 +26,6 @@ import java.util.Map;
 @Api(value = "programs", description = "the programs API")
 public interface ProgramsApi {
 
-
-
     @ApiOperation(value = "Add a new program", nickname = "createNewProgram", notes = "", response = Program.class, responseContainer = "List", tags={ "Program", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Program.class, responseContainer = "List"),

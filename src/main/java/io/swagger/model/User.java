@@ -57,6 +57,8 @@ public class User   {
   @JsonProperty("level")
   private String level = null;
 
+  private String coachId = null;
+
   public String get_id() {
     return _id;
   }
@@ -306,6 +308,13 @@ public class User   {
     this.level = level;
   }
 
+  public String getCoachId() {
+    return coachId;
+  }
+
+  public void setCoachId(String coachId) {
+    this.coachId = coachId;
+  }
 
   @Override
   public boolean equals(java.lang.Object o) {

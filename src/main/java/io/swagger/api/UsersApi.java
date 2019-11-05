@@ -67,10 +67,10 @@ public interface UsersApi {
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Pet not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
-    @RequestMapping(value = "/users/{userName}",
+    @RequestMapping(value = "/updateUsers",
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Void> updateUserByUserName(@ApiParam(value = "User object that needs to be update to the gym" ,required=true )  @Valid @RequestBody User body,@ApiParam(value = "name that need to be updated",required=true) @PathVariable("userName") String userName);
+    ResponseEntity<Integer> updateUserByUserName(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body);
 
     /*
     * Check login
@@ -109,7 +109,7 @@ public interface UsersApi {
             method = RequestMethod.DELETE)
     ResponseEntity<Integer> deleteUserById(@ApiParam(value = "The id that needs to be deleted",required=true) @PathVariable("userId") String userId);
 
-    @ApiOperation(value = "Assign programs to user", nickname = "assignUserPrograms", notes = "", tags={ "User", })
+    @ApiOperation(value = "Assign programs to user", nickname = "assignUserPrograms", notes = "", tags={ "ProgramUser", })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Invalid ID supplied"),

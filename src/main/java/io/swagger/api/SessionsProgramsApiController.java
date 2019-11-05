@@ -52,4 +52,12 @@ public class SessionsProgramsApiController implements SessionsProgramsApi {
 
     }
 
+    public ResponseEntity<List<Session>> getCheckListSessionOfProgram(@ApiParam(value = "", required = true) @PathVariable("progId") String progId){
+        List<Session> lstEx = new ArrayList<>();
+
+        lstEx = sessionProgramService.getCheckListSession(progId);
+
+        return new ResponseEntity<List<Session>>(lstEx, HttpStatus.OK);
+    }
+
 }

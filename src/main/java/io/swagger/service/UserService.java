@@ -18,4 +18,6 @@ public interface UserService {
     Integer deleteUserById(String id);
 
     List<User> getAllCustomer();
+
+    Integer updateUser(User user);
 }

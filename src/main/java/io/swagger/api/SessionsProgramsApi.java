@@ -38,4 +38,15 @@ public interface SessionsProgramsApi {
         method = RequestMethod.GET)
     ResponseEntity<List<Session>> getSessionsOfProgram(@ApiParam(value = "Parameter description in CommonMark or HTML.", required = true) @PathVariable("progId") String progId);
 
+    @ApiOperation(value = "get check list sessions by program", nickname = "getCheckListSessionOfProgram", notes = "", response = Session.class, tags={ "SessionsPrograms", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Session.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Program was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/checkListSessionsProgram/{progId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<List<Session>> getCheckListSessionOfProgram(@ApiParam(value = "", required = true) @PathVariable("progId") String progId);
+
 }

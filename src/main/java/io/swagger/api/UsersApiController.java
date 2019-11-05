@@ -73,10 +73,6 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<List<User>> getUsersByName(@ApiParam(value = "") @Valid @RequestParam(value = "lastName", required = false) String lastName,@ApiParam(value = "") @Valid @RequestParam(value = "firstName", required = false) String firstName) {
         //need to rewrite again, it's just an example
         List<User> lst = new ArrayList<User>();
-        //if (!firstName.isEmpty())
-        //{
-            //lst = userService.getUserByLastName(lastName);
-        //}
 
         String res = new String();
         try {
@@ -89,9 +85,14 @@ public class UsersApiController implements UsersApi {
         return new ResponseEntity<List<User>>(lst, HttpStatus.OK);
     }
 
-    public ResponseEntity<Void> updateUserByUserName(@ApiParam(value = "User object that needs to be update to the gym" ,required=true )  @Valid @RequestBody User body,@ApiParam(value = "name that need to be updated",required=true) @PathVariable("userName") String userName) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    public ResponseEntity<Integer> updateUserByUserName(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body) {
+        try{
+            int res = userService.updateUser(body);
+            return new ResponseEntity<Integer>(res, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /*

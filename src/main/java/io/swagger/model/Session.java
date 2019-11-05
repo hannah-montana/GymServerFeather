@@ -46,6 +46,8 @@ public class Session   {
   @JsonProperty("sendReported")
   private Integer sendReported = null;
 
+  private String isChecked = null;
+
   public Session id(String id) {
     this.id = id;
     return this;
@@ -179,6 +181,14 @@ public class Session   {
 
   public void setSendReported(Integer sendReported) {
     this.sendReported = sendReported;
+  }
+
+  public String getIsChecked() {
+    return isChecked;
+  }
+
+  public void setIsChecked(String isChecked) {
+    this.isChecked = isChecked;
   }
 
   @Override

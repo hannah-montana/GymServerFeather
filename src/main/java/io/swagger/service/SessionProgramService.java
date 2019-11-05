@@ -8,4 +8,5 @@ public interface SessionProgramService {
     List<Session> getListSessionsByProgramId(String proId);
     int getMaxId();
     Integer saveListSesionsByProgramId(String sessId, String[] listEx, String coachId);
+    List<Session> getCheckListSession (String progId);
 }
