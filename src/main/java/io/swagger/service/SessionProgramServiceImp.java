@@ -90,6 +90,7 @@ public class SessionProgramServiceImp implements SessionProgramService  {
         }
     }
 
+    //use for checkbox list
     public List<Session> getCheckListSession(String progId) {
 
         List<Session> lstExBySessId = getListSessionsByProgramId(progId);

@@ -15,4 +15,6 @@ public interface SessionService {
     Integer deleteSession(String id);
 
     Integer duplicateSession(Session ses);
+
+    List<Session> getListCurrentSessionByUserId(String userId);
 }

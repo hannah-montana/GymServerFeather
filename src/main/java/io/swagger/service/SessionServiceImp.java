@@ -1,6 +1,7 @@
 package io.swagger.service;
 
 import io.swagger.model.ExerciseSession;
+import io.swagger.model.ProgramUser;
 import io.swagger.model.Session;
 import io.swagger.repository.ExerciseSessionRepository;
 import io.swagger.repository.SessionRepository;
@@ -28,6 +29,9 @@ public class SessionServiceImp implements SessionService{
 
     @Autowired
     ExerciseSessionService exerciseSessionService;
+
+    @Autowired
+    SessionProgramService sessionProgramService;
 
     public SessionServiceImp(SessionRepository sessionRepository,
                              ExerciseSessionRepository exerciseSessionRepository) {
@@ -188,6 +192,19 @@ public class SessionServiceImp implements SessionService{
         catch (Exception e){
             return 0;
         }
+    }
+
+
+    public List<Session> getListCurrentSessionByUserId(String userId){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId).andOperator(Criteria.where("isFinished").is("Not yet")));
+
+        ProgramUser pro = mongoTemplate.findOne(query, ProgramUser.class);
+        if(pro != null){
+            List<Session> lst = sessionProgramService.getListSessionsByProgramId(pro.getProgId());
+            return lst;
+        }
+        return null;
     }
 
 }

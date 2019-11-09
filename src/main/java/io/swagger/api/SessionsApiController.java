@@ -146,7 +146,16 @@ public class SessionsApiController implements SessionsApi {
             int res = sessionService.duplicateSession(sess);
             return new ResponseEntity<Integer>(1, HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<Integer>(-1, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<List<Session>> getListCurrentSessionsByUserId(@ApiParam(value = "",required=true) @PathVariable("userId") String userId){
+        try{
+            List<Session> lst = sessionService.getListCurrentSessionByUserId(userId);
+            return new ResponseEntity<List<Session>>(lst, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<List<Session>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
