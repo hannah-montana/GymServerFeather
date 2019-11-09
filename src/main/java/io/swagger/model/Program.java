@@ -36,6 +36,8 @@ public class Program   {
 
   private String isFinished = null; //temp field
 
+  private String coachId = null;
+
   public Program id(String id) {
     this.id = id;
     return this;
@@ -123,6 +125,14 @@ public class Program   {
 
   public void setIsFinished(String isFinished) {
     this.isFinished = isFinished;
+  }
+
+  public String getCoachId() {
+    return coachId;
+  }
+
+  public void setCoachId(String coachId) {
+    this.coachId = coachId;
   }
 
   @Override

@@ -28,6 +28,9 @@ public class ProgramServiceImp implements  ProgramService {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    @Autowired
+    UserService userService;
+
     @Override
     public List<Program> getAll() {
         List<Program> lst = new ArrayList<>();
@@ -65,6 +68,10 @@ public class ProgramServiceImp implements  ProgramService {
         if(programRepository.findByName(prog.getName().toString()) == null){
             prog.setId(String.valueOf(maxId));
             newProg = programRepository.save(prog);
+
+            //update point for coach
+            userService.updatePointForCoach(prog.getCoachId(), userService.getMaxiPoint());
+
             return maxId;
         }
 

@@ -105,4 +105,13 @@ public interface SessionsApi {
                                                    @NotNull @ApiParam(value = "", required = false)
                                                    @Valid @RequestParam(value = "coachId", required = false) String coachId);
 
+    @ApiOperation(value = "Add a new session", nickname = "duplicateSession", notes = "", response = Session.class, responseContainer = "List", tags={ "Session", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Session.class, responseContainer = "List"),
+            @ApiResponse(code = 405, message = "Invalid input") })
+    @RequestMapping(value = "/duplicate",
+            produces = { "application/json" },
+            consumes = { "application/json" },
+            method = RequestMethod.POST)
+    ResponseEntity<Integer> duplicateSession(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Session sess);
 }

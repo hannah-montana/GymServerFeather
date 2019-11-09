@@ -161,4 +161,13 @@ public class UsersApiController implements UsersApi {
             return new ResponseEntity<List<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<Integer> checkExistedUserName(@ApiParam(value = "",required=true) @PathVariable("userName") String userName){
+        try{
+            Integer res = userService.checkExistedUserName(userName);
+            return new ResponseEntity<Integer>(res, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -65,6 +65,8 @@ public class Exercise   {
   @JsonProperty("isChecked")
   private String isChecked = null;
 
+  private String coachId = null;
+
   public Exercise id(String id) {
     this.id = id;
     return this;
@@ -328,6 +330,14 @@ public class Exercise   {
 
   public void setIsChecked(String isChecked) {
     this.isChecked = isChecked;
+  }
+
+  public String getCoachId() {
+    return coachId;
+  }
+
+  public void setCoachId(String coachId) {
+    this.coachId = coachId;
   }
 
   @Override

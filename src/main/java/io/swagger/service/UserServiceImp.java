@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,20 @@ public class UserServiceImp implements UserService {
 
     private UserRepository userRepo;
     private ProgramUserRepository programUserRepository;
+
+    public int getEasyPoint() {
+        return 10;
+    }
+
+    public int getMediumPoint(){
+        return 20;
+    }
+    public int getDificultPoint(){
+        return 30;
+    }
+    public int getMaxiPoint(){
+        return 50;
+    }
 
     public UserServiceImp(UserRepository userRepo, ProgramUserRepository programUserRepository) {
         this.userRepo = userRepo;
@@ -162,6 +177,24 @@ public class UserServiceImp implements UserService {
             return 1;
         }
 
+        return 0;
+    }
+
+    public void updatePointForCoach(String coachId, Integer point){
+        User coach = userRepo.findById(coachId);
+        if(coach != null) {
+            int newPoint = coach.getPoint() + point;
+            coach.setPoint(newPoint);
+            userRepo.save(coach);
+        }
+    }
+
+    public Integer checkExistedUserName(String userName){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userName").is(userName));
+        User user = mongoTemplate.findOne(query, User.class);
+        if(user != null)
+            return 1;
         return 0;
     }
 }

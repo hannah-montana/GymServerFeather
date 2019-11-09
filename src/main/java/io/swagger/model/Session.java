@@ -48,6 +48,8 @@ public class Session   {
 
   private String isChecked = null;
 
+  private String coachId = null;
+
   public Session id(String id) {
     this.id = id;
     return this;
@@ -189,6 +191,14 @@ public class Session   {
 
   public void setIsChecked(String isChecked) {
     this.isChecked = isChecked;
+  }
+
+  public String getCoachId() {
+    return coachId;
+  }
+
+  public void setCoachId(String coachId) {
+    this.coachId = coachId;
   }
 
   @Override

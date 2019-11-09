@@ -136,4 +136,15 @@ public interface UsersApi {
             method = RequestMethod.GET)
     ResponseEntity<List<User>> getAllCustomers();
 
+    @ApiOperation(value = "Check existed User name", nickname = "checkExistedUserName", notes = "", response = Integer.class, tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Integer.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Exercise was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/users/checkExistedUserName/{userName}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<Integer> checkExistedUserName(@ApiParam(value = "",required=true) @PathVariable("userName") String userName);
+
 }

@@ -58,7 +58,7 @@ public class SessionsApiController implements SessionsApi {
             //sess.setId(String.valueOf(sessId));
             if(sessId > 0 && listEx != null) {
                 //update list exercises to session
-                exerciseSessionService.saveListExercisesBySessionId(String.valueOf(sessId), listEx, coachId);
+                exerciseSessionService.saveListExercisesBySessionId(String.valueOf(sessId), listEx);
                 return new ResponseEntity<Integer>(1, HttpStatus.OK);
             }
             return new ResponseEntity<Integer>(0, HttpStatus.OK);
@@ -101,7 +101,7 @@ public class SessionsApiController implements SessionsApi {
         }
         else {
             if(keyWords != null){
-                lst = sessionService.searchSessionByKeyword(keyWords);
+                //lst = sessionService.searchSessionByKeyword(keyWords);
                 //return new ResponseEntity<List<Session>>(lst,HttpStatus.OK);
             }
         }
@@ -131,7 +131,7 @@ public class SessionsApiController implements SessionsApi {
                 Session session = new Session();
                 session = sessionService.updateSession(sess);
                 //update list exercises to session
-                exerciseSessionService.saveListExercisesBySessionId(sess.getId(), listEx, coachId);
+                exerciseSessionService.saveListExercisesBySessionId(sess.getId(), listEx);
                 return new ResponseEntity<Integer>(1, HttpStatus.OK);
             }
         }
@@ -139,5 +139,14 @@ public class SessionsApiController implements SessionsApi {
             return new ResponseEntity<Integer>(-1, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<Integer>(0, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Integer> duplicateSession(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Session sess){
+        try{
+            int res = sessionService.duplicateSession(sess);
+            return new ResponseEntity<Integer>(1, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Integer>(-1, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

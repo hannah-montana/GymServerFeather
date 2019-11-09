@@ -14,5 +14,5 @@ public interface SessionService {
 
     Integer deleteSession(String id);
 
-    List<Session> searchSessionByKeyword(String keyword);
+    Integer duplicateSession(Session ses);
 }

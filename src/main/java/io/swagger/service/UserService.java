@@ -20,4 +20,13 @@ public interface UserService {
     List<User> getAllCustomer();
 
     Integer updateUser(User user);
+
+    void updatePointForCoach(String coachId, Integer point);
+
+    int getEasyPoint();
+    int getMediumPoint();
+    int getDificultPoint();
+    int getMaxiPoint();
+
+    Integer checkExistedUserName(String userName);
 }

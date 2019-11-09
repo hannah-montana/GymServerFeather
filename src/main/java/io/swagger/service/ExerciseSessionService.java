@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface ExerciseSessionService {
     List<Exercise> getListExercisesBySessionId(String sessId);
-    Integer saveListExercisesBySessionId(String sessId, String[] listEx, String coachId);
+    Integer saveListExercisesBySessionId(String sessId, String[] listEx);
     List<Exercise> getCheckListExercise (String sessId);
 }

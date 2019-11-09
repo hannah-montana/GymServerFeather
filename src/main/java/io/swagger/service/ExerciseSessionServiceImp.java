@@ -72,7 +72,7 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
         return maxId;
     }
 
-    public Integer saveListExercisesBySessionId(String sessId, String[] listEx, String coachId){
+    public Integer saveListExercisesBySessionId(String sessId, String[] listEx){
         Query query = new Query();
         query.addCriteria(Criteria.where("sessId").is(sessId));
         List<ExerciseSession> lstExSess = mongoTemplate.find(query, ExerciseSession.class);
@@ -91,7 +91,7 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
                 ExerciseSession es = new ExerciseSession();
                 es.setSessId(sessId);
                 es.setExId(it);
-                es.setCoachId(coachId);
+                //es.setCoachId(coachId);
                 es.setId(String.valueOf(maxid));
                 exerciseSessionRepository.save(es);
             }

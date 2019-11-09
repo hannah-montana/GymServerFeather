@@ -25,6 +25,9 @@ public class ExerciseServiceImp implements ExerciseService {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    @Autowired
+    UserService userService;
+
     @Override
     public List<Exercise> getAll() {
         List<Exercise> lst = new ArrayList<>();
@@ -65,6 +68,15 @@ public class ExerciseServiceImp implements ExerciseService {
         if(exerciseRepo.findByName(ex.getName().toString()) == null){
             ex.setId(String.valueOf(maxId));
             newEx = exerciseRepo.save(ex);
+
+            //update point for coach
+            if(ex.getLevel().equals("Easy"))
+                userService.updatePointForCoach(ex.getCoachId(), userService.getEasyPoint());
+            else if(ex.getLevel().equals("Medium"))
+                userService.updatePointForCoach(ex.getCoachId(), userService.getMediumPoint());
+            else
+                userService.updatePointForCoach(ex.getCoachId(), userService.getDificultPoint());
+
             return maxId;
         }
         return 0;
@@ -91,6 +103,9 @@ public class ExerciseServiceImp implements ExerciseService {
             newEx.setPoint(ex.getPoint());
             //haven't check duplicate name
             exerciseRepo.save(newEx);
+
+            //update point for user
+            userService.updatePointForCoach(ex.getCoachId(), userService.getEasyPoint());
 
             return 1;
         }

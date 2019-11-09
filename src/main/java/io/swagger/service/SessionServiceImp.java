@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 @Service("sessionService")
 public class SessionServiceImp implements SessionService{
@@ -21,6 +22,12 @@ public class SessionServiceImp implements SessionService{
 
     @Autowired
     MongoTemplate mongoTemplate;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    ExerciseSessionService exerciseSessionService;
 
     public SessionServiceImp(SessionRepository sessionRepository,
                              ExerciseSessionRepository exerciseSessionRepository) {
@@ -47,17 +54,6 @@ public class SessionServiceImp implements SessionService{
     }
 
     @Override
-    public List<Session> searchSessionByKeyword(String keyword){
-        List<Session> lst = new ArrayList<>();
-        //Query query = new Query();
-        //query.addCriteria(Criteria.where("name").regex("^Matthew"));
-        //List<Session> users = mongoTemplate.find(query, Session.class);
-        lst = sessionRepository.findSessionByRegexString("/^((?!Matthew).)*$/s");
-
-        return lst;
-    }
-
-    @Override
     public Session getSessionById(String id) {
         Session sess = new Session();
 
@@ -66,10 +62,7 @@ public class SessionServiceImp implements SessionService{
         return sess;
     }
 
-    @Override
-    public Integer createSession(Session ses) {
-        Session newSes = new Session();
-
+    public int getMaxId(){
         //get maxId
         List<Integer> lstId = new ArrayList<>();
         List<Session> lst = sessionRepository.findAll();
@@ -79,9 +72,26 @@ public class SessionServiceImp implements SessionService{
         }
         int maxId = Collections.max(lstId) + 1;
 
+        return maxId;
+    }
+
+    @Override
+    public Integer createSession(Session ses) {
+        Session newSes = new Session();
+
+        int maxId = getMaxId();
+
         if(sessionRepository.findByName(ses.getName().toString()) == null){
             ses.setId(String.valueOf(maxId));
             newSes = sessionRepository.save(ses);
+
+            //update point for coach
+            if(ses.getLevel().equals("Easy"))
+                userService.updatePointForCoach(ses.getCoachId(), userService.getEasyPoint());
+            else if(ses.getLevel().equals("Medium"))
+                userService.updatePointForCoach(ses.getCoachId(), userService.getMediumPoint());
+            else
+                userService.updatePointForCoach(ses.getCoachId(), userService.getDificultPoint());
 
             return maxId;
         }
@@ -101,6 +111,9 @@ public class SessionServiceImp implements SessionService{
             newSes.setLevel(ses.getLevel());
             //haven't check duplicate name
             sessionRepository.save(newSes);
+
+            //update point for user
+            userService.updatePointForCoach(ses.getCoachId(), userService.getEasyPoint());
         }
         return newSes;
     }
@@ -127,6 +140,54 @@ public class SessionServiceImp implements SessionService{
         }
 
         return  result;
+    }
+
+    public Integer duplicateSession(Session ses){
+        /*
+        * 1. insert new session
+        * 2. insert exercise for new session
+        * */
+        try {
+            Session duplicate = new Session();
+            int maxId = getMaxId();
+
+            int x = 0;
+            String newName = ses.getName();
+            while (sessionRepository.findByName(newName) != null) {
+                Random random = new Random();
+                x = random.nextInt(100);
+                newName = newName + " - " + String.valueOf(x);
+            }
+            duplicate.setId(String.valueOf(maxId));
+            duplicate.setName(newName);
+            duplicate.setDescription(ses.getDescription());
+            duplicate.setDuration(ses.getDuration());
+            duplicate.setLevel(ses.getLevel());
+            duplicate.setFocusSession(ses.getFocusSession());
+            duplicate.setCoachId(ses.getCoachId()); //wrong
+
+            sessionRepository.save(duplicate);
+
+            //get list exercise by session
+            Query query = new Query();
+            query.addCriteria(Criteria.where("sessId").is(String.valueOf(ses.getId())));
+            List<ExerciseSession> lstExSes = mongoTemplate.find(query, ExerciseSession.class);
+            String[] lstEx = new String[lstExSes.size()];
+            int i = 0;
+            for(ExerciseSession item: lstExSes){
+                lstEx[i] = item.getExId();
+                i++;
+            }
+            exerciseSessionService.saveListExercisesBySessionId(String.valueOf(maxId), lstEx);
+
+            //update point for user
+            userService.updatePointForCoach(ses.getCoachId(), userService.getEasyPoint());
+
+            return 1;
+        }
+        catch (Exception e){
+            return 0;
+        }
     }
 
 }
