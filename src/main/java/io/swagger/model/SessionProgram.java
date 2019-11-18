@@ -31,8 +31,7 @@ public class SessionProgram   {
   @JsonProperty("sessId")
   private String sessId = null;
 
-  @JsonProperty("coachId")
-  private String coachId = null;
+  private Integer priority = null;
 
   public String get_id() {
     return _id;
@@ -100,17 +99,12 @@ public class SessionProgram   {
     this.sessId = sessId;
   }
 
-  public SessionProgram coachId(String coachId) {
-    this.coachId = coachId;
-    return this;
+  public Integer getPriority() {
+    return priority;
   }
 
-  public String getCoachId() {
-    return coachId;
-  }
-
-  public void setCoachId(String coachId) {
-    this.coachId = coachId;
+  public void setPriority(Integer priority) {
+    this.priority = priority;
   }
 
   @Override

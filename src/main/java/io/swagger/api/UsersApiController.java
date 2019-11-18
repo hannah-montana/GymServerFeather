@@ -156,8 +156,7 @@ public class UsersApiController implements UsersApi {
         try {
             List<User> lst = userService.getAllCustomer();
             return new ResponseEntity<List<User>>(lst, HttpStatus.OK);
-        }
-        catch (Exception e){
+        }catch (Exception e){
             return new ResponseEntity<List<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -165,6 +164,15 @@ public class UsersApiController implements UsersApi {
     public ResponseEntity<Integer> checkExistedUserName(@ApiParam(value = "",required=true) @PathVariable("userName") String userName){
         try{
             Integer res = userService.checkExistedUserName(userName);
+            return new ResponseEntity<Integer>(res, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<Integer> updatePhoto(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body){
+        try{
+            Integer res = userService.updatePhoto(body);
             return new ResponseEntity<Integer>(res, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);

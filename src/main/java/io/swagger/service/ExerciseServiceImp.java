@@ -54,8 +54,6 @@ public class ExerciseServiceImp implements ExerciseService {
 
     @Override
     public Integer createExercise(Exercise ex) {
-        Exercise newEx = new Exercise();
-
         //get maxId
         List<Integer> lstId = new ArrayList<>();
         List<Exercise> lst = exerciseRepo.findAll();
@@ -67,7 +65,7 @@ public class ExerciseServiceImp implements ExerciseService {
 
         if(exerciseRepo.findByName(ex.getName().toString()) == null){
             ex.setId(String.valueOf(maxId));
-            newEx = exerciseRepo.save(ex);
+            exerciseRepo.save(ex);
 
             //update point for coach
             if(ex.getLevel().equals("Easy"))

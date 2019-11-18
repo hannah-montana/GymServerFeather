@@ -197,4 +197,15 @@ public class UserServiceImp implements UserService {
             return 1;
         return 0;
     }
+
+    public Integer updatePhoto(User user){
+        User u = userRepo.findById(user.getId());
+        if(u != null)
+        {
+            u.setPhoto(user.getPhoto());
+            userRepo.save(u);
+            return 1;
+        }
+        return 0;
+    }
 }

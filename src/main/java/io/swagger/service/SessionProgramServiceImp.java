@@ -5,6 +5,7 @@ import io.swagger.model.SessionProgram;
 import io.swagger.repository.SessionProgramRepository;
 import io.swagger.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -35,6 +36,7 @@ public class SessionProgramServiceImp implements SessionProgramService  {
 
         Query query = new Query();
         query.addCriteria(Criteria.where("progId").is(progId));
+        query.with(new Sort(Sort.Direction.ASC, "priority"));
         List<SessionProgram> lstSessProg = mongoTemplate.find(query, SessionProgram.class);
 
         List<Session> lstSess = new ArrayList<>();
@@ -73,15 +75,18 @@ public class SessionProgramServiceImp implements SessionProgramService  {
             //add again
             int maxid = getMaxId();
             //String[] splitListEx = listSes.split(",");
+            int priority = 1;
             for (String it : listSes) {
                 maxid = maxid + 1;
                 SessionProgram es = new SessionProgram();
                 es.setSessId(progId);
                 es.sessId(it);
-                es.setCoachId(coachId);
                 es.setProgId(progId);
                 es.setId(String.valueOf(maxid));
+                es.setPriority(priority);
                 sessionProgramRepository.save(es);
+
+                priority ++;
             }
             return 1;
 

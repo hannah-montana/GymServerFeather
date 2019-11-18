@@ -29,4 +29,6 @@ public interface UserService {
     int getMaxiPoint();
 
     Integer checkExistedUserName(String userName);
+
+    Integer updatePhoto(User user);
 }

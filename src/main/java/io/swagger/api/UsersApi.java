@@ -147,4 +147,16 @@ public interface UsersApi {
             method = RequestMethod.GET)
     ResponseEntity<Integer> checkExistedUserName(@ApiParam(value = "",required=true) @PathVariable("userName") String userName);
 
+    @ApiOperation(value = "Update photo", nickname = "updatePhoto", notes = "", tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Invalid ID supplied"),
+            @ApiResponse(code = 404, message = "Pet not found"),
+            @ApiResponse(code = 405, message = "Validation exception") })
+    @RequestMapping(value = "/updatePhoto",
+            consumes = { "application/json" },
+            method = RequestMethod.PUT)
+    ResponseEntity<Integer> updatePhoto(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body);
+
+
 }

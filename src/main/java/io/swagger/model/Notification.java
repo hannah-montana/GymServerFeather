@@ -23,6 +23,9 @@ public class Notification {
     private String toUser = null;
     private String dateAction = null;
     private String read = null;
+    private String focusSessionId = null;
+    private String validatedFromCustomer = null;
+    private String validatedFromCoach = null;
 
     public String get_id() {
         return _id;
@@ -83,4 +86,28 @@ public class Notification {
     }
 
     public Notification(){}
+
+    public String getFocusSessionId() {
+        return focusSessionId;
+    }
+
+    public void setFocusSessionId(String focusSessionId) {
+        this.focusSessionId = focusSessionId;
+    }
+
+    public String getValidatedFromCustomer() {
+        return validatedFromCustomer;
+    }
+
+    public void setValidatedFromCustomer(String validatedFromCustomer) {
+        this.validatedFromCustomer = validatedFromCustomer;
+    }
+
+    public String getValidatedFromCoach() {
+        return validatedFromCoach;
+    }
+
+    public void setValidatedFromCoach(String validatedFromCoach) {
+        this.validatedFromCoach = validatedFromCoach;
+    }
 }
