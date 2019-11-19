@@ -59,6 +59,8 @@ public class User   {
 
   private String coachId = null;
 
+  private String badge = null;
+
   public String get_id() {
     return _id;
   }
@@ -316,6 +318,14 @@ public class User   {
     this.coachId = coachId;
   }
 
+  public String getBadge() {
+    return badge;
+  }
+
+  public void setBadge(String badge) {
+    this.badge = badge;
+  }
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -336,7 +346,8 @@ public class User   {
             Objects.equals(this.photo, user.photo) &&
             Objects.equals(this.email, user.email) &&
             Objects.equals(this.note, user.note) &&
-            Objects.equals(this.level, user.level);
+            Objects.equals(this.level, user.level) &&
+            Objects.equals(this.badge, user.badge);
   }
 
   @Override
@@ -361,6 +372,7 @@ public class User   {
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    note: ").append(toIndentedString(note)).append("\n");
     sb.append("    level: ").append(toIndentedString(level)).append("\n");
+    sb.append("    badge: ").append(toIndentedString(badge)).append("\n");
     sb.append("}");
     return sb.toString();
   }

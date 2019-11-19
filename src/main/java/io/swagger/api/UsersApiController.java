@@ -143,7 +143,6 @@ public class UsersApiController implements UsersApi {
                                                       @NotNull @ApiParam(value = "", required = false)
                                                       @Valid @RequestParam(value = "coachId", required = false) String coachId) {
         if(listProg != null){
-
             //update list sessions to program
             programUserService.saveListProgramsByUserId(user.getId(), listProg, coachId);
             return new ResponseEntity<Integer>(1, HttpStatus.OK);
