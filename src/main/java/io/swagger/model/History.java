@@ -23,11 +23,13 @@ public class History {
     private String sessId = null;
     private String exId = null;
     private String focusSession = null;
+    private Integer praticalDuration = null;
     private Integer duration = null;
     private Integer point = null;
     private Integer calorie = null;
     private Integer order = null;
     private String processing = null;
+
 
     public String get_id() {
         return _id;
@@ -133,5 +135,13 @@ public class History {
 
     public void setProcessing(String processing) {
         this.processing = processing;
+    }
+
+    public Integer getPraticalDuration() {
+        return praticalDuration;
+    }
+
+    public void setPraticalDuration(Integer praticalDuration) {
+        this.praticalDuration = praticalDuration;
     }
 }
