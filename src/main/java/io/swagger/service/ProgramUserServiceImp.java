@@ -1,31 +1,43 @@
 package io.swagger.service;
 
-import io.swagger.model.Program;
-import io.swagger.model.ProgramUser;
-import io.swagger.model.SessionProgram;
+import io.swagger.model.*;
+import io.swagger.repository.HistoryRepository;
 import io.swagger.repository.ProgramRepository;
 import io.swagger.repository.ProgramUserRepository;
+import io.swagger.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Service("programUserService")
 public class ProgramUserServiceImp implements ProgramUserService {
     ProgramRepository programRepository;
     ProgramUserRepository programUserRepository;
+    HistoryRepository historyRepository;
+
+    @Autowired
+    SessionProgramService sessionProgramService;
+
+    @Autowired
+    ExerciseSessionService exerciseSessionService;
 
     @Autowired
     MongoTemplate mongoTemplate;
 
-    public ProgramUserServiceImp(ProgramRepository programRepository, ProgramUserRepository programUserRepository) {
+    public ProgramUserServiceImp(ProgramRepository programRepository,
+                                 ProgramUserRepository programUserRepository,
+                                 HistoryRepository historyRepository) {
         this.programRepository = programRepository;
         this.programUserRepository = programUserRepository;
+        this.historyRepository = historyRepository;
     }
 
     public List<Program> getListProgramByProgramId(String userId) {
@@ -103,6 +115,20 @@ public class ProgramUserServiceImp implements ProgramUserService {
         }
     }
 
+    public int getHistoryMaxId(){
+        //get maxId
+        List<Integer> lstId = new ArrayList<>();
+        List<History> lst = historyRepository.findAll();
+
+        int maxId = 0;
+        if(lst != null) {
+            for (History item : lst) {
+                lstId.add(Integer.parseInt(item.getId()));
+            }
+            maxId = Collections.max(lstId);
+        }
+        return maxId;
+    }
     public Integer assignProgramToUser(ProgramUser proUser){
         try {
             //get maxId
@@ -112,7 +138,44 @@ public class ProgramUserServiceImp implements ProgramUserService {
             programUserRepository.save(proUser);
 
             //save to History
+            /*
+            * get all session in this program
+            * for each session -> get all exercise
+            * insert each row to table History
+            * */
+            int order = 1;
+            String processing = "1";
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            String dateAction = formatter.format(date);
 
+            List<Session> lstSession = sessionProgramService.getListSessionsByProgramId(String.valueOf(maxId));
+            for (Session sess: lstSession){
+                List<Exercise> lstExercise = exerciseSessionService.getListExercisesBySessionId(sess.getId());
+
+                for(Exercise ex: lstExercise) {
+                    History history = new History();
+                    int hisId = getHistoryMaxId();
+                    history.setId(String.valueOf(hisId + 1));
+                    history.setProUsId(String.valueOf(maxId));
+                    history.setProgId(proUser.getProgId());
+                    history.setUserId(proUser.getUserId());
+                    history.setSessId(sess.getId());
+                    history.setExId(ex.getId());
+                    history.setFocusSession(sess.getFocusSession());
+                    history.setDuration(ex.getDuration());
+                    history.setPraticalDuration(0);
+                    history.setPoint(ex.getPoint());
+                    history.setCalorie(ex.getCalorie());
+                    history.setOrder(order);
+                    history.setProcessing(processing);
+                    history.setDateAction(dateAction);
+
+                    historyRepository.save(history);
+                }
+                processing = "0";
+                order ++;
+            }
 
             return 1;
         }

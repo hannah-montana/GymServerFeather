@@ -36,7 +36,7 @@ public class Exercise   {
   private String instruction = null;
 
   @JsonProperty("duration")
-  private String duration = null;
+  private Integer duration = null;
 
   @JsonProperty("level")
   private String level = null;
@@ -153,7 +153,7 @@ public class Exercise   {
     this.instruction = instruction;
   }
 
-  public Exercise duration(String duration) {
+  public Exercise duration(Integer duration) {
     this.duration = duration;
     return this;
   }
@@ -164,11 +164,11 @@ public class Exercise   {
    **/
   @ApiModelProperty(value = "")
 
-  public String getDuration() {
+  public Integer getDuration() {
     return duration;
   }
 
-  public void setDuration(String duration) {
+  public void setDuration(Integer duration) {
     this.duration = duration;
   }
 

@@ -194,7 +194,6 @@ public class SessionServiceImp implements SessionService{
         }
     }
 
-
     public List<Session> getListCurrentSessionByUserId(String userId){
         Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(userId).andOperator(Criteria.where("isFinished").is("Not yet")));
@@ -206,5 +205,4 @@ public class SessionServiceImp implements SessionService{
         }
         return null;
     }
-
 }

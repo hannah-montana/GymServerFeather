@@ -9,7 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.constraints.NotNull;
 
 @Validated
-@Document(collection = "Notification")
+@Document(collection = "History")
 public class History {
 
     @Id
@@ -22,14 +22,14 @@ public class History {
     private String userId = null;
     private String sessId = null;
     private String exId = null;
-    private String focusSession = null;
+    private Integer focusSession = null;
     private Integer praticalDuration = null;
     private Integer duration = null;
     private Integer point = null;
     private Integer calorie = null;
     private Integer order = null;
     private String processing = null;
-
+    private String dateAction = null;
 
     public String get_id() {
         return _id;
@@ -89,11 +89,11 @@ public class History {
         this.exId = exId;
     }
 
-    public String getFocusSession() {
+    public Integer getFocusSession() {
         return focusSession;
     }
 
-    public void setFocusSession(String focusSession) {
+    public void setFocusSession(Integer focusSession) {
         this.focusSession = focusSession;
     }
 
@@ -143,5 +143,13 @@ public class History {
 
     public void setPraticalDuration(Integer praticalDuration) {
         this.praticalDuration = praticalDuration;
+    }
+
+    public String getDateAction() {
+        return dateAction;
+    }
+
+    public void setDateAction(String dateAction) {
+        this.dateAction = dateAction;
     }
 }

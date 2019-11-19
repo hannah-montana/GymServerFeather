@@ -17,4 +17,5 @@ public interface SessionService {
     Integer duplicateSession(Session ses);
 
     List<Session> getListCurrentSessionByUserId(String userId);
+
 }
