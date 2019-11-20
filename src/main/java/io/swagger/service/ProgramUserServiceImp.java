@@ -74,15 +74,15 @@ public class ProgramUserServiceImp implements ProgramUserService {
         //get maxId
         List<Integer> lstId = new ArrayList<>();
         List<ProgramUser> lst = programUserRepository.findAll();
-
-        for (ProgramUser item: lst)
-        {
-            lstId.add(Integer.parseInt(item.getId()));
+        int maxId = 0;
+        if(lst.size() > 0) {
+            for (ProgramUser item : lst) {
+                lstId.add(Integer.parseInt(item.getId()));
+            }
+            maxId = Collections.max(lstId);
         }
-        int maxId = Collections.max(lstId);
         return maxId;
     }
-
 
     public Integer saveListProgramsByUserId(String userId, String[] listProg, String coachId){
         Query query = new Query();
@@ -121,7 +121,7 @@ public class ProgramUserServiceImp implements ProgramUserService {
         List<History> lst = historyRepository.findAll();
 
         int maxId = 0;
-        if(lst != null) {
+        if(lst.size() > 0) {
             for (History item : lst) {
                 lstId.add(Integer.parseInt(item.getId()));
             }
@@ -170,11 +170,19 @@ public class ProgramUserServiceImp implements ProgramUserService {
                     history.setOrder(order);
                     history.setProcessing(processing);
                     history.setDateAction(dateAction);
+                    history.setLevel(ex.getLevel());
 
                     historyRepository.save(history);
                 }
                 processing = "0";
                 order ++;
+            }
+
+            //update already assign to program
+            Program program = programRepository.findById(proUser.getProgId());
+            if(program != null){
+                program.setAlreadyAssign("1");
+                programRepository.save(program);
             }
 
             return 1;

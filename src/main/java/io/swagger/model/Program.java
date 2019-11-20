@@ -38,6 +38,8 @@ public class Program   {
 
   private String coachId = null;
 
+  private String alreadyAssign = null;
+
   public Program id(String id) {
     this.id = id;
     return this;
@@ -133,6 +135,14 @@ public class Program   {
 
   public void setCoachId(String coachId) {
     this.coachId = coachId;
+  }
+
+  public String getAlreadyAssign() {
+    return alreadyAssign;
+  }
+
+  public void setAlreadyAssign(String alreadyAssign) {
+    this.alreadyAssign = alreadyAssign;
   }
 
   @Override

@@ -102,15 +102,18 @@ public class ProgramServiceImp implements  ProgramService {
         //delete in SessionProgram
         Query query = new Query();
         query.addCriteria(Criteria.where("progId").is(id));
+        Program pro = programRepository.findById(id);
+        if(pro != null){
+            if(pro.getAlreadyAssign().equals("1"))
+                return 2;
 
-        List<SessionProgram> lstSesProg = mongoTemplate.find(query, SessionProgram.class);
-        if(lstSesProg != null){
-            for(SessionProgram item : lstSesProg){
-                sessionProgramRepository.delete(sessionProgramRepository.findById(item.getId()));
+            List<SessionProgram> lstSesProg = mongoTemplate.find(query, SessionProgram.class);
+            if(lstSesProg != null){
+                for(SessionProgram item : lstSesProg){
+                    sessionProgramRepository.delete(sessionProgramRepository.findById(item.getId()));
+                }
             }
-        }
 
-        if(programRepository.findById(id) != null){
             programRepository.delete(programRepository.findById(id));
             result = 1;
         }

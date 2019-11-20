@@ -30,6 +30,7 @@ public class History {
     private Integer order = null;
     private String processing = null;
     private String dateAction = null;
+    private String level = null;
 
     public String get_id() {
         return _id;
@@ -151,5 +152,13 @@ public class History {
 
     public void setDateAction(String dateAction) {
         this.dateAction = dateAction;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }
