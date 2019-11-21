@@ -191,4 +191,20 @@ public class ProgramUserServiceImp implements ProgramUserService {
             return 0;
         }
     }
+
+    public List<Program> getListProgramByUserId(String userId) {
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId));
+        List<ProgramUser> lstProgUser = mongoTemplate.find(query, ProgramUser.class);
+
+        List<Program> lstProg = new ArrayList<>();
+        for(ProgramUser progUser: lstProgUser){
+            Program prog = programRepository.findById(progUser.getProgId());
+            prog.setIsFinished(progUser.getIsFinished());
+            lstProg.add(prog);
+        }
+
+        return lstProg;
+    }
 }

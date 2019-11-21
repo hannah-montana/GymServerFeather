@@ -5,6 +5,8 @@
  */
 package io.swagger.api;
 
+import io.swagger.model.CurrentCustomer;
+import io.swagger.model.CustomerDashboard;
 import io.swagger.model.LoginModel;
 import io.swagger.model.User;
 import io.swagger.annotations.*;
@@ -157,6 +159,82 @@ public interface UsersApi {
             consumes = { "application/json" },
             method = RequestMethod.PUT)
     ResponseEntity<Integer> updatePhoto(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body);
+
+    /*
+     * get CustomerDashboard
+     * */
+
+    @ApiOperation(value = "get CustomerDashboard object", nickname = "getCustomerDashboard", response = CustomerDashboard.class, notes = "", tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = CustomerDashboard.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/users/customerDashboard/{userId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<CustomerDashboard> getCustomerDashboard(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+
+    /*
+     * get CustomerDashboard
+     * */
+
+    @ApiOperation(value = "get HealthStatus object", nickname = "getHeathStatus", response = Integer.class, notes = "", tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Integer.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/users/healthStatus/{userId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<Integer> getHeathStatus(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+
+    /*
+     * get CustomerDashboard
+     * */
+
+    @ApiOperation(value = "get CurrentCustomer object", nickname = "getCurrentCustomerDashboard", response = CurrentCustomer.class, notes = "", tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = CurrentCustomer.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/users/currentCustomerDashboard/{userId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<CurrentCustomer> getCurrentCustomerDashboard(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+
+
+    /*
+     * get History Points
+     * */
+
+    @ApiOperation(value = "get History Points", nickname = "getHisotrySession",  notes = "", tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Integer.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/users/historyPoint/{userId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<Map<String,Integer>> getHisotryPointOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+
+    /*
+     * get History Calorie
+     * */
+
+    @ApiOperation(value = "get History Calorie", nickname = "getHisotryCalorie",  notes = "", tags={ "User", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Integer.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "User was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/users/historyCalorie/{userId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<Map<String,Integer>> getHisotryCalorieOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
 
 
 }

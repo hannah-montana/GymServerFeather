@@ -1,8 +1,6 @@
 package io.swagger.service;
 
-import io.swagger.model.LoginModel;
-import io.swagger.model.ProgramUser;
-import io.swagger.model.User;
+import io.swagger.model.*;
 import io.swagger.repository.ProgramUserRepository;
 import io.swagger.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import javax.jws.soap.SOAPBinding;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("userService")
 public class UserServiceImp implements UserService {
@@ -24,6 +24,18 @@ public class UserServiceImp implements UserService {
 
     private UserRepository userRepo;
     private ProgramUserRepository programUserRepository;
+
+    @Autowired
+    ProgramUserService programUserService;
+
+    @Autowired
+    SessionProgramService sessionProgramService;
+
+    @Autowired
+    ExerciseSessionService exerciseSessionService;
+
+    @Autowired
+    HistoryService historyService;
 
     public int getEasyPoint() {
         return 10;
@@ -39,7 +51,8 @@ public class UserServiceImp implements UserService {
         return 50;
     }
 
-    public UserServiceImp(UserRepository userRepo, ProgramUserRepository programUserRepository) {
+    public UserServiceImp(UserRepository userRepo,
+                          ProgramUserRepository programUserRepository) {
         this.userRepo = userRepo;
         this.programUserRepository = programUserRepository;
     }
@@ -207,5 +220,171 @@ public class UserServiceImp implements UserService {
             return 1;
         }
         return 0;
+    }
+
+    @Override
+    public CustomerDashboard getCustomerDashboard(String userId) {
+
+        List<Program> lstProg = new ArrayList<>();
+
+        int calorie = 0;
+        int point = 0;
+        int duration = 0;
+
+        int totalCalories = 0;
+        int totalDuration = 0;
+        int totalPoint = 0;
+        int totalNumberEx = 0;
+
+        lstProg = this.programUserService.getListProgramByUserId(userId);
+
+        for(Program prog: lstProg){
+            List<Session> lstSess = new ArrayList<>();
+            lstSess = this.sessionProgramService.getListSessionsByProgramId(prog.getId());
+
+            for(Session sess: lstSess){
+                List<Exercise> lstEx = new ArrayList<>();
+                lstEx = this.exerciseSessionService.getListExercisesBySessionId(sess.getId());
+
+                for(Exercise ex: lstEx){
+                    point = ex.getPoint();
+                    calorie = ex.getCalorie();
+                    duration = ex.getDuration();
+
+                    totalCalories+=calorie;
+                    totalPoint+=point;
+                    totalDuration+=duration;
+                    totalNumberEx++;
+                }
+            }
+        }
+
+        CustomerDashboard customerDashboard = new CustomerDashboard();
+        customerDashboard.setPoint(totalPoint);
+        customerDashboard.setCalorie(totalCalories);
+        customerDashboard.setDuration(totalDuration);
+        customerDashboard.setNumEx(totalNumberEx);
+
+        return customerDashboard;
+    }
+
+    @Override
+    public CurrentCustomer getCurrentCustomer(String userId) {
+
+        List<History> lsHis = new ArrayList<>();
+
+        int currentCalorie = 0;
+        int currentDuration = 0;
+        int currentPoint = 0;
+        int currentNumberEx = 0;
+        int currentNumberExEasy = 0;
+        int currentNumberExMedium = 0;
+        int currentNumberExDifficult = 0;
+
+
+
+        lsHis = this.historyService.getListHistoryByUserId(userId);
+
+        for(History history: lsHis){
+            currentCalorie += history.getCalorie();
+            currentDuration += history.getPraticalDuration();
+            currentPoint += history.getPoint();
+            currentNumberEx ++;
+
+            String level = history.getLevel();
+
+            switch(level) {
+                case "Easy":
+                    currentNumberExEasy++;
+                    break;
+                case "Medium":
+                    currentNumberExMedium++;
+                    break;
+                case "Difficult":
+                    currentNumberExDifficult++;
+                    break;
+            }
+
+        }
+
+        CurrentCustomer currentCustomer = new CurrentCustomer();
+        currentCustomer.setCalorie(currentCalorie);
+        currentCustomer.setPracDuration(currentDuration);
+        currentCustomer.setPoint(currentPoint);
+        currentCustomer.setNumEx(currentNumberEx);
+        currentCustomer.setNumExEasy(currentNumberExEasy);
+        currentCustomer.setNumExMedium(currentNumberExMedium);
+        currentCustomer.setNumExDifficult(currentNumberExDifficult);
+
+        return currentCustomer;
+    }
+
+    @Override
+    public Integer getHealthPercent(String userId) {
+        CurrentCustomer currentCustomer = new CurrentCustomer();
+        CustomerDashboard customerDashboard = new CustomerDashboard();
+
+        int totalPoints = 0;
+        int currentPoint = 0;
+        //HealthStatus healthStatus = new HealthStatus();
+
+        currentPoint = this.getCurrentCustomer(userId).getPoint();
+        //currentPoint = currentCustomer.getPoint();
+        totalPoints = this.getCustomerDashboard(userId).getPoint();
+
+        int healthPercent = 0;
+        healthPercent =  (int)(((float)currentPoint/(float)totalPoints)*100);
+
+        return healthPercent;
+    }
+
+    @Override
+    public Map<String,Integer> getMapPointOfSessionByUserId(String userId) {
+        List<Session> lstSess = new ArrayList<>();
+        Map<String, Integer> mapSessPoint = new HashMap<>();
+
+        lstSess = this.historyService.getListSessionsByUserId(userId);
+
+        for(Session sess: lstSess){
+            Query query = new Query();
+            query.addCriteria(Criteria.where("sessId").is(sess.getId()));
+            List<History> lstHistory = mongoTemplate.find(query, History.class);
+
+            int totalPointOfSession = 0;
+
+            for(History history: lstHistory){
+                int point= history.getPoint();
+                totalPointOfSession+=point;
+            }
+
+            mapSessPoint.put(sess.getId(),totalPointOfSession);
+        }
+
+        return mapSessPoint;
+    }
+
+    @Override
+    public Map<String, Integer> getMapCalorieOfSessionByUserId(String userId) {
+        List<Session> lstSess = new ArrayList<>();
+        Map<String, Integer> mapSessCalorie = new HashMap<>();
+
+        lstSess = this.historyService.getListSessionsByUserId(userId);
+
+        for(Session sess: lstSess){
+            Query query = new Query();
+            query.addCriteria(Criteria.where("sessId").is(sess.getId()));
+            List<History> lstHistory = mongoTemplate.find(query, History.class);
+
+            int totalCalorieOfSession = 0;
+
+            for(History history: lstHistory){
+                int calorie= history.getCalorie();
+                totalCalorieOfSession+=calorie;
+            }
+
+            mapSessCalorie.put(sess.getId(),totalCalorieOfSession);
+        }
+
+        return mapSessCalorie;
     }
 }

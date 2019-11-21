@@ -1,5 +1,7 @@
 package io.swagger.api;
 
+import io.swagger.model.CurrentCustomer;
+import io.swagger.model.CustomerDashboard;
 import io.swagger.model.LoginModel;
 import io.swagger.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +23,7 @@ import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 @javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2019-10-08T12:40:40.535Z[GMT]")
@@ -176,5 +179,45 @@ public class UsersApiController implements UsersApi {
         }catch (Exception e){
             return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @Override
+    public ResponseEntity<CustomerDashboard> getCustomerDashboard(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
+        CustomerDashboard customerDashboard= new CustomerDashboard();
+
+        customerDashboard = this.userService.getCustomerDashboard(userId);
+        //totalPoint = this.userService.getTotalPoints(userId);
+        return new ResponseEntity<CustomerDashboard>(customerDashboard, HttpStatus.OK);
+
+    }
+
+    @Override
+    public ResponseEntity<Integer> getHeathStatus(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
+        int healthPercent = 0;
+        healthPercent = this.userService.getHealthPercent(userId);
+        return new ResponseEntity<Integer>(healthPercent, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<CurrentCustomer> getCurrentCustomerDashboard(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
+        CurrentCustomer currentCustomer= new CurrentCustomer();
+
+        currentCustomer = this.userService.getCurrentCustomer(userId);
+        return new ResponseEntity<CurrentCustomer>(currentCustomer, HttpStatus.OK);
+
+    }
+
+    @Override
+    public ResponseEntity<Map<String,Integer>> getHisotryPointOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
+        Map<String, Integer> mapSessPoint = new HashMap<>();
+        mapSessPoint = this.userService.getMapPointOfSessionByUserId(userId);
+        return new ResponseEntity<Map<String,Integer>>(mapSessPoint, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Map<String,Integer>> getHisotryCalorieOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
+        Map<String, Integer> mapSessCalorie = new HashMap<>();
+        mapSessCalorie = this.userService.getMapCalorieOfSessionByUserId(userId);
+        return new ResponseEntity<Map<String,Integer>>(mapSessCalorie, HttpStatus.OK);
     }
 }

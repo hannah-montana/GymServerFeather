@@ -13,4 +13,6 @@ public interface ProgramUserService {
     Integer assignProgramToUser(ProgramUser proUser);
 
     Integer checkUserAvailableForAssign(String userId);
+
+    List<Program> getListProgramByUserId(String userId);
 }

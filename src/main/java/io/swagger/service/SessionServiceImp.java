@@ -1,25 +1,25 @@
 package io.swagger.service;
 
 import io.swagger.model.ExerciseSession;
-import io.swagger.model.ProgramUser;
+import io.swagger.model.History;
 import io.swagger.model.Session;
 import io.swagger.repository.ExerciseSessionRepository;
+import io.swagger.repository.HistoryRepository;
 import io.swagger.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service("sessionService")
 public class SessionServiceImp implements SessionService{
     private SessionRepository sessionRepository;
     private ExerciseSessionRepository exerciseSessionRepository;
+    private HistoryRepository historyRepository;
 
     @Autowired
     MongoTemplate mongoTemplate;
@@ -34,9 +34,11 @@ public class SessionServiceImp implements SessionService{
     SessionProgramService sessionProgramService;
 
     public SessionServiceImp(SessionRepository sessionRepository,
-                             ExerciseSessionRepository exerciseSessionRepository) {
+                             ExerciseSessionRepository exerciseSessionRepository,
+                             HistoryRepository historyRepository) {
         this.sessionRepository = sessionRepository;
         this.exerciseSessionRepository = exerciseSessionRepository;
+        this.historyRepository = historyRepository;
     }
 
     @Override
@@ -195,14 +197,43 @@ public class SessionServiceImp implements SessionService{
     }
 
     public List<Session> getListCurrentSessionByUserId(String userId){
-        Query query = new Query();
+        /*Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(userId).andOperator(Criteria.where("isFinished").is("Not yet")));
 
         ProgramUser pro = mongoTemplate.findOne(query, ProgramUser.class);
         if(pro != null){
             List<Session> lst = sessionProgramService.getListSessionsByProgramId(pro.getProgId());
             return lst;
+        }*/
+
+        /*
+        * Find by userid in History
+        * get current processing
+        * order by order field
+        * */
+        List<Session> lstSession = new ArrayList<>();
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId).andOperator(Criteria.where("processing").is("1")));
+        Sort sort = new Sort(Sort.Direction.ASC, "order");
+        query.with(sort);
+
+        List<History> lstHistory = mongoTemplate.find(query, History.class);
+
+        if(lstHistory.size() > 0){
+            //get unique session id
+            ArrayList<String> lstSessionId = new ArrayList<>();
+            for(History item: lstHistory){
+                lstSessionId.add(item.getSessId());
+            }
+            HashSet<String> unique = new HashSet(lstSessionId);
+
+            //get current session
+            for(String item:unique){
+                Session session = sessionRepository.findById(item);
+                if(session != null)
+                    lstSession.add(session);
+            }
         }
-        return null;
+        return lstSession;
     }
 }
