@@ -101,6 +101,7 @@ public class UserServiceImp implements UserService {
             res.setRole(u.getRole());
             res.setStatus("login");
             res.setCoachId(u.getCoachId());
+            res.setBadge(u.getBadge());
         }
         return res;
     }
@@ -120,6 +121,7 @@ public class UserServiceImp implements UserService {
         query.fields().include("note");
         query.fields().include("level");
         query.fields().include("coachId");
+        query.fields().include("badge");
 
         query.addCriteria(Criteria.where("id").is(id));
         user = mongoTemplate.findOne(query, User.class);

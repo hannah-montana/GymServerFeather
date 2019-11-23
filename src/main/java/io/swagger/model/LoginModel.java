@@ -17,6 +17,7 @@ public class LoginModel {
     private String email;
     private String note;
     private String coachId;
+    private String badge;
 
     public LoginModel(){}
 
@@ -130,5 +131,13 @@ public class LoginModel {
 
     public void setCoachId(String coachId) {
         this.coachId = coachId;
+    }
+
+    public String getBadge() {
+        return badge;
+    }
+
+    public void setBadge(String badge) {
+        this.badge = badge;
     }
 }

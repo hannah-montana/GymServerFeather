@@ -10,4 +10,6 @@ public interface NotificationService {
     Integer createNew(Notification noti);
     Integer updateRead(String id);
     Integer validateFocusSession(Notification noti);
+    Integer checkSendValidateFocusSession(String focusSessionId, String fromUser);
+    Integer responseFocusSession(Notification noti);
 }

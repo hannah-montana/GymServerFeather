@@ -113,8 +113,8 @@ public class NotificationServiceImp implements NotificationService{
                 Query query = new Query();
                 query.addCriteria(Criteria.where("userId").is(noti.getFromUser())
                         .andOperator(Criteria.where("sessId").is(noti.getFocusSessionId())
-                        .andOperator(Criteria.where("processing").is("1")
-                        .andOperator(Criteria.where("sendValidateFS").is("0"))
+                            .andOperator(Criteria.where("processing").is("1")
+                                .andOperator(Criteria.where("sendValidateFS").is("0"))
                         )));
 
                 List<History> lstHistory = mongoTemplate.find(query, History.class);
@@ -127,6 +127,92 @@ public class NotificationServiceImp implements NotificationService{
                 return 1;
             }
         }catch (Exception e){
+            return 0;
+        }
+        return 0;
+    }
+
+    public Integer checkSendValidateFocusSession(String focusSessionId, String fromUser){
+        try{
+            Query query = new Query();
+            query.addCriteria(Criteria.where("userId").is(fromUser)
+                .andOperator(Criteria.where("sessId").is(focusSessionId)
+                        .andOperator(Criteria.where("processing").is("1")
+                                .andOperator(Criteria.where("focusSession").is(1)
+                                        .andOperator(Criteria.where("sendValidateFS").is("1")
+                                                //.andOperator(Criteria.where("validatedByCoach").is("0"))
+                                        )
+                                )
+                        )
+                )
+            );
+            List<History> lstHistory = mongoTemplate.find(query, History.class);
+            if(lstHistory != null){
+                if(lstHistory.get(0).getValidatedByCoach().equals("1"))
+                    return 2;
+                return 1;
+            }
+        }catch (Exception e){
+            return 0;
+        }
+        return 0;
+    }
+
+    public Integer responseFocusSession(Notification noti){
+        /*
+        * 1. update Notification table
+        * 2. update History table
+        * 3. enable further session
+        * */
+        try{
+            Notification notification = notificationRepository.findById(noti.getId());
+            if(notification != null){
+                //1. update Notification table
+                notification.setValidatedFromCoach("1");
+                notificationRepository.save(notification);
+
+                //2. update History table
+                Query query = new Query();
+                query.addCriteria(Criteria.where("userId").is(noti.getFromUser())
+                        .andOperator(Criteria.where("sessId").is(noti.getFocusSessionId())
+                                .andOperator(Criteria.where("processing").is("1")
+                                        .andOperator(Criteria.where("focusSession").is(1)
+                                                .andOperator(Criteria.where("sendValidateFS").is("1")
+                                                        .andOperator(Criteria.where("validatedByCoach").is("0"))
+                                                )
+                                        )
+                                )
+                        )
+                );
+                int nextOrder = 0;
+                List<History> lstHistory = mongoTemplate.find(query, History.class);
+                if(lstHistory != null){
+                    for(History history: lstHistory){
+                        history.setValidatedByCoach("1");
+                        nextOrder = history.getOrder();
+                        historyRepository.save(history);
+                    }
+                }
+                nextOrder++;
+
+                //3. enable further session
+                Query queryFurther = new Query();
+                queryFurther.addCriteria(Criteria.where("userId").is(noti.getFromUser())
+                        .andOperator(Criteria.where("order").is(String.valueOf(nextOrder))
+                                .andOperator(Criteria.where("processing").is("0"))
+                        )
+                );
+                List<History> lstFurtherHistory = mongoTemplate.find(queryFurther, History.class);
+                if(lstFurtherHistory != null){
+                    for(History history: lstFurtherHistory){
+                        history.setProcessing("1");
+                        historyRepository.save(history);
+                    }
+                }
+                return 1;
+            }
+        }catch (Exception e)
+        {
             return 0;
         }
         return 0;

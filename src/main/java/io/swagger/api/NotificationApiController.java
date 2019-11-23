@@ -50,9 +50,9 @@ public class NotificationApiController implements NotificationApi {
             return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    public ResponseEntity<Integer> updateRead(@ApiParam(value = "",required=true) @PathVariable("id") String id){
+    public ResponseEntity<Integer> updateRead(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Notification noti){
         try{
-            int res = notificationService.updateRead(id);
+            int res = notificationService.updateRead(noti.getId());
 
             return new ResponseEntity<Integer>(res, HttpStatus.INTERNAL_SERVER_ERROR);
         }catch (Exception e){
@@ -69,11 +69,22 @@ public class NotificationApiController implements NotificationApi {
         }
     }
 
-    public ResponseEntity<Integer> checkValidateFocusSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId){
+    public ResponseEntity<Integer> checkSendValidateFocusSession(@ApiParam(value = "",required=true) @PathVariable("focusSessionId") String focusSessionId,
+                                                                 @ApiParam(value = "",required=true) @PathVariable("fromUser") String fromUser){
         try{
-            //int res = notificationService.validateFocusSession(noti);
+            int res = notificationService.checkSendValidateFocusSession(focusSessionId, fromUser);
 
-            return new ResponseEntity<Integer>(1, HttpStatus.OK);
+            return new ResponseEntity<Integer>(res, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<Integer> validateFSByCoach(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Notification noti){
+        try {
+            int res = notificationService.responseFocusSession(noti);
+
+            return new ResponseEntity<Integer>(res, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
