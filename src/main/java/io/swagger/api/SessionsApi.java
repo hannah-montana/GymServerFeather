@@ -127,4 +127,15 @@ public interface SessionsApi {
             method = RequestMethod.GET)
     ResponseEntity<List<Session>> getListCurrentSessionsByUserId(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
 
+    @ApiOperation(value = "get further session by user id", nickname = "getFurthertSessionsByUserId", notes = "", response = Session.class, tags={ "Session", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Session.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Session was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/sessions/getFurtherSessionByUserId/{userId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<List<Session>> getFurthertSessionsByUserId(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+
 }

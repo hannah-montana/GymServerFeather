@@ -197,15 +197,6 @@ public class SessionServiceImp implements SessionService{
     }
 
     public List<Session> getListCurrentSessionByUserId(String userId){
-        /*Query query = new Query();
-        query.addCriteria(Criteria.where("userId").is(userId).andOperator(Criteria.where("isFinished").is("Not yet")));
-
-        ProgramUser pro = mongoTemplate.findOne(query, ProgramUser.class);
-        if(pro != null){
-            List<Session> lst = sessionProgramService.getListSessionsByProgramId(pro.getProgId());
-            return lst;
-        }*/
-
         /*
         * Find by userid in History
         * get current processing
@@ -222,11 +213,45 @@ public class SessionServiceImp implements SessionService{
         if(lstHistory.size() > 0){
             //get unique session id
             ArrayList<String> lstSessionId = new ArrayList<>();
+            ArrayList<Integer> lstOrder = new ArrayList<>();
+
             for(History item: lstHistory){
                 lstSessionId.add(item.getSessId());
             }
-            HashSet<String> unique = new HashSet(lstSessionId);
+            //HashSet<String> unique = new HashSet(lstSessionId);
+            LinkedHashSet<String> unique = new LinkedHashSet<String>(lstSessionId);
 
+            //get current session
+            for(String item:unique){
+                Session session = sessionRepository.findById(item);
+                if(session != null)
+                    lstSession.add(session);
+            }
+        }
+        return lstSession;
+    }
+
+    public List<Session> getFurtherSessionByUserId(String userId){
+        /*
+         * Find by userid in History
+         * get further processing
+         * order by order field
+         * */
+        List<Session> lstSession = new ArrayList<>();
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId).andOperator(Criteria.where("processing").is("0")));
+        Sort sort = new Sort(Sort.Direction.ASC, "order");
+        query.with(sort);
+
+        List<History> lstHistory = mongoTemplate.find(query, History.class);
+
+        if(lstHistory.size() > 0){
+            //get unique session id
+            ArrayList<String> lstSessionId = new ArrayList<>();
+            for(History item: lstHistory){
+                lstSessionId.add(item.getSessId());
+            }
+            LinkedHashSet<String> unique = new LinkedHashSet<String>(lstSessionId);
             //get current session
             for(String item:unique){
                 Session session = sessionRepository.findById(item);

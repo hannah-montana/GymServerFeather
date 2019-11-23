@@ -158,4 +158,13 @@ public class SessionsApiController implements SessionsApi {
             return new ResponseEntity<List<Session>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    public ResponseEntity<List<Session>> getFurthertSessionsByUserId(@ApiParam(value = "",required=true) @PathVariable("userId") String userId){
+        try{
+            List<Session> lst = sessionService.getFurtherSessionByUserId(userId);
+            return new ResponseEntity<List<Session>>(lst, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<List<Session>>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

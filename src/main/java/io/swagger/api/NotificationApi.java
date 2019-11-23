@@ -45,4 +45,25 @@ public interface NotificationApi {
             method = RequestMethod.PUT)
     ResponseEntity<Integer> updateRead(@ApiParam(value = "",required=true) @PathVariable("id") String id);
 
+    @ApiOperation(value = "Validate focus Session", nickname = "validateFocusSession", notes = "", response = Notification.class, responseContainer = "List", tags={ "Notification", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = BooleanOperators.Not.class, responseContainer = "List"),
+            @ApiResponse(code = 405, message = "Invalid input") })
+    @RequestMapping(value = "/notification/validate",
+            produces = { "application/json" },
+            consumes = { "application/json" },
+            method = RequestMethod.POST)
+    ResponseEntity<Integer> validateFocusSession(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Notification noti);
+
+    @ApiOperation(value = "check validated focus session", nickname = "checkValidateFocusSession", notes = "", response = Notification.class, tags={ "Notification", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Notification.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Exercise was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/notification/checkValidated/{userId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<Integer> checkValidateFocusSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+
 }

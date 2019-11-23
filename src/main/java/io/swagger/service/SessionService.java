@@ -18,4 +18,5 @@ public interface SessionService {
 
     List<Session> getListCurrentSessionByUserId(String userId);
 
+    List<Session> getFurtherSessionByUserId(String userId);
 }

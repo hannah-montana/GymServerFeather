@@ -59,4 +59,23 @@ public class NotificationApiController implements NotificationApi {
             return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    public ResponseEntity<Integer> validateFocusSession(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Notification noti){
+        try{
+            int res = notificationService.validateFocusSession(noti);
+
+            return new ResponseEntity<Integer>(res, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<Integer> checkValidateFocusSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId){
+        try{
+            //int res = notificationService.validateFocusSession(noti);
+
+            return new ResponseEntity<Integer>(1, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

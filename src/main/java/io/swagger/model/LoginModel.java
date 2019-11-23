@@ -16,6 +16,7 @@ public class LoginModel {
     private String photo;
     private String email;
     private String note;
+    private String coachId;
 
     public LoginModel(){}
 
@@ -121,5 +122,13 @@ public class LoginModel {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getCoachId() {
+        return coachId;
+    }
+
+    public void setCoachId(String coachId) {
+        this.coachId = coachId;
     }
 }

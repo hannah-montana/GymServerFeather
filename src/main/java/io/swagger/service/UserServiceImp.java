@@ -100,6 +100,7 @@ public class UserServiceImp implements UserService {
             res.setLevel(u.getLevel());
             res.setRole(u.getRole());
             res.setStatus("login");
+            res.setCoachId(u.getCoachId());
         }
         return res;
     }

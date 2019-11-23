@@ -31,6 +31,8 @@ public class History {
     private String processing = null;
     private String dateAction = null;
     private String level = null;
+    private String sendValidateFS = null;
+    private String validatedByCoach = null;
 
     public String get_id() {
         return _id;
@@ -160,5 +162,21 @@ public class History {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getSendValidateFS() {
+        return sendValidateFS;
+    }
+
+    public void setSendValidateFS(String sendValidateFS) {
+        this.sendValidateFS = sendValidateFS;
+    }
+
+    public String getValidatedByCoach() {
+        return validatedByCoach;
+    }
+
+    public void setValidatedByCoach(String validatedByCoach) {
+        this.validatedByCoach = validatedByCoach;
     }
 }
