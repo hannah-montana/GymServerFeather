@@ -54,7 +54,7 @@ public class NotificationApiController implements NotificationApi {
         try{
             int res = notificationService.updateRead(noti.getId());
 
-            return new ResponseEntity<Integer>(res, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Integer>(res, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

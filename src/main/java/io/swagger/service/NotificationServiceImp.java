@@ -60,6 +60,7 @@ public class NotificationServiceImp implements NotificationService{
 
                 noti.setId(String.valueOf(maxId));
                 noti.setRead("0");
+                noti.setTemp(maxId);
 
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 String dateString = format.format(new Date());
