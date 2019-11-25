@@ -7,6 +7,7 @@ package io.swagger.api;
 
 import io.swagger.model.Session;
 import io.swagger.annotations.*;
+import io.swagger.models.auth.In;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -137,5 +138,17 @@ public interface SessionsApi {
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<List<Session>> getFurthertSessionsByUserId(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+
+    @ApiOperation(value = "check session finish or not", nickname = "checkFinisedSession", notes = "", response = Integer.class, tags={ "Session", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Integer.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Session was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/sessions/checkFinish/{userId}/{sessId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<Integer> checkFinisedSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId,
+                                                      @ApiParam(value = "",required=true) @PathVariable("sessId") String sessId);
 
 }

@@ -208,16 +208,16 @@ public class UsersApiController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<Map<String,Integer>> getHisotryPointOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
-        Map<String, Integer> mapSessPoint = new HashMap<>();
-        mapSessPoint = this.userService.getMapPointOfSessionByUserId(userId);
-        return new ResponseEntity<Map<String,Integer>>(mapSessPoint, HttpStatus.OK);
+    public ResponseEntity<List<Integer>> getHisotryPointOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
+        List<Integer> lstSessPoint = new ArrayList<>();
+        lstSessPoint = this.userService.getListPointOfSessionByUserId(userId);
+        return new ResponseEntity<List<Integer>>(lstSessPoint, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Map<String,Integer>> getHisotryCalorieOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
-        Map<String, Integer> mapSessCalorie = new HashMap<>();
-        mapSessCalorie = this.userService.getMapCalorieOfSessionByUserId(userId);
-        return new ResponseEntity<Map<String,Integer>>(mapSessCalorie, HttpStatus.OK);
+    public ResponseEntity<List<Integer>> getHisotryCalorieOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
+        List<Integer> lstSessCalorie = new ArrayList<>();
+        lstSessCalorie = this.userService.getListCalorieOfSessionByUserId(userId);
+        return new ResponseEntity<List<Integer>>(lstSessCalorie, HttpStatus.OK);
     }
 }

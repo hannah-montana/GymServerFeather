@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.models.auth.In;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
@@ -49,6 +50,8 @@ public class Session   {
   private String isChecked = null;
 
   private String coachId = null;
+
+  private Integer order = null; //use for further session
 
   public Session id(String id) {
     this.id = id;
@@ -199,6 +202,14 @@ public class Session   {
 
   public void setCoachId(String coachId) {
     this.coachId = coachId;
+  }
+
+  public Integer getOrder() {
+    return order;
+  }
+
+  public void setOrder(Integer order) {
+    this.order = order;
   }
 
   @Override

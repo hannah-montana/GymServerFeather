@@ -61,6 +61,12 @@ public class User   {
 
   private String badge = null;
 
+  private Integer calorie = null;
+
+  private Integer duration = null;
+
+  private String gender = null;
+
   public String get_id() {
     return _id;
   }
@@ -324,6 +330,30 @@ public class User   {
 
   public void setBadge(String badge) {
     this.badge = badge;
+  }
+
+  public Integer getCalorie() {
+    return calorie;
+  }
+
+  public void setCalorie(Integer calorie) {
+    this.calorie = calorie;
+  }
+
+  public Integer getDuration() {
+    return duration;
+  }
+
+  public void setDuration(Integer duration) {
+    this.duration = duration;
+  }
+
+  public String getGender() {
+    return gender;
+  }
+
+  public void setGender(String gender) {
+    this.gender = gender;
   }
 
   @Override

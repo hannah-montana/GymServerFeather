@@ -149,7 +149,7 @@ public class ProgramUserServiceImp implements ProgramUserService {
             Date date = new Date();
             String dateAction = formatter.format(date);
 
-            List<Session> lstSession = sessionProgramService.getListSessionsByProgramId(String.valueOf(maxId));
+            List<Session> lstSession = sessionProgramService.getListSessionsByProgramId(String.valueOf(proUser.getProgId()));
             for (Session sess: lstSession){
                 List<Exercise> lstExercise = exerciseSessionService.getListExercisesBySessionId(sess.getId());
 
@@ -171,6 +171,16 @@ public class ProgramUserServiceImp implements ProgramUserService {
                     history.setProcessing(processing);
                     history.setDateAction(dateAction);
                     history.setLevel(ex.getLevel());
+                    history.setName(ex.getName());
+                    history.setDescription(ex.getDescription());
+                    history.setInstruction(ex.getInstruction());
+                    history.setType(ex.getType());
+                    history.setPhoto(ex.getPhoto());
+                    history.setCalorie(ex.getCalorie());
+                    history.setTarget(ex.getTarget());
+                    history.setCalorie(ex.getCalorie());
+                    history.setSendValidateFS("0");
+                    history.setValidatedByCoach("0");
 
                     historyRepository.save(history);
                 }

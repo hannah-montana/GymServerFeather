@@ -3,12 +3,47 @@
   <component name="ChangeListManager">
     <list default="true" id="b615ea90-2b01-42fe-9d3a-02a4e87e33e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/NotificationApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/NotificationApi.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/NotificationApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/NotificationApiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/model/LoginModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/model/LoginModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesSessionsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesSessionsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesSessionsApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesSessionsApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/SessionsApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/SessionsApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/SessionsApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/SessionsApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/UsersApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/UsersApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/api/UsersApiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/api/UsersApiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/model/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/model/History.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/model/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/model/Notification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/model/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/model/Session.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/repository/HistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/repository/HistoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/ExerciseSessionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/ExerciseSessionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/ExerciseSessionServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/ExerciseSessionServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/HistoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/HistoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/HistoryServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/HistoryServiceImp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/ProgramUserServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/ProgramUserServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/SessionServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/SessionServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/io/swagger/service/UserServiceImp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/io/swagger/service/UserServiceImp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/ExercisesApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/ExercisesApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/ExercisesSessionsApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/ExercisesSessionsApi.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/ExercisesSessionsApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/ExercisesSessionsApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/SessionsApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/SessionsApi.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/SessionsApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/SessionsApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/UsersApi.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/UsersApi.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/api/UsersApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/api/UsersApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/model/History.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/model/History.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/model/Session.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/model/Session.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/model/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/repository/HistoryRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/repository/HistoryRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/ExerciseSessionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/ExerciseSessionService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/ExerciseSessionServiceImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/ExerciseSessionServiceImp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/HistoryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/HistoryService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/HistoryServiceImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/HistoryServiceImp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/NotificationServiceImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/NotificationServiceImp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/ProgramUserServiceImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/ProgramUserServiceImp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/SessionServiceImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/SessionServiceImp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/io/swagger/service/UserServiceImp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/io/swagger/service/UserServiceImp.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,7 +78,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../V/GymServerFeather" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
   </component>
@@ -133,13 +168,8 @@
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesSessionsApiController.java</url>
-          <line>46</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/api/SessionsApiController.java</url>
-          <line>133</line>
+          <line>137</line>
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -149,7 +179,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/api/SessionsApiController.java</url>
-          <line>56</line>
+          <line>60</line>
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -164,17 +194,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/ExerciseSessionServiceImp.java</url>
-          <line>47</line>
+          <line>69</line>
           <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/ExerciseSessionServiceImp.java</url>
-          <line>58</line>
+          <line>80</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationServiceImp.java</url>
-          <line>34</line>
+          <line>35</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -189,7 +219,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/ProgramUserServiceImp.java</url>
-          <line>181</line>
+          <line>191</line>
           <option name="timeStamp" value="61" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -204,7 +234,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationServiceImp.java</url>
-          <line>88</line>
+          <line>90</line>
           <option name="timeStamp" value="70" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -214,17 +244,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationServiceImp.java</url>
-          <line>93</line>
+          <line>95</line>
           <option name="timeStamp" value="72" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationServiceImp.java</url>
-          <line>109</line>
+          <line>111</line>
           <option name="timeStamp" value="73" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationServiceImp.java</url>
-          <line>136</line>
+          <line>138</line>
           <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -234,18 +264,58 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationServiceImp.java</url>
-          <line>167</line>
+          <line>180</line>
           <option name="timeStamp" value="76" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationServiceImp.java</url>
-          <line>186</line>
+          <line>199</line>
           <option name="timeStamp" value="77" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/NotificationServiceImp.java</url>
-          <line>195</line>
+          <line>209</line>
           <option name="timeStamp" value="78" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/swagger/api/ExercisesSessionsApiController.java</url>
+          <line>71</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/SessionServiceImp.java</url>
+          <line>263</line>
+          <option name="timeStamp" value="85" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/ExerciseSessionServiceImp.java</url>
+          <line>128</line>
+          <option name="timeStamp" value="86" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/ExerciseSessionServiceImp.java</url>
+          <line>148</line>
+          <option name="timeStamp" value="87" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/HistoryServiceImp.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="88" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/HistoryServiceImp.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="89" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/CoachDashboardServiceImp.java</url>
+          <line>185</line>
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/io/swagger/service/CoachDashboardServiceImp.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="93" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

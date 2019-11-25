@@ -2,6 +2,7 @@ package io.swagger.service;
 
 import io.swagger.model.History;
 import io.swagger.model.Notification;
+import io.swagger.models.auth.In;
 import io.swagger.repository.HistoryRepository;
 import io.swagger.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class NotificationServiceImp implements NotificationService{
         query.addCriteria(new Criteria().orOperator(Criteria.where("fromUser").is(id),
                                                     Criteria.where("toUser").is(id)));
 
-        Sort sort = new Sort(Sort.Direction.DESC, "dateAction");
+        Sort sort = new Sort(Sort.Direction.DESC, "temp");
         query.with(sort);
 
         List<Notification> lst = mongoTemplate.find(query, Notification.class);
@@ -59,6 +60,7 @@ public class NotificationServiceImp implements NotificationService{
 
                 noti.setId(String.valueOf(maxId));
                 noti.setRead("0");
+
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 String dateString = format.format(new Date());
                 noti.setDateAction(dateString);
@@ -139,9 +141,9 @@ public class NotificationServiceImp implements NotificationService{
                 .andOperator(Criteria.where("sessId").is(focusSessionId)
                         .andOperator(Criteria.where("processing").is("1")
                                 .andOperator(Criteria.where("focusSession").is(1)
-                                        .andOperator(Criteria.where("sendValidateFS").is("1")
+                                        //.andOperator(Criteria.where("sendValidateFS").is("1")
                                                 //.andOperator(Criteria.where("validatedByCoach").is("0"))
-                                        )
+                                        //)
                                 )
                         )
                 )
@@ -149,8 +151,18 @@ public class NotificationServiceImp implements NotificationService{
             List<History> lstHistory = mongoTemplate.find(query, History.class);
             if(lstHistory != null){
                 if(lstHistory.get(0).getValidatedByCoach().equals("1"))
-                    return 2;
-                return 1;
+                    return 2; //coach already validate
+
+                //if not finish -> return 3
+                for(History his: lstHistory){
+                    if(his.getPraticalDuration() == 0)
+                        return 3; //haven't finish
+                }
+                for(History his: lstHistory){
+                    if(his.getSendValidateFS().equals("1"))
+                        return 4;  //already sent request
+                }
+                return 1; //proceed send request validation
             }
         }catch (Exception e){
             return 0;
@@ -163,6 +175,7 @@ public class NotificationServiceImp implements NotificationService{
         * 1. update Notification table
         * 2. update History table
         * 3. enable further session
+        * 4. send notification to customer
         * */
         try{
             Notification notification = notificationRepository.findById(noti.getId());
@@ -189,6 +202,7 @@ public class NotificationServiceImp implements NotificationService{
                 if(lstHistory != null){
                     for(History history: lstHistory){
                         history.setValidatedByCoach("1");
+                        history.setProcessing("2"); //done
                         nextOrder = history.getOrder();
                         historyRepository.save(history);
                     }
@@ -198,7 +212,7 @@ public class NotificationServiceImp implements NotificationService{
                 //3. enable further session
                 Query queryFurther = new Query();
                 queryFurther.addCriteria(Criteria.where("userId").is(noti.getFromUser())
-                        .andOperator(Criteria.where("order").is(String.valueOf(nextOrder))
+                        .andOperator(Criteria.where("order").is(nextOrder)
                                 .andOperator(Criteria.where("processing").is("0"))
                         )
                 );
@@ -209,6 +223,17 @@ public class NotificationServiceImp implements NotificationService{
                         historyRepository.save(history);
                     }
                 }
+
+                //4. send notification to customer
+                Notification notification1 = new Notification();
+                notification1.setNotifyContent("Attention! Your FOCUS SESSION has been validated.");
+                notification1.setFromUser(noti.getToUser());
+                notification1.setToUser(noti.getFromUser());
+                notification1.setFocusSessionId(noti.getFocusSessionId());
+                notification1.setValidatedFromCoach("1");
+                notification1.setValidatedFromCustomer("1");
+                createNew(notification1);
+
                 return 1;
             }
         }catch (Exception e)

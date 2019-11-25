@@ -33,6 +33,13 @@ public class History {
     private String level = null;
     private String sendValidateFS = null;
     private String validatedByCoach = null;
+    private String name = null;
+    private String description = null;
+    private String instruction = null;
+    private String type = null;
+    private String photo = null;
+    private Integer calories = null;
+    private String target = null;
 
     public String get_id() {
         return _id;
@@ -178,5 +185,61 @@ public class History {
 
     public void setValidatedByCoach(String validatedByCoach) {
         this.validatedByCoach = validatedByCoach;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getInstruction() {
+        return instruction;
+    }
+
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public Integer getCalories() {
+        return calories;
+    }
+
+    public void setCalories(Integer calories) {
+        this.calories = calories;
+    }
+
+    public String getTarget() {
+        return target;
+    }
+
+    public void setTarget(String target) {
+        this.target = target;
     }
 }

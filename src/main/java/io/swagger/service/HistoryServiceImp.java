@@ -52,12 +52,56 @@ public class HistoryServiceImp implements HistoryService{
 
         for(History history: lsHistory){
             Session sess = sessionRepository.findById(history.getSessId());
-            /*if(!lstSess.contains(sess)){
+            if(!lstSess.contains(sess)){
                 lstSess.add(sess);
-            }*/
-            lstSess.add(sess);
+            }
+            //lstSess.add(sess);
         }
 
         return lstSess;
+    }
+
+    public Integer checkFinishedSession(String sessId, String userId){
+        try {
+            Query query = new Query();
+            query.addCriteria(Criteria.where("userId").is(userId)
+                    .andOperator(Criteria.where("sessId").is(sessId)
+                            .andOperator(Criteria.where("processing").is("1")
+                            )
+                    )
+            );
+            List<History> lstHistory = mongoTemplate.find(query, History.class);
+            int nextOrder = 0;
+            if(lstHistory != null){
+                for(History his: lstHistory){
+                    nextOrder = his.getOrder();
+                    if(his.getPraticalDuration() == 0)
+                        return 1; //haven't finish
+                }
+
+                nextOrder++;
+                /*
+                * Check next session
+                * If focus session -> send report
+                * Else -> cannot sent
+                * */
+                Query query2 = new Query();
+                query2.addCriteria(Criteria.where("userId").is(userId)
+                        .andOperator(Criteria.where("processing").is("0")
+                                .andOperator(Criteria.where("order").is(nextOrder)
+                                )
+                        )
+                );
+                List<History> lstHistory2 = mongoTemplate.find(query2, History.class);
+                if(lstHistory2 != null){
+                    if(lstHistory2.get(0).getFocusSession() == 1)
+                        return 2; //next session is focus session -> send report
+                }
+                return 3; //next session is not fs
+            }
+            return 0;
+        }catch (Exception ex){
+            return 0;
+        }
     }
 }

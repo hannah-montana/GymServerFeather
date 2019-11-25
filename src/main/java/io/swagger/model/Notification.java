@@ -26,6 +26,7 @@ public class Notification {
     private String focusSessionId = null;
     private String validatedFromCustomer = null;
     private String validatedFromCoach = null;
+    private Integer temp = null; //equal id
 
     public String get_id() {
         return _id;
@@ -109,5 +110,13 @@ public class Notification {
 
     public void setValidatedFromCoach(String validatedFromCoach) {
         this.validatedFromCoach = validatedFromCoach;
+    }
+
+    public Integer getTemp() {
+        return temp;
+    }
+
+    public void setTemp(Integer temp) {
+        this.temp = temp;
     }
 }

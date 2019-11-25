@@ -98,7 +98,7 @@ public class ExercisesApiController implements ExercisesApi {
 
         if(ex!=null) {
             int res = exerciseService.updateExercise(ex);
-            return new ResponseEntity<Integer>(1, HttpStatus.OK);
+            return new ResponseEntity<Integer>(res, HttpStatus.OK);
         }
         return new ResponseEntity<Integer>(0, HttpStatus.OK);
 

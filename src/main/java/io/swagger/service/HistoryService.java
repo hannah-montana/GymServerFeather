@@ -8,4 +8,5 @@ import java.util.List;
 public interface HistoryService {
     List<History> getListHistoryByUserId(String userId);
     List<Session> getListSessionsByUserId(String userId);
+    Integer checkFinishedSession(String sessId, String userId);
 }

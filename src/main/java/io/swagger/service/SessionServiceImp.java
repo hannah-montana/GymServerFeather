@@ -204,7 +204,7 @@ public class SessionServiceImp implements SessionService{
         * */
         List<Session> lstSession = new ArrayList<>();
         Query query = new Query();
-        query.addCriteria(Criteria.where("userId").is(userId).andOperator(Criteria.where("processing").is("1")));
+        query.addCriteria(Criteria.where("userId").is(userId).andOperator(Criteria.where("processing").ne("0")));
         Sort sort = new Sort(Sort.Direction.ASC, "order");
         query.with(sort);
 
@@ -248,15 +248,28 @@ public class SessionServiceImp implements SessionService{
         if(lstHistory.size() > 0){
             //get unique session id
             ArrayList<String> lstSessionId = new ArrayList<>();
+            String previousSession = "0";
             for(History item: lstHistory){
-                lstSessionId.add(item.getSessId());
+                if(previousSession == "0"){
+                    lstSessionId.add(item.getSessId());
+                    previousSession = item.getSessId();
+                }
+                else{
+                    if(item.getSessId() != previousSession){
+                        lstSessionId.add(item.getSessId());
+                        previousSession = item.getSessId();
+                    }
+                }
             }
-            LinkedHashSet<String> unique = new LinkedHashSet<String>(lstSessionId);
+            //LinkedHashSet<String> unique = new LinkedHashSet<String>(lstSessionId);
             //get current session
-            for(String item:unique){
+            int order = 1;
+            for(String item:lstSessionId){
                 Session session = sessionRepository.findById(item);
+                session.setOrder(order);
                 if(session != null)
                     lstSession.add(session);
+                order++;
             }
         }
         return lstSession;

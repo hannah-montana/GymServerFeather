@@ -1,9 +1,6 @@
 package io.swagger.service;
 
-import io.swagger.model.CurrentCustomer;
-import io.swagger.model.CustomerDashboard;
-import io.swagger.model.LoginModel;
-import io.swagger.model.User;
+import io.swagger.model.*;
 import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
@@ -41,4 +38,10 @@ public interface UserService {
 
     Map<String,Integer> getMapPointOfSessionByUserId(String userId);
     Map<String,Integer> getMapCalorieOfSessionByUserId(String userId);
+
+    List<Integer> getListPointOfSessionByUserId(String userId);
+    List<Integer> getListCalorieOfSessionByUserId(String userId);
+
+    List<Ranking> getListAllRanking();
+    List<Ranking> getListTopRanking(String userId);
 }

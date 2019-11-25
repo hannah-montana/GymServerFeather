@@ -219,7 +219,7 @@ public interface UsersApi {
     @RequestMapping(value = "/users/historyPoint/{userId}",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<Map<String,Integer>> getHisotryPointOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+    ResponseEntity<List<Integer>> getHisotryPointOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
 
     /*
      * get History Calorie
@@ -234,7 +234,7 @@ public interface UsersApi {
     @RequestMapping(value = "/users/historyCalorie/{userId}",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<Map<String,Integer>> getHisotryCalorieOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+    ResponseEntity<List<Integer>> getHisotryCalorieOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
 
 
 }

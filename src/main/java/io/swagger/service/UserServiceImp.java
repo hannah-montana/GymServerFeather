@@ -11,10 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import javax.jws.soap.SOAPBinding;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("userService")
 public class UserServiceImp implements UserService {
@@ -165,6 +162,10 @@ public class UserServiceImp implements UserService {
         query.fields().include("note");
         query.fields().include("level");
         query.fields().include("coachId");
+        query.fields().include("badge");
+        query.fields().include("calorie");
+        query.fields().include("duration");
+        query.fields().include("gender");
 
         query.addCriteria(Criteria.where("role").is("2"));
 
@@ -389,5 +390,124 @@ public class UserServiceImp implements UserService {
         }
 
         return mapSessCalorie;
+    }
+
+    @Override
+    public List<Integer> getListPointOfSessionByUserId(String userId) {
+        List<Session> lstSess = new ArrayList<>();
+        List<Integer> lstPoint = new ArrayList<>();
+
+        lstSess = this.historyService.getListSessionsByUserId(userId);
+
+        for(Session sess: lstSess){
+            Query query = new Query();
+            query.addCriteria(Criteria.where("sessId").is(sess.getId()));
+            List<History> lstHistory = mongoTemplate.find(query, History.class);
+
+            int totalPointOfSession = 0;
+
+            for(History history: lstHistory){
+                int point= history.getPoint();
+                totalPointOfSession+=point;
+            }
+
+            lstPoint.add(totalPointOfSession);
+        }
+
+        return lstPoint;
+    }
+
+    @Override
+    public List<Integer> getListCalorieOfSessionByUserId(String userId) {
+        List<Session> lstSess = new ArrayList<>();
+        List<Integer> lstCalorie = new ArrayList<>();
+
+        lstSess = this.historyService.getListSessionsByUserId(userId);
+
+        for(Session sess: lstSess){
+            Query query = new Query();
+            query.addCriteria(Criteria.where("sessId").is(sess.getId()));
+            List<History> lstHistory = mongoTemplate.find(query, History.class);
+
+            int totalCalorieOfSession = 0;
+
+            for(History history: lstHistory){
+                int calorie= history.getCalorie();
+                totalCalorieOfSession+=calorie;
+            }
+
+            lstCalorie.add(totalCalorieOfSession);
+        }
+
+        return lstCalorie;
+    }
+
+    @Override
+    public List<Ranking> getListAllRanking() {
+        List<User> lstAllUsers = this.getAllCustomer();
+        List<Ranking> lstAllRanking = new ArrayList<>();
+
+
+        Collections.sort(lstAllUsers, new Comparator<User>() {
+            @Override
+            public int compare(User u1, User u2) {
+                return u2.getPoint().compareTo(u1.getPoint());
+            }
+        });
+
+        for(int i=0; i <lstAllUsers.size();i++){
+            User user = lstAllUsers.get(i);
+            Ranking ranking = new Ranking();
+            ranking.setId(user.getId());
+            ranking.setFirstName(user.getFirstName());
+            ranking.setLastName(user.getLastName());
+            ranking.setPoint(user.getPoint());
+            ranking.setBadge(user.getBadge());
+            ranking.setDuration(user.getDuration());
+            ranking.setCalorie(user.getCalorie());
+
+            lstAllRanking.add(ranking);
+        }
+
+        lstAllRanking.get(0).setRank(1);
+        for(int i=1; i <lstAllUsers.size();i++) {
+            if(lstAllRanking.get(i).getPoint()==lstAllRanking.get(i-1).getPoint()){
+                lstAllRanking.get(i).setRank(lstAllRanking.get(i-1).getRank());
+            }
+            else{
+                lstAllRanking.get(i).setRank(lstAllRanking.get(i-1).getRank()+1);
+            }
+
+        }
+        return lstAllRanking;
+    }
+
+    @Override
+    public List<Ranking> getListTopRanking(String userId) {
+
+        List<Ranking> lstAllRanking = this.getListAllRanking();
+        List<Ranking> lstTopRanking = new ArrayList<>();
+
+        User user = this.getUserById(userId);
+        if(lstAllRanking.size()>10){
+            for(int i=0; i<10; i++){
+                lstTopRanking.add(lstAllRanking.get(i));
+            }
+        }else{
+            lstTopRanking = lstAllRanking;
+        }
+
+
+        if(!lstTopRanking.contains(user.getId())){
+            lstTopRanking.remove(9);
+        }
+
+        for(Ranking currentRanking:lstAllRanking ){
+            if(user.getId().equals(currentRanking.getId())){
+                lstTopRanking.add(currentRanking);
+            }
+        }
+
+        return lstTopRanking;
     }
 }

@@ -3,6 +3,7 @@ package io.swagger.api;
 import io.swagger.model.Exercise;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
+import io.swagger.model.History;
 import io.swagger.service.ExerciseSessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,11 +51,29 @@ public class ExercisesSessionsApiController implements ExercisesSessionsApi {
         return new ResponseEntity<List<Exercise>>(lstEx, HttpStatus.OK);
     }
 
+    public ResponseEntity<List<History>> getExercisesOfSessionInHistory(@ApiParam(value = "", required = true) @PathVariable("userId") String userId,
+                                                                        @ApiParam(value = "", required = true) @PathVariable("sessId") String sessId){
+        List<History> lstEx = new ArrayList<>();
+
+        lstEx = exerciseSessionService.getExercisesOfSessionInHistory(userId, sessId);
+        return new ResponseEntity<List<History>>(lstEx, HttpStatus.OK);
+    }
+
     public ResponseEntity<List<Exercise>> getCheckListExercisesOfSession(@ApiParam(value = "", required = true) @PathVariable("sessId") String sessId){
         List<Exercise> lstEx = new ArrayList<>();
 
         lstEx = exerciseSessionService.getCheckListExercise(sessId);
 
         return new ResponseEntity<List<Exercise>>(lstEx, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Integer> updatePractical(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<History> lstHistory){
+        try {
+            int res = exerciseSessionService.updatePractical(lstHistory);
+            return new ResponseEntity<Integer>(res, HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

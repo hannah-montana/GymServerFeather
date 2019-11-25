@@ -8,6 +8,7 @@ package io.swagger.api;
 import io.swagger.model.Exercise;
 import io.swagger.annotations.*;
 import io.swagger.model.ExerciseSession;
+import io.swagger.model.History;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,18 @@ public interface ExercisesSessionsApi {
         method = RequestMethod.GET)
     ResponseEntity<List<Exercise>> getExercisesOfSession(@ApiParam(value = "Parameter description in CommonMark or HTML.", required = true) @PathVariable("sessId") String sessId);
 
+    @ApiOperation(value = "get exercises by session id, user id in table history", nickname = "getExercisesOfSessionInHistory", notes = "", response = Exercise.class, tags={ "ExercisesSessions", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Exercise.class), // reponse = ExerciseSession.class
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Session was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/exercisesSessions/history/{userId}/{sessId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<List<History>> getExercisesOfSessionInHistory(@ApiParam(value = "", required = true) @PathVariable("userId") String userId,
+                                                                 @ApiParam(value = "", required = true) @PathVariable("sessId") String sessId);
+
     @ApiOperation(value = "get check list exercise by session", nickname = "getCheckListExercisesOfSession", notes = "", response = Exercise.class, tags={ "ExercisesSessions", })
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "OK", response = Exercise.class),
@@ -48,5 +61,15 @@ public interface ExercisesSessionsApi {
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<List<Exercise>> getCheckListExercisesOfSession(@ApiParam(value = "", required = true) @PathVariable("sessId") String sessId);
+
+    @ApiOperation(value = "Update practical to History", nickname = "updatePractical", notes = "", response = History.class, responseContainer = "List", tags={ "ExercisesSessions", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = History.class, responseContainer = "List"),
+            @ApiResponse(code = 405, message = "Invalid input") })
+    @RequestMapping(value = "/history/updatePractical",
+            produces = { "application/json" },
+            consumes = { "application/json" },
+            method = RequestMethod.POST)
+    ResponseEntity<Integer> updatePractical(@ApiParam(value = "" ,required=true )  @Valid @RequestBody List<History> lstHistory);
 
 }

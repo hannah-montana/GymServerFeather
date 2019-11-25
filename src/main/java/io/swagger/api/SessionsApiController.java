@@ -5,6 +5,7 @@ import io.swagger.model.Session;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import io.swagger.service.ExerciseSessionService;
+import io.swagger.service.HistoryService;
 import io.swagger.service.SessionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,9 @@ public class SessionsApiController implements SessionsApi {
 
     @Autowired
     ExerciseSessionService exerciseSessionService;
+
+    @Autowired
+    HistoryService historyService;
 
     @org.springframework.beans.factory.annotation.Autowired
     public SessionsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -165,6 +169,16 @@ public class SessionsApiController implements SessionsApi {
             return new ResponseEntity<List<Session>>(lst, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<List<Session>>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<Integer> checkFinisedSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId,
+                                                             @ApiParam(value = "",required=true) @PathVariable("sessId") String sessId){
+        try {
+            int res = historyService.checkFinishedSession(sessId, userId);
+            return new ResponseEntity<Integer>(res, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
