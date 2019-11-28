@@ -2,7 +2,6 @@ package io.swagger.service;
 
 import io.swagger.model.History;
 import io.swagger.model.Notification;
-import io.swagger.models.auth.In;
 import io.swagger.repository.HistoryRepository;
 import io.swagger.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,6 +108,7 @@ public class NotificationServiceImp implements NotificationService{
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 String dateString = format.format(new Date());
                 noti.setDateAction(dateString);
+                noti.setTemp(maxId);
 
                 notificationRepository.save(noti);
 
@@ -241,6 +241,18 @@ public class NotificationServiceImp implements NotificationService{
         {
             return 0;
         }
+        return 0;
+    }
+
+    public Integer countNumberOfNotification(String userId){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("toUser").is(userId)
+                .andOperator(Criteria.where("read").is("0")
+                )
+        );
+        List<Notification> lstNotify = mongoTemplate.find(query, Notification.class);
+        if(lstNotify.size() > 0)
+            return lstNotify.size();
         return 0;
     }
 }

@@ -44,4 +44,6 @@ public interface UserService {
 
     List<Ranking> getListAllRanking();
     List<Ranking> getListTopRanking(String userId);
+
+    Integer createNewAccount(User user);
 }

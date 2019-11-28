@@ -9,10 +9,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("historyService")
 public class HistoryServiceImp implements HistoryService{
@@ -103,5 +100,52 @@ public class HistoryServiceImp implements HistoryService{
         }catch (Exception ex){
             return 0;
         }
+    }
+
+    public List<Evoluation> getListEvolution(String userId){
+        List<Evoluation> lstEvoluation = new ArrayList<>();
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId)
+            .andOperator(Criteria.where("focusSession").is("1")
+                    .andOperator(Criteria.where("processing").ne("0"))));
+
+        List<History> lstHistory = mongoTemplate.find(query, History.class);
+        if(lstHistory.size() > 0){
+            ArrayList<String> lstParentId = new ArrayList<>();
+            String parentId = "";
+            for(History history: lstHistory){
+                parentId = history.getParentId();
+                lstParentId.add(parentId);
+            }
+            LinkedHashSet<String> unique = new LinkedHashSet<String>(lstParentId);
+
+
+            int fsNo = 1;
+            for(String item: unique){
+                Query query2 = new Query();
+                query2.addCriteria(Criteria.where("parentId").is(item));
+                List<History> subHistorys = new ArrayList<>();
+                if(subHistorys.size() > 0) {
+                    Evoluation evoluation = new Evoluation();
+                    evoluation.setType("column");
+                    evoluation.setName("FC" + String.valueOf(fsNo));
+                    evoluation.setLegendText("FC" + String.valueOf(fsNo));
+                    evoluation.setShowInLegend(true);
+
+                    List<DataPoint> lstDataPoint = new ArrayList<>();
+                    for (History subHistory : subHistorys) {
+                        DataPoint dataPoint = new DataPoint();
+                        dataPoint.setLabel(subHistory.getName());
+                        dataPoint.setY(String.valueOf(subHistory.getPraticalDuration()));
+                        lstDataPoint.add(dataPoint);
+                    }
+                    evoluation.setDataPoints(lstDataPoint);
+                    lstEvoluation.add(evoluation);
+                }
+                fsNo++;
+            }
+        }
+
+        return lstEvoluation;
     }
 }

@@ -12,4 +12,5 @@ public interface NotificationService {
     Integer validateFocusSession(Notification noti);
     Integer checkSendValidateFocusSession(String focusSessionId, String fromUser);
     Integer responseFocusSession(Notification noti);
+    Integer countNumberOfNotification(String userId);
 }

@@ -40,6 +40,7 @@ public class History {
     private String photo = null;
     private Integer calories = null;
     private String target = null;
+    private String parentId = null;
 
     public String get_id() {
         return _id;
@@ -241,5 +242,13 @@ public class History {
 
     public void setTarget(String target) {
         this.target = target;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
 }

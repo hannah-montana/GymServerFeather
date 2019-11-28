@@ -53,6 +53,8 @@ public class Session   {
 
   private Integer order = null; //use for further session
 
+  private String parentId = null; //use for get current session: parent history id
+
   public Session id(String id) {
     this.id = id;
     return this;
@@ -210,6 +212,14 @@ public class Session   {
 
   public void setOrder(Integer order) {
     this.order = order;
+  }
+
+  public String getParentId() {
+    return parentId;
+  }
+
+  public void setParentId(String parentId) {
+    this.parentId = parentId;
   }
 
   @Override

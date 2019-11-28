@@ -1,11 +1,8 @@
 
 package io.swagger.api;
 
-import io.swagger.model.Program;
-import io.swagger.model.ProgramUser;
-import io.swagger.model.Session;
+import io.swagger.model.*;
 import io.swagger.annotations.*;
-import io.swagger.model.SessionProgram;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,5 +55,16 @@ public interface ProgramsUsersApi {
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<Integer> checkAssign(@ApiParam(value = "", required = true) @PathVariable("userId") String userId);
+
+    @ApiOperation(value = "get evoluation", nickname = "getEvoluation", notes = "", response = Evoluation.class, tags={ "ProgramUser", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Evoluation.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "User  was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/getEvoluation/{userId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<List<Evoluation>> getEvoluation(@ApiParam(value = "", required = true) @PathVariable("userId") String userId);
 
 }

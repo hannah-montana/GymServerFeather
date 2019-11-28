@@ -38,7 +38,7 @@ public interface UsersApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<List<User>> createNewUser(@ApiParam(value = "User object that needs to be added to the gym" ,required=true )  @Valid @RequestBody User body);
+    ResponseEntity<Integer> createNewUser(@ApiParam(value = "User object that needs to be added to the gym" ,required=true )  @Valid @RequestBody User body);
 
 
     @ApiOperation(value = "Delete user", nickname = "deleteUserByUserName", notes = "Delete an user.", tags={ "User", })

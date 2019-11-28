@@ -1,9 +1,11 @@
 package io.swagger.api;
 
 import io.swagger.annotations.ApiParam;
+import io.swagger.model.Evoluation;
 import io.swagger.model.Program;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.model.ProgramUser;
+import io.swagger.service.HistoryService;
 import io.swagger.service.ProgramUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,9 @@ public class ProgramsUsersApiController implements ProgramsUsersApi {
 
     @Autowired
     ProgramUserService programUserService;
+
+    @Autowired
+    HistoryService historyService;
 
     public ProgramsUsersApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
@@ -66,6 +71,15 @@ public class ProgramsUsersApiController implements ProgramsUsersApi {
             return new ResponseEntity<Integer>(res, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Integer>(-1, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public ResponseEntity<List<Evoluation>> getEvoluation(@ApiParam(value = "", required = true) @PathVariable("userId") String userId){
+        try{
+            List<Evoluation> lstEvoluation = historyService.getListEvolution(userId);
+            return new ResponseEntity<List<Evoluation>>(lstEvoluation, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<List<Evoluation>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -45,11 +45,12 @@ public interface ExercisesSessionsApi {
             @ApiResponse(code = 400, message = "Bad request"),
             @ApiResponse(code = 404, message = "Session was not found"),
             @ApiResponse(code = 200, message = "Unexpected error") })
-    @RequestMapping(value = "/exercisesSessions/history/{userId}/{sessId}",
+    @RequestMapping(value = "/exercisesSessions/history/{userId}/{sessId}/{parentId}",
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<List<History>> getExercisesOfSessionInHistory(@ApiParam(value = "", required = true) @PathVariable("userId") String userId,
-                                                                 @ApiParam(value = "", required = true) @PathVariable("sessId") String sessId);
+                                                                 @ApiParam(value = "", required = true) @PathVariable("sessId") String sessId,
+                                                                 @ApiParam(value = "", required = true) @PathVariable("parentId") String parentId);
 
     @ApiOperation(value = "get check list exercise by session", nickname = "getCheckListExercisesOfSession", notes = "", response = Exercise.class, tags={ "ExercisesSessions", })
     @ApiResponses(value = {

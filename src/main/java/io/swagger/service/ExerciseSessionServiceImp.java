@@ -1,13 +1,7 @@
 package io.swagger.service;
 
-import io.swagger.model.Exercise;
-import io.swagger.model.ExerciseSession;
-import io.swagger.model.History;
-import io.swagger.model.User;
-import io.swagger.repository.ExerciseRepository;
-import io.swagger.repository.ExerciseSessionRepository;
-import io.swagger.repository.HistoryRepository;
-import io.swagger.repository.UserRepository;
+import io.swagger.model.*;
+import io.swagger.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -27,6 +21,9 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
 
     @Autowired
     private ExerciseService exerciseService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     public ExerciseSessionServiceImp(ExerciseSessionRepository exerciseSessionRepository,
                                      ExerciseRepository exerciseRepository,
@@ -55,11 +52,13 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
         return lstEx;
     }
 
-    public List<History> getExercisesOfSessionInHistory(String userId, String sessId){
+    public List<History> getExercisesOfSessionInHistory(String userId, String sessId, String parentId){
         Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(userId)
                         .andOperator(Criteria.where("sessId").is(sessId)
-                                .andOperator(Criteria.where("processing").ne("0"))));
+                                .andOperator(Criteria.where("processing").ne("0")
+                                        .andOperator(Criteria.where("parentId").is(parentId))
+                                )));
 
         List<History> lstHistory = mongoTemplate.find(query, History.class);
 
@@ -132,49 +131,71 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
                 for (History history : lstHistory) {
                     History his = historyRepository.findById(history.getId());
                     if (his != null) {
+                        his.setPraticalDuration(history.getPraticalDuration());
                         if(his.getPraticalDuration() > 0)
                             checkFinish++;
 
                         userId = his.getUserId();
 
-                        his.setPraticalDuration(history.getPraticalDuration());
                         historyRepository.save(his);
                     }
                 }
                 /*
-                * if finish this session
+                * Finish this session
+                * if this session is a focus session -> validate
                 * next session is not focus session
                 * processing next session
+                * If not finish -> update history
                 * */
                 if(checkFinish == lstHistory.size()){
                     //get current session
                     History history = historyRepository.findById(lstHistory.get(0).getId());
 
-                    Query query = new Query();
-                    query.addCriteria(Criteria.where("userId").is(history.getUserId())
-                            .andOperator(Criteria.where("processing").is("0")
-                                    .andOperator(Criteria.where("order").is(history.getOrder()+1)
-                                    )
-                            )
-                    );
-                    List<History> lstHistory2 = mongoTemplate.find(query, History.class);
-                    if(lstHistory2.size() > 0){
-                        if(lstHistory2.get(0).getFocusSession() == 0){
-                            //next session is not focus session
-                            //update previous session with processing = 2
-                            //proceed new session
-                            for(History item : lstHistory){
-                                History his2 = historyRepository.findById(item.getId());
-                                his2.setProcessing("2");
-                                historyRepository.save(his2);
-                            }
+                    //if you just finish a focus session -> have to make validation
+                    if(history.getFocusSession() == 1){
+                        return 2;
+                    }
+                    else {
+                        Query query = new Query();
+                        query.addCriteria(Criteria.where("userId").is(history.getUserId())
+                                .andOperator(Criteria.where("processing").is("0")
+                                        .andOperator(Criteria.where("order").is(history.getOrder() + 1)
+                                        )
+                                )
+                        );
+                        List<History> lstHistory2 = mongoTemplate.find(query, History.class);
+                        if (lstHistory2.size() > 0) {
+                            if (lstHistory2.get(0).getFocusSession() == 0) {
+                                //next session is not focus session
+                                //update previous session with processing = 2
+                                //proceed new session
+                                for (History item : lstHistory) {
+                                    History his2 = historyRepository.findById(item.getId());
+                                    his2.setProcessing("2");
+                                    historyRepository.save(his2);
+                                }
 
-                            for(History item : lstHistory2){
-                                item.setProcessing("1");
-                                historyRepository.save(item);
+                                for (History item : lstHistory2) {
+                                    item.setProcessing("1");
+                                    historyRepository.save(item);
+                                }
+                            } else {
+                                //next session is a focus session
+                                //send notification to customer -> send report to coach
+                                User user = userRepository.findById(userId);
+                                if (user != null) {
+                                    Notification notification = new Notification();
+                                    notification.setId("0");
+                                    notification.setNotifyContent("Next session is a Focus Session, please send REPORT to coach");
+                                    notification.setFromUser("0"); //system notification
+                                    notification.setToUser(user.getId());
+
+                                    notificationService.createNew(notification);
+                                }
                             }
                         }
                     }
+
                 }
 
                 //update point, calorie, duration to user
@@ -198,7 +219,7 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
         if(user != null){
             Query query = new Query();
             query.addCriteria(Criteria.where("userId").is(userId)
-                    .andOperator(Criteria.where("processing").is("1")));
+                    .andOperator(Criteria.where("processing").ne("0")));
             List<History> lstHistory = mongoTemplate.find(query, History.class);
             if(lstHistory != null){
                 for(History history : lstHistory){
@@ -213,13 +234,13 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
             user.setDuration(duration);
 
             //update badge
-            if(point <= 150)
+            if(point <= 500)
                 user.setBadge("assets/images/level_1.png");
-            else if(point > 150 && point <= 300)
+            else if(point > 500 && point <= 1000)
                 user.setBadge("assets/images/level_2.png");
-            else if(point > 300 && point <= 500)
+            else if(point > 1000 && point <= 2000)
                 user.setBadge("assets/images/level_3.png");
-            else if(point > 500 && point <= 750)
+            else if(point > 2000 && point <= 3500)
                 user.setBadge("assets/images/level_4.png");
             else
                 user.setBadge("assets/images/level_5.png");

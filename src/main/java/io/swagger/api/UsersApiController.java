@@ -48,30 +48,20 @@ public class UsersApiController implements UsersApi {
         this.request = request;
     }
 
-    public ResponseEntity<List<User>> createNewUser(@ApiParam(value = "User object that needs to be added to the gym" ,required=true )  @Valid @RequestBody User body) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
-                return new ResponseEntity<List<User>>(objectMapper.readValue("[ {\n  \"firstName\" : \"firstName\",\n  \"lastName\" : \"lastName\",\n  \"password\" : \"password\",\n  \"role\" : 6,\n  \"_id\" : 0,\n  \"userName\" : \"userName\",\n  \"points\" : 1\n}, {\n  \"firstName\" : \"firstName\",\n  \"lastName\" : \"lastName\",\n  \"password\" : \"password\",\n  \"role\" : 6,\n  \"_id\" : 0,\n  \"userName\" : \"userName\",\n  \"points\" : 1\n} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<List<User>>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+    public ResponseEntity<Integer> createNewUser(@ApiParam(value = "" ,required=true )  @Valid @RequestBody User body) {
+        try{
+            int res = userService.createNewAccount(body);
+            return new ResponseEntity<Integer>(res, HttpStatus.OK);
         }
-
-        return new ResponseEntity<List<User>>(HttpStatus.NOT_IMPLEMENTED);
+        catch (Exception e){
+            return new ResponseEntity<Integer>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<Void> deleteUserByUserName(@ApiParam(value = "The name that needs to be deleted",required=true) @PathVariable("userName") String userName) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
-
-    /*public ResponseEntity<User> getUserByUserName(@ApiParam(value = "Parameter description in CommonMark or HTML.",required=true) @PathVariable("userName") String userName) {
-
-        User user = userService.getUserByUserName(userName);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
-    }*/
 
     public ResponseEntity<List<User>> getUsersByName(@ApiParam(value = "") @Valid @RequestParam(value = "lastName", required = false) String lastName,@ApiParam(value = "") @Valid @RequestParam(value = "firstName", required = false) String firstName) {
         //need to rewrite again, it's just an example

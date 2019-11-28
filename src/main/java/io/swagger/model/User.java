@@ -67,6 +67,8 @@ public class User   {
 
   private String gender = null;
 
+  private String purpose = null;
+
   public String get_id() {
     return _id;
   }
@@ -350,6 +352,14 @@ public class User   {
 
   public String getGender() {
     return gender;
+  }
+
+  public String getPurpose() {
+    return purpose;
+  }
+
+  public void setPurpose(String purpose) {
+    this.purpose = purpose;
   }
 
   public void setGender(String gender) {

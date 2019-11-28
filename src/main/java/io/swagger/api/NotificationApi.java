@@ -2,6 +2,7 @@ package io.swagger.api;
 
 import io.swagger.annotations.*;
 import io.swagger.model.Notification;
+import io.swagger.model.Report;
 import org.springframework.data.mongodb.core.aggregation.BooleanOperators;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -77,5 +78,26 @@ public interface NotificationApi {
             consumes = { "application/json" },
             method = RequestMethod.PUT)
     ResponseEntity<Integer> validateFSByCoach(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Notification noti);
+
+    @ApiOperation(value = "count number of notification", nickname = "countNumberOfNotification", notes = "", response = Integer.class, tags={ "Notification", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Integer.class),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 404, message = "Exercise was not found"),
+            @ApiResponse(code = 200, message = "Unexpected error") })
+    @RequestMapping(value = "/notification/countNotifications/{userId}",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<Integer> countNumberOfNotification(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+
+    @ApiOperation(value = "Customer send report to coach", nickname = "customerSendReport", notes = "", response = Integer.class, responseContainer = "List", tags={ "Notification", })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = Integer.class),
+            @ApiResponse(code = 405, message = "Invalid input") })
+    @RequestMapping(value = "/notification/customerSendReport",
+            produces = { "application/json" },
+            consumes = { "application/json" },
+            method = RequestMethod.POST)
+    ResponseEntity<Integer> customerSendReport(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Report report);
 
 }

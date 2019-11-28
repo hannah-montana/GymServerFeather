@@ -52,10 +52,11 @@ public class ExercisesSessionsApiController implements ExercisesSessionsApi {
     }
 
     public ResponseEntity<List<History>> getExercisesOfSessionInHistory(@ApiParam(value = "", required = true) @PathVariable("userId") String userId,
-                                                                        @ApiParam(value = "", required = true) @PathVariable("sessId") String sessId){
+                                                                        @ApiParam(value = "", required = true) @PathVariable("sessId") String sessId,
+                                                                        @ApiParam(value = "", required = true) @PathVariable("parentId") String parentId){
         List<History> lstEx = new ArrayList<>();
 
-        lstEx = exerciseSessionService.getExercisesOfSessionInHistory(userId, sessId);
+        lstEx = exerciseSessionService.getExercisesOfSessionInHistory(userId, sessId, parentId);
         return new ResponseEntity<List<History>>(lstEx, HttpStatus.OK);
     }
 

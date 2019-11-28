@@ -215,18 +215,44 @@ public class SessionServiceImp implements SessionService{
             ArrayList<String> lstSessionId = new ArrayList<>();
             ArrayList<Integer> lstOrder = new ArrayList<>();
 
+            String previousSession = "0";
             for(History item: lstHistory){
-                lstSessionId.add(item.getSessId());
+                if(previousSession == "0"){
+                    lstSessionId.add(item.getSessId());
+                    previousSession = item.getSessId();
+
+                    Session session = sessionRepository.findById(item.getSessId());
+                    if(session != null) {
+                        Session newSession = session;
+                        newSession.setParentId(item.getParentId());
+                        lstSession.add(newSession);
+                    }
+                }
+                else{
+                    if(item.getSessId() != previousSession){
+                        lstSessionId.add(item.getSessId());
+                        previousSession = item.getSessId();
+
+                        Session session = sessionRepository.findById(item.getSessId());
+                        if(session != null) {
+                            Session newSession = session;
+                            newSession.setParentId(item.getParentId());
+                            lstSession.add(newSession);
+                        }
+                    }
+                }
+                //get current session
+                /*Session session = sessionRepository.findById(item.getSessId());
+                if(session != null)
+                    lstSession.add(session);*/
             }
-            //HashSet<String> unique = new HashSet(lstSessionId);
-            LinkedHashSet<String> unique = new LinkedHashSet<String>(lstSessionId);
 
             //get current session
-            for(String item:unique){
+            /*for(String item:lstSessionId){
                 Session session = sessionRepository.findById(item);
                 if(session != null)
                     lstSession.add(session);
-            }
+            }*/
         }
         return lstSession;
     }

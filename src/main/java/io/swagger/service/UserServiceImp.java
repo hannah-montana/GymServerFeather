@@ -292,7 +292,8 @@ public class UserServiceImp implements UserService {
         for(History history: lsHis){
             currentCalorie += history.getCalorie();
             currentDuration += history.getPraticalDuration();
-            currentPoint += history.getPoint();
+            //currentPoint += history.getPoint();
+            currentPoint += history.getPraticalDuration();
             currentNumberEx ++;
 
             String level = history.getLevel();
@@ -510,4 +511,51 @@ public class UserServiceImp implements UserService {
 
         return lstTopRanking;
     }
+
+    public Integer createNewAccount(User user){
+        try {
+            //get maxId
+            List<Integer> lstId = new ArrayList<>();
+            List<User> lst = userRepo.findAll();
+            for (User item : lst) {
+                lstId.add(Integer.parseInt(item.getId()));
+            }
+            int maxId = Collections.max(lstId) + 1;
+
+            user.setId(String.valueOf(maxId));
+            user.setPhoto("assets/images/customers/no-image.png");
+            user.setRole("2");
+            user.setCoachId("1");
+            user.setPoint(0);
+            user.setCalorie(0);
+            user.setDuration(0);
+            user.setGender("u");
+            user.setNote(user.getPurpose());
+            user.setLevel("Beginer");
+            user.setBadge("assets/images/level_1.png");
+
+            userRepo.save(user);
+
+            //assign default program
+            ProgramUser programUser = new ProgramUser();
+            programUser.setId("0");
+            programUser.setUserId(String.valueOf(maxId));
+            programUser.setCoachId("1");
+            programUser.setPoint(0);
+            programUser.setIsFinished("Not yet");
+            if(user.getPurpose().equals("Increase Muscle"))
+                programUser.setProgId("1");
+            else if(user.getPurpose().equals("Loose Weight"))
+                programUser.setProgId("3");
+            else
+                programUser.setProgId("2");
+
+            programUserService.assignProgramToUser(programUser);
+
+            return 1;
+        }catch (Exception e) {
+            return 0;
+        }
+    }
+
 }

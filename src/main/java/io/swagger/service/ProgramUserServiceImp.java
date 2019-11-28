@@ -1,10 +1,8 @@
 package io.swagger.service;
 
 import io.swagger.model.*;
-import io.swagger.repository.HistoryRepository;
-import io.swagger.repository.ProgramRepository;
-import io.swagger.repository.ProgramUserRepository;
-import io.swagger.repository.SessionRepository;
+import io.swagger.repository.*;
+import javafx.scene.Parent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -22,6 +20,7 @@ public class ProgramUserServiceImp implements ProgramUserService {
     ProgramRepository programRepository;
     ProgramUserRepository programUserRepository;
     HistoryRepository historyRepository;
+    ParentHistoryRepository parentHistoryRepository;
 
     @Autowired
     SessionProgramService sessionProgramService;
@@ -34,10 +33,12 @@ public class ProgramUserServiceImp implements ProgramUserService {
 
     public ProgramUserServiceImp(ProgramRepository programRepository,
                                  ProgramUserRepository programUserRepository,
-                                 HistoryRepository historyRepository) {
+                                 HistoryRepository historyRepository,
+                                 ParentHistoryRepository parentHistoryRepository) {
         this.programRepository = programRepository;
         this.programUserRepository = programUserRepository;
         this.historyRepository = historyRepository;
+        this.parentHistoryRepository = parentHistoryRepository;
     }
 
     public List<Program> getListProgramByProgramId(String userId) {
@@ -139,9 +140,10 @@ public class ProgramUserServiceImp implements ProgramUserService {
 
             //save to History
             /*
-            * get all session in this program
-            * for each session -> get all exercise
-            * insert each row to table History
+            * 1. get all session in this program
+            * 2. insert to Parent History
+            * 3. for each session -> get all exercise
+            * 4. insert each row to table History
             * */
             int order = 1;
             String processing = "1";
@@ -149,14 +151,41 @@ public class ProgramUserServiceImp implements ProgramUserService {
             Date date = new Date();
             String dateAction = formatter.format(date);
 
+            //1. get all session in this program
             List<Session> lstSession = sessionProgramService.getListSessionsByProgramId(String.valueOf(proUser.getProgId()));
+
             for (Session sess: lstSession){
+                //2. insert to Parent History
+                ParentHistory parentHistory = new ParentHistory();
+                //get maxId
+                List<Integer> lstId = new ArrayList<>();
+                int maxIdParentHistory = 0;
+                List<ParentHistory> lstParentHistory = parentHistoryRepository.findAll();
+                if(lstParentHistory.size() > 0) {
+                    for (ParentHistory item : lstParentHistory) {
+                        lstId.add(Integer.parseInt(item.getId()));
+                    }
+                    maxIdParentHistory = Collections.max(lstId) + 1;
+                }
+                else {
+                    maxIdParentHistory = 1;
+                }
+                parentHistory.setId(String.valueOf(maxIdParentHistory));
+                parentHistory.setProUsId(String.valueOf(maxId));
+                parentHistory.setProgId(proUser.getProgId());
+                parentHistory.setSessId(sess.getId());
+                parentHistory.setUserId(proUser.getUserId());
+                parentHistoryRepository.save(parentHistory);
+
+                //3. for each session -> get all exercise
                 List<Exercise> lstExercise = exerciseSessionService.getListExercisesBySessionId(sess.getId());
 
+                //4. insert each row to table History
                 for(Exercise ex: lstExercise) {
                     History history = new History();
                     int hisId = getHistoryMaxId();
                     history.setId(String.valueOf(hisId + 1));
+                    history.setParentId(String.valueOf(maxIdParentHistory));
                     history.setProUsId(String.valueOf(maxId));
                     history.setProgId(proUser.getProgId());
                     history.setUserId(proUser.getUserId());
@@ -187,7 +216,6 @@ public class ProgramUserServiceImp implements ProgramUserService {
                 processing = "0";
                 order ++;
             }
-
             //update already assign to program
             Program program = programRepository.findById(proUser.getProgId());
             if(program != null){
