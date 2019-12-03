@@ -16,13 +16,13 @@ import javax.validation.constraints.*;
 @Document(collection = "BarChart")
 public class BarChart {
 
-    private Float noLevel1 = null;
-    private Float noLevel2 = null;
-    private Float noLevel3 = null;
-    private Float noLevel4 = null;
-    private Float noLevel5 = null;
+    private Double noLevel1 = null;
+    private Double noLevel2 = null;
+    private Double noLevel3 = null;
+    private Double noLevel4 = null;
+    private Double noLevel5 = null;
 
-    public BarChart noLevel1(Float noLevel1) {
+    public BarChart noLevel1(Double noLevel1) {
         this.noLevel1 = noLevel1;
         return this;
     }
@@ -34,15 +34,15 @@ public class BarChart {
     @ApiModelProperty(required = true, value = "")
     @NotNull
 
-    public Float getNoLevel1() {
+    public Double getNoLevel1() {
         return noLevel1;
     }
 
-    public void setNoLevel1(Float noLevel1) {
+    public void setNoLevel1(Double noLevel1) {
         this.noLevel1 = noLevel1;
     }
 
-    public BarChart noLevel2(Float noLevel2) {
+    public BarChart noLevel2(Double noLevel2) {
         this.noLevel2 = noLevel2;
         return this;
     }
@@ -54,15 +54,15 @@ public class BarChart {
     @ApiModelProperty(required = true, value = "")
     @NotNull
 
-    public Float getNoLevel2() {
+    public Double getNoLevel2() {
         return noLevel2;
     }
 
-    public void setNoLevel2(Float noLevel2) {
+    public void setNoLevel2(Double noLevel2) {
         this.noLevel2 = noLevel2;
     }
 
-    public BarChart noLevel3(Float noLevel3) {
+    public BarChart noLevel3(Double noLevel3) {
         this.noLevel3 = noLevel3;
         return this;
     }
@@ -74,15 +74,15 @@ public class BarChart {
     @ApiModelProperty(required = true, value = "")
     @NotNull
 
-    public Float getNoLevel3() {
+    public Double getNoLevel3() {
         return noLevel3;
     }
 
-    public void setNoLevel3(Float noLevel3) {
+    public void setNoLevel3(Double noLevel3) {
         this.noLevel3 = noLevel3;
     }
 
-    public BarChart noLevel4(Float noLevel4) {
+    public BarChart noLevel4(Double noLevel4) {
         this.noLevel4 = noLevel4;
         return this;
     }
@@ -94,15 +94,15 @@ public class BarChart {
     @ApiModelProperty(required = true, value = "")
     @NotNull
 
-    public Float getNoLevel4() {
+    public Double getNoLevel4() {
         return noLevel4;
     }
 
-    public void setNoLevel4(Float noLevel4) {
+    public void setNoLevel4(Double noLevel4) {
         this.noLevel4 = noLevel4;
     }
 
-    public BarChart noLevel5(Float noLevel5) {
+    public BarChart noLevel5(Double noLevel5) {
         this.noLevel5 = noLevel5;
         return this;
     }
@@ -114,11 +114,11 @@ public class BarChart {
     @ApiModelProperty(required = true, value = "")
     @NotNull
 
-    public Float getNoLevel5() {
+    public Double getNoLevel5() {
         return noLevel5;
     }
 
-    public void setNoLevel5(Float noLevel5) {
+    public void setNoLevel5(Double noLevel5) {
         this.noLevel5 = noLevel5;
     }
 }

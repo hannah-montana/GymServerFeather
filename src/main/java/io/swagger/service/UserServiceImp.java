@@ -285,15 +285,17 @@ public class UserServiceImp implements UserService {
         int currentNumberExMedium = 0;
         int currentNumberExDifficult = 0;
 
-
-
-        lsHis = this.historyService.getListHistoryByUserId(userId);
+        //lsHis = this.historyService.getListHistoryByUserId(userId);
+        Query query = new Query();
+        query.addCriteria(Criteria.where("userId").is(userId)
+                .andOperator(Criteria.where("processing").ne("0")
+                        .andOperator(Criteria.where("praticalDuration").gt(0))));
+        lsHis = mongoTemplate.find(query, History.class);
 
         for(History history: lsHis){
             currentCalorie += history.getCalorie();
             currentDuration += history.getPraticalDuration();
-            //currentPoint += history.getPoint();
-            currentPoint += history.getPraticalDuration();
+            currentPoint += history.getPoint();
             currentNumberEx ++;
 
             String level = history.getLevel();
@@ -309,7 +311,6 @@ public class UserServiceImp implements UserService {
                     currentNumberExDifficult++;
                     break;
             }
-
         }
 
         CurrentCustomer currentCustomer = new CurrentCustomer();
@@ -394,12 +395,14 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public List<Integer> getListPointOfSessionByUserId(String userId) {
+    public List<DataPoint> getListPointOfSessionByUserId(String userId) {
         List<Session> lstSess = new ArrayList<>();
         List<Integer> lstPoint = new ArrayList<>();
+        List<DataPoint> lstDataPoint = new ArrayList<>();
 
         lstSess = this.historyService.getListSessionsByUserId(userId);
 
+        int i=1;
         for(Session sess: lstSess){
             Query query = new Query();
             query.addCriteria(Criteria.where("sessId").is(sess.getId()));
@@ -411,26 +414,33 @@ public class UserServiceImp implements UserService {
                 int point= history.getPoint();
                 totalPointOfSession+=point;
             }
-
             lstPoint.add(totalPointOfSession);
+
+            DataPoint dataPoint = new DataPoint();
+            dataPoint.setLabel("S" + String.valueOf(i));
+            dataPoint.setY(totalPointOfSession);
+            i++;
+
+            lstDataPoint.add(dataPoint);
         }
 
-        return lstPoint;
+        return lstDataPoint;
     }
 
     @Override
-    public List<Integer> getListCalorieOfSessionByUserId(String userId) {
+    public List<DataPoint> getListCalorieOfSessionByUserId(String userId) {
         List<Session> lstSess = new ArrayList<>();
         List<Integer> lstCalorie = new ArrayList<>();
+        List<DataPoint> lstDataPoint = new ArrayList<>();
 
         lstSess = this.historyService.getListSessionsByUserId(userId);
 
+        int i=1;
+        int totalCalorieOfSession = 0;
         for(Session sess: lstSess){
             Query query = new Query();
             query.addCriteria(Criteria.where("sessId").is(sess.getId()));
             List<History> lstHistory = mongoTemplate.find(query, History.class);
-
-            int totalCalorieOfSession = 0;
 
             for(History history: lstHistory){
                 int calorie= history.getCalorie();
@@ -438,9 +448,17 @@ public class UserServiceImp implements UserService {
             }
 
             lstCalorie.add(totalCalorieOfSession);
+
+            DataPoint dataPoint = new DataPoint();
+            dataPoint.setLabel("S" + String.valueOf(i));
+            dataPoint.setY(totalCalorieOfSession);
+            dataPoint.setX(i);
+            i++;
+
+            lstDataPoint.add(dataPoint);
         }
 
-        return lstCalorie;
+        return lstDataPoint;
     }
 
     @Override
@@ -498,14 +516,36 @@ public class UserServiceImp implements UserService {
             lstTopRanking = lstAllRanking;
         }
 
-
-        if(!lstTopRanking.contains(user.getId())){
-            lstTopRanking.remove(9);
+        int check = 0;
+        for(Ranking r: lstTopRanking){
+            if(r.getId().equals(userId)){
+                check = 1;
+                break;
+            }
         }
 
-        for(Ranking currentRanking:lstAllRanking ){
-            if(user.getId().equals(currentRanking.getId())){
-                lstTopRanking.add(currentRanking);
+        if(check == 0){
+            lstTopRanking.remove(9);
+
+            for(Ranking currentRanking:lstAllRanking ){
+                if(user.getId().equals(currentRanking.getId())){
+                    lstTopRanking.add(currentRanking);
+                }
+            }
+        }
+
+        for(Ranking item: lstTopRanking){
+            if(item.getRank().equals(1)){
+                item.setMedal("assets/images/winner.png");
+            }
+            else if(item.getRank().equals(2)){
+                item.setMedal("assets/images/gold.png");
+            }
+            else if(item.getRank().equals(3)){
+                item.setMedal("assets/images/silver.png");
+            }
+            else if(item.getRank().equals(4)){
+                item.setMedal("assets/images/bronze.png");
             }
         }
 

@@ -1,9 +1,6 @@
 package io.swagger.api;
 
-import io.swagger.model.CurrentCustomer;
-import io.swagger.model.CustomerDashboard;
-import io.swagger.model.LoginModel;
-import io.swagger.model.User;
+import io.swagger.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import io.swagger.service.ProgramUserService;
@@ -198,16 +195,16 @@ public class UsersApiController implements UsersApi {
     }
 
     @Override
-    public ResponseEntity<List<Integer>> getHisotryPointOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
-        List<Integer> lstSessPoint = new ArrayList<>();
+    public ResponseEntity<List<DataPoint>> getHisotryPointOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
+        List<DataPoint> lstSessPoint = new ArrayList<>();
         lstSessPoint = this.userService.getListPointOfSessionByUserId(userId);
-        return new ResponseEntity<List<Integer>>(lstSessPoint, HttpStatus.OK);
+        return new ResponseEntity<List<DataPoint>>(lstSessPoint, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<Integer>> getHisotryCalorieOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
-        List<Integer> lstSessCalorie = new ArrayList<>();
+    public ResponseEntity<List<DataPoint>> getHisotryCalorieOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId) {
+        List<DataPoint> lstSessCalorie = new ArrayList<>();
         lstSessCalorie = this.userService.getListCalorieOfSessionByUserId(userId);
-        return new ResponseEntity<List<Integer>>(lstSessCalorie, HttpStatus.OK);
+        return new ResponseEntity<List<DataPoint>>(lstSessCalorie, HttpStatus.OK);
     }
 }

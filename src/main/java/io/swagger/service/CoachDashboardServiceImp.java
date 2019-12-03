@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,7 +90,7 @@ public class CoachDashboardServiceImp implements CoachDashboardService {
         List<User> lstUserByCoachId = this.getListUserByCoachId(coachId);
 
         for(User user: lstUserByCoachId){
-            if(user.getLevel().equals("1")){
+            if(user.getBadge().equals("assets/images/level_1.png")){
                 lstLevel1.add(user);
             }
         }
@@ -100,7 +102,7 @@ public class CoachDashboardServiceImp implements CoachDashboardService {
         List<User> lstUserByCoachId = this.getListUserByCoachId(coachId);
 
         for(User user: lstUserByCoachId){
-            if(user.getLevel().equals("2")){
+            if(user.getBadge().equals("assets/images/level_2.png")){
                 lstLevel2.add(user);
             }
         }
@@ -112,7 +114,7 @@ public class CoachDashboardServiceImp implements CoachDashboardService {
         List<User> lstUserByCoachId = this.getListUserByCoachId(coachId);
 
         for(User user: lstUserByCoachId){
-            if(user.getLevel().equals("3")){
+            if(user.getBadge().equals("assets/images/level_3.png")){
                 lstLevel3.add(user);
             }
         }
@@ -124,7 +126,7 @@ public class CoachDashboardServiceImp implements CoachDashboardService {
         List<User> lstUserByCoachId = this.getListUserByCoachId(coachId);
 
         for(User user: lstUserByCoachId){
-            if(user.getLevel().equals("4")){
+            if(user.getBadge().equals("assets/images/level_4.png")){
                 lstLevel4.add(user);
             }
         }
@@ -222,17 +224,60 @@ public class CoachDashboardServiceImp implements CoachDashboardService {
     public List<AreaChart> getListExerciseOfFocusSession(String sessId) {
         List<AreaChart> lstAreaChart = new ArrayList<>();
         List<Exercise> lstEx = this.exerciseSessionService.getListExercisesBySessionId(sessId);
+        //List<Evoluation> lstData = new ArrayList<>();
+
+        AreaChart point = new AreaChart();
+        point.setType("stackedArea");
+        point.setName("Point");
+        point.setShowInLegend(true);
+
+        AreaChart calorie = new AreaChart();
+        calorie.setType("stackedArea");
+        calorie.setName("Calorie");
+        calorie.setShowInLegend(true);
+
+        AreaChart duration = new AreaChart();
+        duration.setType("stackedArea");
+        duration.setName("Calorie");
+        duration.setShowInLegend(true);
+
+        List<DataPoint> lstPoint = new ArrayList<>();
+        List<DataPoint> lstCalorie = new ArrayList<>();
+        List<DataPoint> lstDuration = new ArrayList<>();
 
         for(int i=0;i<lstEx.size();i++){
-            AreaChart areaChart = new AreaChart();
+            /*AreaChart areaChart = new AreaChart();
             areaChart.setId(i+1);
-            areaChart.setDuration(lstEx.get(i).getCalorie());
             areaChart.setPoint(lstEx.get(i).getPoint());
             areaChart.setDuration(lstEx.get(i).getDuration());
             areaChart.setCalorie(lstEx.get(i).getCalorie());
 
-            lstAreaChart.add(areaChart);
+            lstAreaChart.add(areaChart);*/
+
+            DataPoint dataPoint = new DataPoint();
+            DataPoint dataCalorie = new DataPoint();
+            DataPoint dataDuration = new DataPoint();
+
+            dataPoint.setX(i);
+            dataCalorie.setX(i);
+            dataDuration.setX(i);
+
+            dataPoint.setY(lstEx.get(i).getPoint());
+            dataCalorie.setY(lstEx.get(i).getCalorie());
+            dataDuration.setY(lstEx.get(i).getDuration());
+
+            lstPoint.add(dataPoint);
+            lstCalorie.add(dataCalorie);
+            lstDuration.add(dataDuration);
         }
+        point.setDataPoints(lstPoint);
+        calorie.setDataPoints(lstCalorie);
+        duration.setDataPoints(lstDuration);
+
+        lstAreaChart.add(point);
+        lstAreaChart.add(calorie);
+        lstAreaChart.add(duration);
+
         return lstAreaChart;
     }
 
@@ -253,11 +298,11 @@ public class CoachDashboardServiceImp implements CoachDashboardService {
         float noLevel4 = lstLvel4.size();
         float noLevel5 = noCustomer - noLevel1 - noLevel2 - noLevel3 - noLevel4;
 
-        barChart.setNoLevel1(100*noLevel1/noCustomer);
-        barChart.setNoLevel2(100*noLevel2/noCustomer);
-        barChart.setNoLevel3(100*noLevel3/noCustomer);
-        barChart.setNoLevel4(100*noLevel4/noCustomer);
-        barChart.setNoLevel5(100*noLevel5/noCustomer);
+        barChart.setNoLevel1(Math.round(10000*noLevel1/noCustomer) / 100.0);
+        barChart.setNoLevel2(Math.round(10000*noLevel2/noCustomer) / 100.0);
+        barChart.setNoLevel3(Math.round(10000*noLevel3/noCustomer) / 100.0);
+        barChart.setNoLevel4(Math.round(10000*noLevel4/noCustomer) / 100.0);
+        barChart.setNoLevel5(Math.round(10000*noLevel5/noCustomer) / 100.0);
 
         return barChart;
     }

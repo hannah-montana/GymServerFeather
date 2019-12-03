@@ -1,7 +1,6 @@
 package io.swagger.service;
 
 import io.swagger.model.*;
-import io.swagger.repository.ExerciseRepository;
 import io.swagger.repository.SessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -32,7 +31,7 @@ public class HistoryServiceImp implements HistoryService{
         List<History> lsHistory = mongoTemplate.find(query, History.class);
 
         for(History history: lsHistory){
-            if(history.getProcessing().equals("1")){
+            if(history.getProcessing().equals("1") || history.getProcessing().equals("2")){
                 lstProcessingHistory.add(history);
             }
         }
@@ -46,13 +45,23 @@ public class HistoryServiceImp implements HistoryService{
         List<History> lsHistory = this.getListHistoryByUserId(userId);
 
         List<Session> lstSess = new ArrayList<>();
+        String parentId ="";
 
         for(History history: lsHistory){
             Session sess = sessionRepository.findById(history.getSessId());
-            if(!lstSess.contains(sess)){
+
+            if(parentId.equals(""))
+            {
+                parentId = history.getParentId();
                 lstSess.add(sess);
             }
-            //lstSess.add(sess);
+            else {
+                if(parentId.equals(history.getParentId())){}
+                else {
+                    parentId = history.getParentId();
+                    lstSess.add(sess);
+                }
+            }
         }
 
         return lstSess;
@@ -106,7 +115,7 @@ public class HistoryServiceImp implements HistoryService{
         List<Evoluation> lstEvoluation = new ArrayList<>();
         Query query = new Query();
         query.addCriteria(Criteria.where("userId").is(userId)
-            .andOperator(Criteria.where("focusSession").is("1")
+            .andOperator(Criteria.where("focusSession").is(1)
                     .andOperator(Criteria.where("processing").ne("0"))));
 
         List<History> lstHistory = mongoTemplate.find(query, History.class);
@@ -119,24 +128,24 @@ public class HistoryServiceImp implements HistoryService{
             }
             LinkedHashSet<String> unique = new LinkedHashSet<String>(lstParentId);
 
-
             int fsNo = 1;
             for(String item: unique){
                 Query query2 = new Query();
                 query2.addCriteria(Criteria.where("parentId").is(item));
                 List<History> subHistorys = new ArrayList<>();
+                subHistorys = mongoTemplate.find(query2, History.class);
                 if(subHistorys.size() > 0) {
                     Evoluation evoluation = new Evoluation();
                     evoluation.setType("column");
                     evoluation.setName("FC" + String.valueOf(fsNo));
-                    evoluation.setLegendText("FC" + String.valueOf(fsNo));
+                    //evoluation.setLegendText("FC" + String.valueOf(fsNo));
                     evoluation.setShowInLegend(true);
 
-                    List<DataPoint> lstDataPoint = new ArrayList<>();
+                    List<DataPointWithoutX> lstDataPoint = new ArrayList<>();
                     for (History subHistory : subHistorys) {
-                        DataPoint dataPoint = new DataPoint();
+                        DataPointWithoutX dataPoint = new DataPointWithoutX();
                         dataPoint.setLabel(subHistory.getName());
-                        dataPoint.setY(String.valueOf(subHistory.getPraticalDuration()));
+                        dataPoint.setY(subHistory.getPraticalDuration());
                         lstDataPoint.add(dataPoint);
                     }
                     evoluation.setDataPoints(lstDataPoint);

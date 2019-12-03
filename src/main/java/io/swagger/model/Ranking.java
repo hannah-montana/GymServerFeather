@@ -42,6 +42,8 @@ public class Ranking {
     @JsonProperty("badge")
     private String badge = null;
 
+    private String medal = null;
+
     public Ranking id(String id) {
         this.id = id;
         return this;
@@ -198,5 +200,13 @@ public class Ranking {
 
     public void setBadge(String badge) {
         this.badge = badge;
+    }
+
+    public String getMedal() {
+        return medal;
+    }
+
+    public void setMedal(String medal) {
+        this.medal = medal;
     }
 }

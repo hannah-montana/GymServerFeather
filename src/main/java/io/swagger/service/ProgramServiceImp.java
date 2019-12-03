@@ -54,8 +54,6 @@ public class ProgramServiceImp implements  ProgramService {
 
     @Override
     public Integer createProgram(Program prog) {
-        Program newProg = new Program();
-
         //get maxId
         List<Integer> lstId = new ArrayList<>();
         List<Program> lst = programRepository.findAll();
@@ -67,14 +65,14 @@ public class ProgramServiceImp implements  ProgramService {
 
         if(programRepository.findByName(prog.getName().toString()) == null){
             prog.setId(String.valueOf(maxId));
-            newProg = programRepository.save(prog);
+            prog.setAlreadyAssign("0");
+            programRepository.save(prog);
 
             //update point for coach
             userService.updatePointForCoach(prog.getCoachId(), userService.getMaxiPoint());
 
             return maxId;
         }
-
         return 0;
     }
 

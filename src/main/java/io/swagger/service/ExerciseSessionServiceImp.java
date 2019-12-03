@@ -153,6 +153,7 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
 
                     //if you just finish a focus session -> have to make validation
                     if(history.getFocusSession() == 1){
+                        updatePointCalorieDurationForUser(userId);
                         return 2;
                     }
                     else {
@@ -219,7 +220,8 @@ public class ExerciseSessionServiceImp implements  ExerciseSessionService{
         if(user != null){
             Query query = new Query();
             query.addCriteria(Criteria.where("userId").is(userId)
-                    .andOperator(Criteria.where("processing").ne("0")));
+                    .andOperator(Criteria.where("processing").ne("0")
+                            .andOperator(Criteria.where("praticalDuration").gt(0))));
             List<History> lstHistory = mongoTemplate.find(query, History.class);
             if(lstHistory != null){
                 for(History history : lstHistory){

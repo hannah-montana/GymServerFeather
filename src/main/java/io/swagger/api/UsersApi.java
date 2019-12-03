@@ -5,10 +5,7 @@
  */
 package io.swagger.api;
 
-import io.swagger.model.CurrentCustomer;
-import io.swagger.model.CustomerDashboard;
-import io.swagger.model.LoginModel;
-import io.swagger.model.User;
+import io.swagger.model.*;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -219,7 +216,7 @@ public interface UsersApi {
     @RequestMapping(value = "/users/historyPoint/{userId}",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<List<Integer>> getHisotryPointOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+    ResponseEntity<List<DataPoint>> getHisotryPointOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
 
     /*
      * get History Calorie
@@ -234,7 +231,7 @@ public interface UsersApi {
     @RequestMapping(value = "/users/historyCalorie/{userId}",
             produces = { "application/json" },
             method = RequestMethod.GET)
-    ResponseEntity<List<Integer>> getHisotryCalorieOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
+    ResponseEntity<List<DataPoint>> getHisotryCalorieOfSession(@ApiParam(value = "",required=true) @PathVariable("userId") String userId);
 
 
 }

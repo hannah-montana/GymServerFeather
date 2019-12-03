@@ -1,5 +1,6 @@
 package io.swagger.model;
 
+import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -16,96 +17,40 @@ import javax.validation.constraints.*;
 @Document(collection = "AreaChart")
 public class AreaChart {
 
-    @JsonProperty("id")
-    private Integer id = null;
+    private String type;
+    private String name;
+    private boolean showInLegend;
+    private List<DataPoint> dataPoints;
 
-    @JsonProperty("calorie")
-    private Integer calorie = null;
-
-    @JsonProperty("duration")
-    private Integer duration = null;
-
-    @JsonProperty("point")
-    private Integer point = null;
-
-    public AreaChart id(Integer id) {
-        this.id = id;
-        return this;
+    public String getType() {
+        return type;
     }
 
-    /**
-     * Get id
-     * @return id
-     **/
-    @ApiModelProperty(required = true, value = "")
-    @NotNull
-
-    public Integer getId() {
-        return id;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getName() {
+        return name;
     }
 
-    public AreaChart point(Integer point) {
-        this.point = point;
-        return this;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    /**
-     * Get point
-     * @return point
-     **/
-    @ApiModelProperty(required = true, value = "")
-    @NotNull
-
-    public Integer getPoint() {
-        return point;
+    public boolean isShowInLegend() {
+        return showInLegend;
     }
 
-    public void setPoint(Integer point) {
-        this.point = point;
+    public void setShowInLegend(boolean showInLegend) {
+        this.showInLegend = showInLegend;
     }
 
-    public AreaChart calorie(Integer calorie) {
-        this.calorie = calorie;
-        return this;
+    public List<DataPoint> getDataPoints() {
+        return dataPoints;
     }
 
-    /**
-     * Get calorie
-     * @return calorie
-     **/
-    @ApiModelProperty(required = true, value = "")
-    @NotNull
-
-    public Integer getCalorie() {
-        return calorie;
-    }
-
-    public void setCalorie(Integer calorie) {
-        this.calorie = calorie;
-    }
-
-
-    public AreaChart duration(Integer duration) {
-        this.duration = duration;
-        return this;
-    }
-
-    /**
-     * Get duration
-     * @return duration
-     **/
-    @ApiModelProperty(required = true, value = "")
-    @NotNull
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
+    public void setDataPoints(List<DataPoint> dataPoints) {
+        this.dataPoints = dataPoints;
     }
 }

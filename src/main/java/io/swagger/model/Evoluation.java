@@ -8,20 +8,11 @@ import java.util.List;
 @Validated
 @Document(collection = "Evoluation")
 public class Evoluation {
-    private String id;
     private String type;
     private String name;
-    private String legendText;
+    //private String legendText;
     private boolean showInLegend;
-    private List<DataPoint> dataPoints;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private List<DataPointWithoutX> dataPoints;
 
     public String getType() {
         return type;
@@ -39,13 +30,13 @@ public class Evoluation {
         this.name = name;
     }
 
-    public String getLegendText() {
+    /*public String getLegendText() {
         return legendText;
     }
 
     public void setLegendText(String legendText) {
         this.legendText = legendText;
-    }
+    }*/
 
     public boolean isShowInLegend() {
         return showInLegend;
@@ -55,11 +46,11 @@ public class Evoluation {
         this.showInLegend = showInLegend;
     }
 
-    public List<DataPoint> getDataPoints() {
+    public List<DataPointWithoutX> getDataPoints() {
         return dataPoints;
     }
 
-    public void setDataPoints(List<DataPoint> dataPoints) {
+    public void setDataPoints(List<DataPointWithoutX> dataPoints) {
         this.dataPoints = dataPoints;
     }
 }

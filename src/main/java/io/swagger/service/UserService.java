@@ -39,8 +39,8 @@ public interface UserService {
     Map<String,Integer> getMapPointOfSessionByUserId(String userId);
     Map<String,Integer> getMapCalorieOfSessionByUserId(String userId);
 
-    List<Integer> getListPointOfSessionByUserId(String userId);
-    List<Integer> getListCalorieOfSessionByUserId(String userId);
+    List<DataPoint> getListPointOfSessionByUserId(String userId);
+    List<DataPoint> getListCalorieOfSessionByUserId(String userId);
 
     List<Ranking> getListAllRanking();
     List<Ranking> getListTopRanking(String userId);
